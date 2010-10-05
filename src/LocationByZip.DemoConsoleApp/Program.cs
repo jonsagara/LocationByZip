@@ -12,22 +12,25 @@ namespace LocationByZip.DemoConsoleApp
 			//	Location by ZIP Code.
 			Location location = ZipCodeUtil.LookupByZipCode("93275");
 			if (location != null)
-				Console.WriteLine(location.ToString());
+			{
+				Console.WriteLine(location);
+			}
+
 
 			//	Location(s) by City/State.
 			IList<Location> locs = ZipCodeUtil.LookupByCityState("Tulare", "CA");
-			if (locs != null && locs.Count > 0)
+			foreach (Location loc in locs)
 			{
-				foreach (Location loc in locs)
-				{
-					Console.WriteLine(loc.ToString());
-				}
+				Console.WriteLine(loc);
 			}
+
 
 			//	Location by City/State/Zip
 			location = ZipCodeUtil.LookupByCityStateZip("Tulare", "CA", "93275");
 			if (location != null)
-				Console.WriteLine(location.ToString());
+			{
+				Console.WriteLine(location);
+			}
 
 			//	Distance between two locations.
 			Location sf = ZipCodeUtil.LookupByZipCode("94175");
@@ -37,12 +40,9 @@ namespace LocationByZip.DemoConsoleApp
 
 			//	Other Locations within an X-mile radius of a specific location.
 			IList<LocationInRadius> locsInRadius = sf.LocationsWithinRadius(5.0);
-			if (locsInRadius != null && locs.Count > 0)
+			foreach (Location locInRad in locsInRadius)
 			{
-				foreach (Location loc in locsInRadius)
-				{
-					Console.WriteLine(loc.ToString());
-				}
+				Console.WriteLine(locInRad);
 			}
 
 
