@@ -28,7 +28,7 @@ namespace SagaraSoftware.ZipCodeUtil
 			OleDbCommand oleCmd = null;
 			OleDbDataReader oleReader = null;
 			Location loc = null;
-			string strConnString = ConfigurationSettings.AppSettings["ZipCodeConnString"];
+			string strConnString = ConfigurationManager.AppSettings["ZipCodeConnString"];
 			StringBuilder sql = new StringBuilder();
 
 			if (null == strConnString || string.Empty == strConnString)
@@ -87,7 +87,7 @@ namespace SagaraSoftware.ZipCodeUtil
 			OleDbCommand oleCmd = null;
 			OleDbDataReader oleReader = null;
 			ArrayList locs = new ArrayList();
-			string strConnString = ConfigurationSettings.AppSettings["ZipCodeConnString"];
+			string strConnString = ConfigurationManager.AppSettings["ZipCodeConnString"];
 			StringBuilder sql = new StringBuilder();
 
 			if (null == strConnString || string.Empty == strConnString)
@@ -158,7 +158,7 @@ namespace SagaraSoftware.ZipCodeUtil
 			OleDbCommand oleCmd = null;
 			OleDbDataReader oleReader = null;
 			ArrayList locs = new ArrayList();
-			string strConnString = ConfigurationSettings.AppSettings["ZipCodeConnString"];
+			string strConnString = ConfigurationManager.AppSettings["ZipCodeConnString"];
 			StringBuilder sql = new StringBuilder();
 
 			if (null == strConnString || string.Empty == strConnString)

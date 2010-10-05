@@ -1,4 +1,5 @@
 using System;
+using System.Configuration;
 
 namespace SagaraSoftware.ZipCodeUtil
 {
@@ -24,7 +25,7 @@ namespace SagaraSoftware.ZipCodeUtil
 	{
 		public static IDataProvider GetDataProvider()
 		{
-			string strProviderType = System.Configuration.ConfigurationSettings.AppSettings["ZipCodeProviderType"];
+			string strProviderType = ConfigurationManager.AppSettings["ZipCodeProviderType"];
 
 			if (null == strProviderType || string.Empty == strProviderType)
 				throw new ApplicationException("The host application must define the ZipCodeProviderType key in the config file.");
