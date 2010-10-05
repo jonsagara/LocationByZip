@@ -28,20 +28,29 @@ namespace SagaraSoftware.ZipCodeUtil
 		{
 			string strProviderType = ConfigurationManager.AppSettings["ZipCodeProviderType"];
 
-			if (null == strProviderType || string.Empty == strProviderType)
-				throw new ApplicationException("The host application must define the ZipCodeProviderType key in the config file.");
+			if (string.IsNullOrWhiteSpace(strProviderType))
+				throw new Exception("The host application must define the ZipCodeProviderType key in the config file.");
 
+			IDataProvider dp = null;
 			switch (strProviderType.ToUpper())
 			{
 				case "ACCESS":
-					return new AccessProvider();
+					dp = new AccessProvider();
+					break;
+
 				case "MSSQL":
 					throw new NotImplementedException("SqlProvider is not yet implemented");
-				case "MYSQL":
-					throw new NotImplementedException("MySqlProvider is not yet implemented");
+
 				default:
 					throw new ApplicationException("Invalid database provider type specified in config file.");
 			}
+
+			if (dp == null)
+			{
+				throw new Exception("Unabled to instantiate data provider " + strProviderType);
+			}
+
+			return dp;
 		}
 	}
 }

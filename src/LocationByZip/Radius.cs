@@ -41,8 +41,7 @@ namespace SagaraSoftware.ZipCodeUtil
 			try
 			{
 				db = DataProvider.GetDataProvider();
-				if (null != db)
-					locs = db.GetLocationsWithinRadius(inLocation, radBox);
+				locs = db.GetLocationsWithinRadius(inLocation, radBox);
 			}
 			catch (Exception e)
 			{

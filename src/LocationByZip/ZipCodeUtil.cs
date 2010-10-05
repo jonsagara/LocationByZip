@@ -38,9 +38,7 @@ namespace SagaraSoftware.ZipCodeUtil
 			try
 			{
 				db = DataProvider.GetDataProvider();
-
-				if (db != null)
-					loc = db.DoLookupByZipCode(inZipCode);
+				loc = db.DoLookupByZipCode(inZipCode);
 			}
 			catch (Exception e)
 			{
@@ -81,9 +79,7 @@ namespace SagaraSoftware.ZipCodeUtil
 			try
 			{
 				db = DataProvider.GetDataProvider();
-
-				if (null != db)
-					locs = db.DoLookupByCityState(inCity, inState);
+				locs = db.DoLookupByCityState(inCity, inState);
 			}
 			catch (Exception e)
 			{
