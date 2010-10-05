@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using SagaraSoftware.ZipCodeUtil;
 
@@ -10,12 +11,12 @@ namespace LocationByZip.DemoConsoleApp
 		{
 			//	Location by ZIP Code.
 			Location location = ZipCodeUtil.LookupByZipCode("93275");
-			if (null != location)
+			if (location != null)
 				Console.WriteLine(location.ToString());
 
 			//	Location(s) by City/State.
-			Location[] locs = ZipCodeUtil.LookupByCityState("Tulare", "CA");
-			if (null != locs && locs.Length > 0)
+			IList<Location> locs = ZipCodeUtil.LookupByCityState("Tulare", "CA");
+			if (locs != null && locs.Count > 0)
 			{
 				foreach (Location loc in locs)
 				{
@@ -25,7 +26,7 @@ namespace LocationByZip.DemoConsoleApp
 
 			//	Location by City/State/Zip
 			location = ZipCodeUtil.LookupByCityStateZip("Tulare", "CA", "93275");
-			if (null != location)
+			if (location != null)
 				Console.WriteLine(location.ToString());
 
 			//	Distance between two locations.
@@ -36,7 +37,7 @@ namespace LocationByZip.DemoConsoleApp
 
 			//	Other Locations within an X-mile radius of a specific location.
 			locs = sf.LocationsWithinRadius(5.0);
-			if (null != locs && locs.Length > 0)
+			if (null != locs && locs.Count > 0)
 			{
 				foreach (Location loc in locs)
 				{
