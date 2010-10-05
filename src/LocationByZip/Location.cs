@@ -9,7 +9,7 @@ namespace SagaraSoftware.ZipCodeUtil
 	/// </summary>
 	public class Location
 	{
-		public String City
+		public string City
 		{
 			get
 			{
@@ -21,7 +21,7 @@ namespace SagaraSoftware.ZipCodeUtil
 			}
 		}
 
-		public String State
+		public string State
 		{
 			get
 			{
@@ -33,7 +33,7 @@ namespace SagaraSoftware.ZipCodeUtil
 			}
 		}
 
-		public String ZipCode
+		public string ZipCode
 		{
 			get
 			{
@@ -45,7 +45,7 @@ namespace SagaraSoftware.ZipCodeUtil
 			}
 		}
 
-		public String County
+		public string County
 		{
 			get
 			{
@@ -57,7 +57,7 @@ namespace SagaraSoftware.ZipCodeUtil
 			}
 		}
 
-		public Double Latitude
+		public double Latitude
 		{
 			get
 			{
@@ -69,7 +69,7 @@ namespace SagaraSoftware.ZipCodeUtil
 			}
 		}
 
-		public Double Longitude
+		public double Longitude
 		{
 			get
 			{
@@ -81,7 +81,7 @@ namespace SagaraSoftware.ZipCodeUtil
 			}
 		}
 
-		public String ZipClass
+		public string ZipClass
 		{
 			get
 			{
@@ -94,13 +94,13 @@ namespace SagaraSoftware.ZipCodeUtil
 		}
 
 
-		public Double DistanceFrom(Location inRemoteLocation)
+		public double DistanceFrom(Location inRemoteLocation)
 		{
 			return Distance.GetDistance(this, inRemoteLocation);
 		}
 
 
-		public Location[] LocationsWithinRadius(Double inRadius)
+		public Location[] LocationsWithinRadius(double inRadius)
 		{
 			return Radius.LocationsWithinRadius(this, inRadius);
 		}
@@ -134,11 +134,11 @@ namespace SagaraSoftware.ZipCodeUtil
 		public LocationInRadius()
 			: base()
 		{
-			DistanceToCenter = Double.MinValue;
+			DistanceToCenter = double.MinValue;
 		}
 
 
-		public Double DistanceToCenter
+		public double DistanceToCenter
 		{
 			get
 			{

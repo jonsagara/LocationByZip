@@ -10,6 +10,6 @@ namespace SagaraSoftware.ZipCodeUtil
 		/// <summary>
 		/// The radius of the Earth in miles, assuming it is a sphere.
 		/// </summary>
-		public const Double kEarthRadiusMiles = 3956.0;
+		public const double kEarthRadiusMiles = 3956.0;
 	}
 }

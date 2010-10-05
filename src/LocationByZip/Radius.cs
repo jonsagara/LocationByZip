@@ -14,7 +14,7 @@ namespace SagaraSoftware.ZipCodeUtil
 		/// <param name="inLocation">The Location around which to search.</param>
 		/// <param name="inRadius">Search radius in miles.</param>
 		/// <returns></returns>
-		public static LocationInRadius[] LocationsWithinRadius(Location inLocation, Double inRadius)
+		public static LocationInRadius[] LocationsWithinRadius(Location inLocation, double inRadius)
 		{
 			Debug.Assert(null != inLocation);
 			Debug.Assert(inRadius > 0.0);
@@ -24,12 +24,12 @@ namespace SagaraSoftware.ZipCodeUtil
 			if (inRadius <= 0.0)
 				throw new ArgumentOutOfRangeException("inRadius", inRadius, "Invalid value for radius passed in.");
 
-			Debug.Assert(Double.MinValue != inLocation.Latitude);
-			Debug.Assert(Double.MinValue != inLocation.Longitude);
+			Debug.Assert(double.MinValue != inLocation.Latitude);
+			Debug.Assert(double.MinValue != inLocation.Longitude);
 
-			if (Double.MinValue == inLocation.Latitude)
+			if (double.MinValue == inLocation.Latitude)
 				throw new ArgumentException("inLocation.Latitude", string.Format("The database does not contain latitude information for {0}, {1}.", inLocation.City, inLocation.State));
-			if (Double.MinValue == inLocation.Longitude)
+			if (double.MinValue == inLocation.Longitude)
 				throw new ArgumentException("inLocation.Longitude", string.Format("The database does not contain longitude information for {0}, {1}.", inLocation.City, inLocation.State));
 
 
@@ -62,7 +62,7 @@ namespace SagaraSoftware.ZipCodeUtil
 		/// <summary>
 		/// Represents the Southern latitude line.
 		/// </summary>
-		public Double BottomLine
+		public double BottomLine
 		{
 			get
 			{
@@ -78,7 +78,7 @@ namespace SagaraSoftware.ZipCodeUtil
 		/// <summary>
 		/// Represents the Northern latitude line.
 		/// </summary>
-		public Double TopLine
+		public double TopLine
 		{
 			get
 			{
@@ -94,7 +94,7 @@ namespace SagaraSoftware.ZipCodeUtil
 		/// <summary>
 		/// Represents the Western longitude line.
 		/// </summary>
-		public Double LeftLine
+		public double LeftLine
 		{
 			get
 			{
@@ -110,7 +110,7 @@ namespace SagaraSoftware.ZipCodeUtil
 		/// <summary>
 		/// Represents the Eastern longitude line.
 		/// </summary>
-		public Double RightLine
+		public double RightLine
 		{
 			get
 			{
@@ -126,7 +126,7 @@ namespace SagaraSoftware.ZipCodeUtil
 		/// <summary>
 		/// Represents the radius of the search area.
 		/// </summary>
-		public Double Radius
+		public double Radius
 		{
 			get
 			{
@@ -158,7 +158,7 @@ namespace SagaraSoftware.ZipCodeUtil
 		/// <param name="inLocation"></param>
 		/// <param name="inRadius"></param>
 		/// <returns></returns>
-		public static RadiusBox Create(Location inLocation, Double inRadius)
+		public static RadiusBox Create(Location inLocation, double inRadius)
 		{
 			/*
 				A point {lat,lon} is a distance d out on the tc radial from point 1 if:

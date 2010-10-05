@@ -18,7 +18,7 @@ namespace SagaraSoftware.ZipCodeUtil
 
 		/// <summary>
 		/// Look up a <see cref="SagaraSoftware.ZipCodeUtil.Location" /> by ZIP Code.  If Latitude
-		///  or Longitude are NULL, they are set to Double.MinValue.
+		///  or Longitude are NULL, they are set to double.MinValue.
 		/// </summary>
 		/// <param name="inZipCode">ZIP Code to lookup.</param>
 		/// <returns><see cref="SagaraSoftware.ZipCodeUtil.Location" /> of the ZIP Code.</returns>
@@ -53,8 +53,8 @@ namespace SagaraSoftware.ZipCodeUtil
 					loc.State = Convert.ToString(oleReader["STATE"]);
 					loc.ZipCode = inZipCode;
 					loc.County = Convert.ToString(oleReader["COUNTY"]);
-					loc.Latitude = (DBNull.Value == oleReader["LATITUDE"]) ? Double.MinValue : Double.Parse(Convert.ToString(oleReader["LATITUDE"]));
-					loc.Longitude = (DBNull.Value == oleReader["LONGITUDE"]) ? Double.MinValue : Double.Parse(Convert.ToString(oleReader["LONGITUDE"]));
+					loc.Latitude = (DBNull.Value == oleReader["LATITUDE"]) ? double.MinValue : double.Parse(Convert.ToString(oleReader["LATITUDE"]));
+					loc.Longitude = (DBNull.Value == oleReader["LONGITUDE"]) ? double.MinValue : double.Parse(Convert.ToString(oleReader["LONGITUDE"]));
 					loc.ZipClass = Convert.ToString(oleReader["ZIP_CLASS"]);
 				}
 			}
@@ -114,8 +114,8 @@ namespace SagaraSoftware.ZipCodeUtil
 					loc.State = Convert.ToString(oleReader["STATE"]);
 					loc.ZipCode = Convert.ToString(oleReader["ZIP"]);
 					loc.County = Convert.ToString(oleReader["COUNTY"]);
-					loc.Latitude = Double.Parse(Convert.ToString(oleReader["LATITUDE"]));
-					loc.Longitude = Double.Parse(Convert.ToString(oleReader["LONGITUDE"]));
+					loc.Latitude = double.Parse(Convert.ToString(oleReader["LATITUDE"]));
+					loc.Longitude = double.Parse(Convert.ToString(oleReader["LONGITUDE"]));
 					loc.ZipClass = Convert.ToString(oleReader["ZIP_CLASS"]);
 
 					locs.Add(loc);
@@ -191,8 +191,8 @@ namespace SagaraSoftware.ZipCodeUtil
 					loc.State = Convert.ToString(oleReader["STATE"]);
 					loc.ZipCode = Convert.ToString(oleReader["ZIP"]);
 					loc.County = Convert.ToString(oleReader["COUNTY"]);
-					loc.Latitude = Double.Parse(Convert.ToString(oleReader["LATITUDE"]));
-					loc.Longitude = Double.Parse(Convert.ToString(oleReader["LONGITUDE"]));
+					loc.Latitude = double.Parse(Convert.ToString(oleReader["LATITUDE"]));
+					loc.Longitude = double.Parse(Convert.ToString(oleReader["LONGITUDE"]));
 					loc.ZipClass = Convert.ToString(oleReader["ZIP_CLASS"]);
 					loc.DistanceToCenter = Distance.GetDistance(inRefLoc, loc);
 

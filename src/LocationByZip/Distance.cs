@@ -17,7 +17,7 @@ namespace SagaraSoftware.ZipCodeUtil
 		/// <param name="inLoc1"></param>
 		/// <param name="inLoc2"></param>
 		/// <returns></returns>
-		public static Double GetDistance(Location inLoc1, Location inLoc2)
+		public static double GetDistance(Location inLoc1, Location inLoc2)
 		{
 			Debug.Assert(inLoc1 != null);
 			Debug.Assert(inLoc2 != null);
@@ -27,18 +27,18 @@ namespace SagaraSoftware.ZipCodeUtil
 			if (inLoc2 == null)
 				throw new ArgumentNullException("inLoc2", "Null location passed in.");
 
-			Debug.Assert(inLoc1.Latitude != Double.MinValue);
-			Debug.Assert(inLoc1.Longitude != Double.MinValue);
-			Debug.Assert(inLoc2.Latitude != Double.MinValue);
-			Debug.Assert(inLoc2.Longitude != Double.MinValue);
+			Debug.Assert(inLoc1.Latitude != double.MinValue);
+			Debug.Assert(inLoc1.Longitude != double.MinValue);
+			Debug.Assert(inLoc2.Latitude != double.MinValue);
+			Debug.Assert(inLoc2.Longitude != double.MinValue);
 
-			if (inLoc1.Latitude == Double.MinValue)
+			if (inLoc1.Latitude == double.MinValue)
 				throw new ArgumentException("inLoc1.Latitude", string.Format("The database does not contain latitude information for {0}, {1}.", inLoc1.City, inLoc1.State));
-			if (inLoc1.Longitude == Double.MinValue)
+			if (inLoc1.Longitude == double.MinValue)
 				throw new ArgumentException("inLoc1.Longitude", string.Format("The database does not contain longitude information for {0}, {1}.", inLoc1.City, inLoc1.State));
-			if (inLoc2.Latitude == Double.MinValue)
+			if (inLoc2.Latitude == double.MinValue)
 				throw new ArgumentException("inLoc2.Latitude", string.Format("The database does not contain latitude information for {0}, {1}.", inLoc2.City, inLoc2.State));
-			if (inLoc2.Longitude == Double.MinValue)
+			if (inLoc2.Longitude == double.MinValue)
 				throw new ArgumentException("inLoc2.Longitude", string.Format("The database does not contain longitude information for {0}, {1}.", inLoc2.City, inLoc2.State));
 
 			return Haversine(inLoc1, inLoc2);
@@ -71,7 +71,7 @@ namespace SagaraSoftware.ZipCodeUtil
 					* The locations of the two points in spherical coordinates (longitude and 
 						latitude) are lon1,lat1 and lon2, lat2.
 			*/
-			double dDistance = Double.MinValue;
+			double dDistance = double.MinValue;
 			double dLat1InRad = inLoc1.Latitude * (Math.PI / 180.0);
 			double dLong1InRad = inLoc1.Longitude * (Math.PI / 180.0);
 			double dLat2InRad = inLoc2.Latitude * (Math.PI / 180.0);
