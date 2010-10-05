@@ -41,8 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataProvider\AccessProvider.cs" />
     <Compile Include="DataProvider\IDataProvider.cs" />
+    <Compile Include="DataProvider\SqlServerProvider.cs" />
     <Compile Include="Distance.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="Location.cs" />
