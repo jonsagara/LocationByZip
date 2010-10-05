@@ -31,7 +31,7 @@ namespace SagaraSoftware.ZipCodeUtil
 			string strConnString = ConfigurationManager.AppSettings["ZipCodeConnString"];
 			StringBuilder sql = new StringBuilder();
 
-			if (null == strConnString || string.Empty == strConnString)
+			if (strConnString == null || strConnString == string.Empty)
 				throw new ApplicationException("You must provide a connection string for your MS Access database.");
 
 			sql.Append("SELECT * FROM ZIP_CODES WHERE ZIP = ?");

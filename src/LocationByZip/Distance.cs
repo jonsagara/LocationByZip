@@ -19,26 +19,26 @@ namespace SagaraSoftware.ZipCodeUtil
 		/// <returns></returns>
 		public static Double GetDistance(Location inLoc1, Location inLoc2)
 		{
-			Debug.Assert(null != inLoc1);
-			Debug.Assert(null != inLoc2);
+			Debug.Assert(inLoc1 != null);
+			Debug.Assert(inLoc2 != null);
 
-			if (null == inLoc1)
+			if (inLoc1 == null)
 				throw new ArgumentNullException("inLoc1", "Null location passed in.");
-			if (null == inLoc2)
+			if (inLoc2 == null)
 				throw new ArgumentNullException("inLoc2", "Null location passed in.");
 
-			Debug.Assert(Double.MinValue != inLoc1.Latitude);
-			Debug.Assert(Double.MinValue != inLoc1.Longitude);
-			Debug.Assert(Double.MinValue != inLoc2.Latitude);
-			Debug.Assert(Double.MinValue != inLoc2.Longitude);
+			Debug.Assert(inLoc1.Latitude != Double.MinValue);
+			Debug.Assert(inLoc1.Longitude != Double.MinValue);
+			Debug.Assert(inLoc2.Latitude != Double.MinValue);
+			Debug.Assert(inLoc2.Longitude != Double.MinValue);
 
-			if (Double.MinValue == inLoc1.Latitude)
+			if (inLoc1.Latitude == Double.MinValue)
 				throw new ArgumentException("inLoc1.Latitude", string.Format("The database does not contain latitude information for {0}, {1}.", inLoc1.City, inLoc1.State));
-			if (Double.MinValue == inLoc1.Longitude)
+			if (inLoc1.Longitude == Double.MinValue)
 				throw new ArgumentException("inLoc1.Longitude", string.Format("The database does not contain longitude information for {0}, {1}.", inLoc1.City, inLoc1.State));
-			if (Double.MinValue == inLoc2.Latitude)
+			if (inLoc2.Latitude == Double.MinValue)
 				throw new ArgumentException("inLoc2.Latitude", string.Format("The database does not contain latitude information for {0}, {1}.", inLoc2.City, inLoc2.State));
-			if (Double.MinValue == inLoc2.Longitude)
+			if (inLoc2.Longitude == Double.MinValue)
 				throw new ArgumentException("inLoc2.Longitude", string.Format("The database does not contain longitude information for {0}, {1}.", inLoc2.City, inLoc2.State));
 
 			return Haversine(inLoc1, inLoc2);
