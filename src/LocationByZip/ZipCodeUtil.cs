@@ -52,44 +52,6 @@ namespace LocationByZip
 		}
 
 
-		/// <summary>
-		/// Looks up a City/State by City/State/ZIP.  Note: this is the same as looking up a 
-		/// location by ZIP Code alone.
-		/// </summary>
-		/// <param name="city">The search city.</param>
-		/// <param name="state">The search state.</param>
-		/// <param name="zipCode">The search ZIP Code.</param>
-		/// <returns>If a match is found, then a <see cref="LocationByZip.Location" /> object.
-		///  Otherwise, null.</returns>
-		public static Location LookupByCityStateZip(string city, string state, string zipCode)
-		{
-			VerifyCity(city);
-			VerifyState(state);
-			VerifyZipCode(zipCode);
-
-			Location loc = LookupByZipCode(zipCode);
-			if (loc != null)
-			{
-				if (!city.Equals(loc.City, StringComparison.OrdinalIgnoreCase)
-					|| !state.Equals(loc.State, StringComparison.OrdinalIgnoreCase))
-				{
-					throw new Exception(
-						string.Format(
-							"The input City/State ({0}/{1}) does not match the City/State ({2}/{3}) associated with ZIP Code {4}", 
-							city,
-							state,
-							loc.City,
-							loc.State,
-							zipCode
-							)
-						);
-				}
-			}
-
-			return loc;
-		}
-
-
 		//
 		// Helpers
 		//

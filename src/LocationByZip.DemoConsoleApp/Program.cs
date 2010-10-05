@@ -25,14 +25,6 @@ namespace LocationByZip.DemoConsoleApp
 			}
 
 
-			//	Location by City/State/Zip
-			location = ZipCodeUtil.LookupByCityStateZip("Tulare", "CA", "93275");
-			if (location != null)
-			{
-				Console.WriteLine(location);
-			}
-
-
 			//	Distance between two locations.
 			Location sf = ZipCodeUtil.LookupByZipCode("94175");
 			Location la = ZipCodeUtil.LookupByZipCode("90185");
