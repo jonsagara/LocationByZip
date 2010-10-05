@@ -14,38 +14,38 @@ namespace SagaraSoftware.ZipCodeUtil
 		/// <param name="inLocation">The Location around which to search.</param>
 		/// <param name="inRadius">Search radius in miles.</param>
 		/// <returns></returns>
-		public static LocationInRadius[] LocationsWithinRadius (Location inLocation, Double inRadius)
+		public static LocationInRadius[] LocationsWithinRadius(Location inLocation, Double inRadius)
 		{
-			Debug.Assert (null != inLocation);
-			Debug.Assert (inRadius > 0.0);
+			Debug.Assert(null != inLocation);
+			Debug.Assert(inRadius > 0.0);
 
 			if (null == inLocation)
-				throw new ArgumentNullException ("inLocation", "Null location passed in.");
+				throw new ArgumentNullException("inLocation", "Null location passed in.");
 			if (inRadius <= 0.0)
-				throw new ArgumentOutOfRangeException ("inRadius", inRadius, "Invalid value for radius passed in.");
+				throw new ArgumentOutOfRangeException("inRadius", inRadius, "Invalid value for radius passed in.");
 
-			Debug.Assert (Double.MinValue != inLocation.Latitude);
-			Debug.Assert (Double.MinValue != inLocation.Longitude);
+			Debug.Assert(Double.MinValue != inLocation.Latitude);
+			Debug.Assert(Double.MinValue != inLocation.Longitude);
 
 			if (Double.MinValue == inLocation.Latitude)
-				throw new ArgumentException ("inLocation.Latitude", string.Format ("The database does not contain latitude information for {0}, {1}.", inLocation.City, inLocation.State));
+				throw new ArgumentException("inLocation.Latitude", string.Format("The database does not contain latitude information for {0}, {1}.", inLocation.City, inLocation.State));
 			if (Double.MinValue == inLocation.Longitude)
-				throw new ArgumentException ("inLocation.Longitude", string.Format ("The database does not contain longitude information for {0}, {1}.", inLocation.City, inLocation.State));
-			
-			
-			RadiusBox radBox = RadiusBox.Create (inLocation, inRadius);
+				throw new ArgumentException("inLocation.Longitude", string.Format("The database does not contain longitude information for {0}, {1}.", inLocation.City, inLocation.State));
+
+
+			RadiusBox radBox = RadiusBox.Create(inLocation, inRadius);
 			IDataProvider db = null;
 			LocationInRadius[] locs = null;
 
 			try
 			{
-				db = DataProvider.GetDataProvider ();
+				db = DataProvider.GetDataProvider();
 				if (null != db)
-					locs = db.GetLocationsWithinRadius (inLocation, radBox);
+					locs = db.GetLocationsWithinRadius(inLocation, radBox);
 			}
 			catch (Exception e)
 			{
-				throw new ApplicationException ("Rethrowing exception", e);
+				throw new ApplicationException("Rethrowing exception", e);
 			}
 
 			return locs;
@@ -59,7 +59,7 @@ namespace SagaraSoftware.ZipCodeUtil
 	/// </summary>
 	public class RadiusBox
 	{
-		public RadiusBox ()
+		public RadiusBox()
 		{
 		}
 
@@ -70,7 +70,7 @@ namespace SagaraSoftware.ZipCodeUtil
 		public Double BottomLine
 		{
 			get
-			{	
+			{
 				return _dBottomLatLine;
 			}
 			set
@@ -163,7 +163,7 @@ namespace SagaraSoftware.ZipCodeUtil
 		/// <param name="inLocation"></param>
 		/// <param name="inRadius"></param>
 		/// <returns></returns>
-		public static RadiusBox Create (Location inLocation, Double inRadius)
+		public static RadiusBox Create(Location inLocation, Double inRadius)
 		{
 			/*
 				A point {lat,lon} is a distance d out on the tc radial from point 1 if:
@@ -182,7 +182,7 @@ namespace SagaraSoftware.ZipCodeUtil
 			double dLatInRads = inLocation.Latitude * (Math.PI / 180.0);
 			double dLongInRads = inLocation.Longitude * (Math.PI / 180.0);
 			double dDistInRad = inRadius / Globals.kEarthRadiusMiles;
-			RadiusBox box = new RadiusBox ();
+			RadiusBox box = new RadiusBox();
 			box.Radius = inRadius;
 
 			//	N (tc == 0):
@@ -207,8 +207,8 @@ namespace SagaraSoftware.ZipCodeUtil
 			//		lat	 = asin (sin(lat1)*cos(d))
 			//		dlon = atan2 (sin(tc)*sin(d)*cos(lat1), cos(d) - sin(lat1)*sin(lat))
 			//		lon	 = mod (lon1 + dlon + pi, 2*pi) - pi
-			lat = Math.Asin (Math.Sin (dLatInRads) * Math.Cos (dDistInRad));
-			dlon = Math.Atan2 (Math.Sin (Math.PI / 2.0) * Math.Sin (dDistInRad) * Math.Cos (dLatInRads), Math.Cos (dDistInRad) - Math.Sin (dLatInRads)* Math.Sin (lat));
+			lat = Math.Asin(Math.Sin(dLatInRads) * Math.Cos(dDistInRad));
+			dlon = Math.Atan2(Math.Sin(Math.PI / 2.0) * Math.Sin(dDistInRad) * Math.Cos(dLatInRads), Math.Cos(dDistInRad) - Math.Sin(dLatInRads) * Math.Sin(lat));
 			box.RightLine = ((dLongInRads + dlon + Math.PI) % (2.0 * Math.PI)) - Math.PI;
 			box.RightLine *= (180.0 / Math.PI);
 
@@ -216,7 +216,7 @@ namespace SagaraSoftware.ZipCodeUtil
 			//		lat	 = asin (sin(lat1)*cos(d))
 			//		dlon = atan2 (sin(tc)*sin(d)*cos(lat1), cos(d) - sin(lat1)*sin(lat))
 			//		lon	 = mod (lon1 + dlon + pi, 2*pi) - pi
-			dlon = Math.Atan2 (Math.Sin (3.0 * Math.PI / 2.0) * Math.Sin (dDistInRad) * Math.Cos (dLatInRads), Math.Cos (dDistInRad) - Math.Sin (dLatInRads)* Math.Sin (lat));
+			dlon = Math.Atan2(Math.Sin(3.0 * Math.PI / 2.0) * Math.Sin(dDistInRad) * Math.Cos(dLatInRads), Math.Cos(dDistInRad) - Math.Sin(dLatInRads) * Math.Sin(lat));
 			box.LeftLine = ((dLongInRads + dlon + Math.PI) % (2.0 * Math.PI)) - Math.PI;
 			box.LeftLine *= (180.0 / Math.PI);
 

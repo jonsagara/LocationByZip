@@ -8,9 +8,9 @@ namespace SagaraSoftware.ZipCodeUtil
 	/// </summary>
 	public interface IDataProvider
 	{
-		Location DoLookupByZipCode (string inZipCode);
-		Location[] DoLookupByCityState (string inCity, string inState);
-		LocationInRadius[] GetLocationsWithinRadius (Location inRefLoc, RadiusBox inBounds);
+		Location DoLookupByZipCode(string inZipCode);
+		Location[] DoLookupByCityState(string inCity, string inState);
+		LocationInRadius[] GetLocationsWithinRadius(Location inRefLoc, RadiusBox inBounds);
 	}
 
 
@@ -22,23 +22,23 @@ namespace SagaraSoftware.ZipCodeUtil
 	/// </summary>
 	public class DataProvider
 	{
-		public static IDataProvider GetDataProvider ()
+		public static IDataProvider GetDataProvider()
 		{
 			string strProviderType = System.Configuration.ConfigurationSettings.AppSettings["ZipCodeProviderType"];
 
 			if (null == strProviderType || string.Empty == strProviderType)
-				throw new ApplicationException ("The host application must define the ZipCodeProviderType key in the config file.");
+				throw new ApplicationException("The host application must define the ZipCodeProviderType key in the config file.");
 
-			switch (strProviderType.ToUpper ())
+			switch (strProviderType.ToUpper())
 			{
 				case "ACCESS":
-					return new AccessProvider ();
+					return new AccessProvider();
 				case "MSSQL":
-					throw new NotImplementedException ("SqlProvider is not yet implemented");
+					throw new NotImplementedException("SqlProvider is not yet implemented");
 				case "MYSQL":
-					throw new NotImplementedException ("MySqlProvider is not yet implemented");
+					throw new NotImplementedException("MySqlProvider is not yet implemented");
 				default:
-					throw new ApplicationException ("Invalid database provider type specified in config file.");
+					throw new ApplicationException("Invalid database provider type specified in config file.");
 			}
 		}
 	}

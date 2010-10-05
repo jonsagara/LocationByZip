@@ -12,7 +12,7 @@ namespace SagaraSoftware.ZipCodeUtil
 		/// <summary>
 		/// Default constructor.  Does nothing.
 		/// </summary>
-		public Location ()
+		public Location()
 		{
 		}
 
@@ -102,28 +102,28 @@ namespace SagaraSoftware.ZipCodeUtil
 		}
 
 
-		public Double DistanceFrom (Location inRemoteLocation)
+		public Double DistanceFrom(Location inRemoteLocation)
 		{
-			return Distance.GetDistance (this, inRemoteLocation);
+			return Distance.GetDistance(this, inRemoteLocation);
 		}
 
 
-		public Location[] LocationsWithinRadius (Double inRadius)
+		public Location[] LocationsWithinRadius(Double inRadius)
 		{
-			return Radius.LocationsWithinRadius (this, inRadius);
+			return Radius.LocationsWithinRadius(this, inRadius);
 		}
 
 
-		public override string ToString ()
+		public override string ToString()
 		{
-			StringBuilder str = new StringBuilder ();
+			StringBuilder str = new StringBuilder();
 
-			str.AppendFormat ("Location: {0}, {1} {2} in {3} County\n", City, State, ZipCode, County);
-			str.AppendFormat ("\tLatitude:\t{0}\n", Latitude);
-			str.AppendFormat ("\tLongitude:\t{0}\n", Longitude);
-			str.AppendFormat ("\tZip Class:\t{0}\n", ZipClass);
+			str.AppendFormat("Location: {0}, {1} {2} in {3} County\n", City, State, ZipCode, County);
+			str.AppendFormat("\tLatitude:\t{0}\n", Latitude);
+			str.AppendFormat("\tLongitude:\t{0}\n", Longitude);
+			str.AppendFormat("\tZip Class:\t{0}\n", ZipClass);
 
-			return str.ToString ();
+			return str.ToString();
 		}
 
 
@@ -139,7 +139,8 @@ namespace SagaraSoftware.ZipCodeUtil
 
 	public class LocationInRadius : Location
 	{
-		public LocationInRadius () : base ()
+		public LocationInRadius()
+			: base()
 		{
 			DistanceToCenter = Double.MinValue;
 		}
@@ -158,17 +159,17 @@ namespace SagaraSoftware.ZipCodeUtil
 		}
 
 
-		public override string ToString ()
+		public override string ToString()
 		{
-			StringBuilder str = new StringBuilder ();
+			StringBuilder str = new StringBuilder();
 
-			str.AppendFormat ("Location: {0}, {1} {2} in {3} County\n", City, State, ZipCode, County);
-			str.AppendFormat ("\tLatitude:\t{0}\n", Latitude);
-			str.AppendFormat ("\tLongitude:\t{0}\n", Longitude);
-			str.AppendFormat ("\tZip Class:\t{0}\n", ZipClass);
-			str.AppendFormat ("\tDistance to original location:\t{0}\n", DistanceToCenter);
+			str.AppendFormat("Location: {0}, {1} {2} in {3} County\n", City, State, ZipCode, County);
+			str.AppendFormat("\tLatitude:\t{0}\n", Latitude);
+			str.AppendFormat("\tLongitude:\t{0}\n", Longitude);
+			str.AppendFormat("\tZip Class:\t{0}\n", ZipClass);
+			str.AppendFormat("\tDistance to original location:\t{0}\n", DistanceToCenter);
 
-			return str.ToString ();
+			return str.ToString();
 		}
 
 

@@ -17,31 +17,31 @@ namespace SagaraSoftware.ZipCodeUtil
 		/// <param name="inLoc1"></param>
 		/// <param name="inLoc2"></param>
 		/// <returns></returns>
-		public static Double GetDistance (Location inLoc1, Location inLoc2)
+		public static Double GetDistance(Location inLoc1, Location inLoc2)
 		{
-			Debug.Assert (null != inLoc1);
-			Debug.Assert (null != inLoc2);
+			Debug.Assert(null != inLoc1);
+			Debug.Assert(null != inLoc2);
 
 			if (null == inLoc1)
-				throw new ArgumentNullException ("inLoc1", "Null location passed in.");
+				throw new ArgumentNullException("inLoc1", "Null location passed in.");
 			if (null == inLoc2)
-				throw new ArgumentNullException ("inLoc2", "Null location passed in.");
+				throw new ArgumentNullException("inLoc2", "Null location passed in.");
 
-			Debug.Assert (Double.MinValue != inLoc1.Latitude);
-			Debug.Assert (Double.MinValue != inLoc1.Longitude);
-			Debug.Assert (Double.MinValue != inLoc2.Latitude);
-			Debug.Assert (Double.MinValue != inLoc2.Longitude);
+			Debug.Assert(Double.MinValue != inLoc1.Latitude);
+			Debug.Assert(Double.MinValue != inLoc1.Longitude);
+			Debug.Assert(Double.MinValue != inLoc2.Latitude);
+			Debug.Assert(Double.MinValue != inLoc2.Longitude);
 
 			if (Double.MinValue == inLoc1.Latitude)
-				throw new ArgumentException ("inLoc1.Latitude", string.Format ("The database does not contain latitude information for {0}, {1}.", inLoc1.City, inLoc1.State));
+				throw new ArgumentException("inLoc1.Latitude", string.Format("The database does not contain latitude information for {0}, {1}.", inLoc1.City, inLoc1.State));
 			if (Double.MinValue == inLoc1.Longitude)
-				throw new ArgumentException ("inLoc1.Longitude", string.Format ("The database does not contain longitude information for {0}, {1}.", inLoc1.City, inLoc1.State));
+				throw new ArgumentException("inLoc1.Longitude", string.Format("The database does not contain longitude information for {0}, {1}.", inLoc1.City, inLoc1.State));
 			if (Double.MinValue == inLoc2.Latitude)
-				throw new ArgumentException ("inLoc2.Latitude", string.Format ("The database does not contain latitude information for {0}, {1}.", inLoc2.City, inLoc2.State));
+				throw new ArgumentException("inLoc2.Latitude", string.Format("The database does not contain latitude information for {0}, {1}.", inLoc2.City, inLoc2.State));
 			if (Double.MinValue == inLoc2.Longitude)
-				throw new ArgumentException ("inLoc2.Longitude", string.Format ("The database does not contain longitude information for {0}, {1}.", inLoc2.City, inLoc2.State));
+				throw new ArgumentException("inLoc2.Longitude", string.Format("The database does not contain longitude information for {0}, {1}.", inLoc2.City, inLoc2.State));
 
-			return Haversine (inLoc1, inLoc2);
+			return Haversine(inLoc1, inLoc2);
 		}
 
 
@@ -51,7 +51,7 @@ namespace SagaraSoftware.ZipCodeUtil
 		/// <param name="inLoc1"></param>
 		/// <param name="inLoc2"></param>
 		/// <returns></returns>
-		private static double Haversine (Location inLoc1, Location inLoc2)
+		private static double Haversine(Location inLoc1, Location inLoc2)
 		{
 			/*
 				The Haversine formula according to Dr. Math.
@@ -81,10 +81,10 @@ namespace SagaraSoftware.ZipCodeUtil
 			double dLatitude = dLat2InRad - dLat1InRad;
 
 			// Intermediate result a.
-			double a = Math.Pow (Math.Sin (dLatitude / 2.0), 2.0) + Math.Cos (dLat1InRad) * Math.Cos (dLat2InRad) * Math.Pow (Math.Sin (dLongitude / 2.0), 2.0);
+			double a = Math.Pow(Math.Sin(dLatitude / 2.0), 2.0) + Math.Cos(dLat1InRad) * Math.Cos(dLat2InRad) * Math.Pow(Math.Sin(dLongitude / 2.0), 2.0);
 
 			// Intermediate result c (great circle distance in Radians).
-			double c = 2.0 * Math.Atan2 (Math.Sqrt (a), Math.Sqrt (1.0 - a));
+			double c = 2.0 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1.0 - a));
 
 			// Distance.
 			dDistance = Globals.kEarthRadiusMiles * c;
