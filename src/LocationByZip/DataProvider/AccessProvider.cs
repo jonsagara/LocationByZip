@@ -12,14 +12,6 @@ namespace SagaraSoftware.ZipCodeUtil
 	/// </summary>
 	public class AccessProvider : IDataProvider
 	{
-		/// <summary>
-		/// Default constructor.  Does nothing.
-		/// </summary>
-		public AccessProvider()
-		{
-		}
-
-
 		//
 		// IDataProvider Members
 		//

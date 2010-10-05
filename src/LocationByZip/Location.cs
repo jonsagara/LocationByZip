@@ -9,14 +9,6 @@ namespace SagaraSoftware.ZipCodeUtil
 	/// </summary>
 	public class Location
 	{
-		/// <summary>
-		/// Default constructor.  Does nothing.
-		/// </summary>
-		public Location()
-		{
-		}
-
-
 		public String City
 		{
 			get

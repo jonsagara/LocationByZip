@@ -59,11 +59,6 @@ namespace SagaraSoftware.ZipCodeUtil
 	/// </summary>
 	public class RadiusBox
 	{
-		public RadiusBox()
-		{
-		}
-
-
 		/// <summary>
 		/// Represents the Southern latitude line.
 		/// </summary>
