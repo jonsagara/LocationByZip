@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.OleDb;
@@ -14,6 +13,20 @@ namespace SagaraSoftware.ZipCodeUtil
 	/// </summary>
 	public class AccessProvider : IDataProvider
 	{
+		private string ConnectionString
+		{
+			get
+			{
+				string connStr = ConfigurationManager.AppSettings["ZipCodeConnString"];
+
+				if (string.IsNullOrWhiteSpace(connStr))
+					throw new Exception("You must provide a connection string for your MS Access database.");
+
+				return connStr;
+			}
+		}
+
+
 		//
 		// IDataProvider Members
 		//
@@ -26,50 +39,32 @@ namespace SagaraSoftware.ZipCodeUtil
 		/// <returns><see cref="SagaraSoftware.ZipCodeUtil.Location" /> of the ZIP Code.</returns>
 		public Location DoLookupByZipCode(string inZipCode)
 		{
-			OleDbConnection oleConn = null;
-			OleDbCommand oleCmd = null;
-			OleDbDataReader oleReader = null;
 			Location loc = null;
-			string strConnString = ConfigurationManager.AppSettings["ZipCodeConnString"];
 			StringBuilder sql = new StringBuilder();
-
-			if (strConnString == null || strConnString == string.Empty)
-				throw new ApplicationException("You must provide a connection string for your MS Access database.");
 
 			sql.Append("SELECT * FROM ZIP_CODES WHERE ZIP = ?");
 
-			oleConn = new OleDbConnection(strConnString);
-			oleCmd = new OleDbCommand(sql.ToString(), oleConn);
-			oleCmd.Parameters.Add(new OleDbParameter("ZIP", inZipCode));
-			oleConn.Open();
-
-			try
+			using (var oleConn = new OleDbConnection(ConnectionString))
+			using (var oleCmd = new OleDbCommand(sql.ToString(), oleConn))
 			{
-				oleReader = oleCmd.ExecuteReader();
+				oleCmd.Parameters.Add(new OleDbParameter("ZIP", inZipCode));
+				oleConn.Open();
 
-				if (oleReader.Read())
+				using (var oleReader = oleCmd.ExecuteReader())
 				{
-					loc = new Location();
+					if (oleReader.Read())
+					{
+						loc = new Location();
 
-					loc.City = Convert.ToString(oleReader["CITY"]);
-					loc.State = Convert.ToString(oleReader["STATE"]);
-					loc.ZipCode = inZipCode;
-					loc.County = Convert.ToString(oleReader["COUNTY"]);
-					loc.Latitude = (DBNull.Value == oleReader["LATITUDE"]) ? double.MinValue : double.Parse(Convert.ToString(oleReader["LATITUDE"]));
-					loc.Longitude = (DBNull.Value == oleReader["LONGITUDE"]) ? double.MinValue : double.Parse(Convert.ToString(oleReader["LONGITUDE"]));
-					loc.ZipClass = Convert.ToString(oleReader["ZIP_CLASS"]);
+						loc.City = Convert.ToString(oleReader["CITY"]);
+						loc.State = Convert.ToString(oleReader["STATE"]);
+						loc.ZipCode = inZipCode;
+						loc.County = Convert.ToString(oleReader["COUNTY"]);
+						loc.Latitude = (DBNull.Value == oleReader["LATITUDE"]) ? double.MinValue : double.Parse(Convert.ToString(oleReader["LATITUDE"]));
+						loc.Longitude = (DBNull.Value == oleReader["LONGITUDE"]) ? double.MinValue : double.Parse(Convert.ToString(oleReader["LONGITUDE"]));
+						loc.ZipClass = Convert.ToString(oleReader["ZIP_CLASS"]);
+					}
 				}
-			}
-			catch (Exception e)
-			{
-				throw new ApplicationException("Error getting data from database", e);
-			}
-			finally
-			{
-				if (null != oleReader)
-					oleReader.Close();
-				if (null != oleConn)
-					oleConn.Close();
 			}
 
 			return loc;
@@ -85,54 +80,35 @@ namespace SagaraSoftware.ZipCodeUtil
 		/// <returns>An array of <see cref="SagaraSoftware.ZipCodeUtil.Location" /> objects whose City/State matches the input City/State.</returns>
 		public IList<Location> DoLookupByCityState(string inCity, string inState)
 		{
-			OleDbConnection oleConn = null;
-			OleDbCommand oleCmd = null;
-			OleDbDataReader oleReader = null;
 			IList<Location> locs = new List<Location>();
-			string strConnString = ConfigurationManager.AppSettings["ZipCodeConnString"];
 			StringBuilder sql = new StringBuilder();
-
-			if (null == strConnString || string.Empty == strConnString)
-				throw new ApplicationException("You must provide a connection string for your MS Access database.");
 
 			sql.Append("SELECT * FROM ZIP_CODES WHERE CITY = ? AND STATE = ? ORDER BY ZIP");
 
-			oleConn = new OleDbConnection(strConnString);
-			oleCmd = new OleDbCommand(sql.ToString(), oleConn);
-			oleCmd.Parameters.Add(new OleDbParameter("CITY", inCity));
-			oleCmd.Parameters.Add(new OleDbParameter("STATE", inState));
-			oleConn.Open();
-
-			try
+			using (var oleConn = new OleDbConnection(ConnectionString))
+			using (var oleCmd = new OleDbCommand(sql.ToString(), oleConn))
 			{
-				oleReader = oleCmd.ExecuteReader();
-				string jon = oleCmd.CommandText;
+				oleCmd.Parameters.Add(new OleDbParameter("CITY", inCity));
+				oleCmd.Parameters.Add(new OleDbParameter("STATE", inState));
+				oleConn.Open();
 
-				while (oleReader.Read())
+				using (var oleReader = oleCmd.ExecuteReader())
 				{
-					Location loc = new Location();
+					while (oleReader.Read())
+					{
+						Location loc = new Location();
 
-					loc.City = Convert.ToString(oleReader["CITY"]);
-					loc.State = Convert.ToString(oleReader["STATE"]);
-					loc.ZipCode = Convert.ToString(oleReader["ZIP"]);
-					loc.County = Convert.ToString(oleReader["COUNTY"]);
-					loc.Latitude = double.Parse(Convert.ToString(oleReader["LATITUDE"]));
-					loc.Longitude = double.Parse(Convert.ToString(oleReader["LONGITUDE"]));
-					loc.ZipClass = Convert.ToString(oleReader["ZIP_CLASS"]);
+						loc.City = Convert.ToString(oleReader["CITY"]);
+						loc.State = Convert.ToString(oleReader["STATE"]);
+						loc.ZipCode = Convert.ToString(oleReader["ZIP"]);
+						loc.County = Convert.ToString(oleReader["COUNTY"]);
+						loc.Latitude = double.Parse(Convert.ToString(oleReader["LATITUDE"]));
+						loc.Longitude = double.Parse(Convert.ToString(oleReader["LONGITUDE"]));
+						loc.ZipClass = Convert.ToString(oleReader["ZIP_CLASS"]);
 
-					locs.Add(loc);
+						locs.Add(loc);
+					}
 				}
-			}
-			catch (Exception e)
-			{
-				throw new ApplicationException("Error getting data from database", e);
-			}
-			finally
-			{
-				if (null != oleReader)
-					oleReader.Close();
-				if (null != oleConn)
-					oleConn.Close();
 			}
 
 			return locs;
@@ -156,15 +132,8 @@ namespace SagaraSoftware.ZipCodeUtil
 		///  within Radius miles of inRefLoc.</returns>
 		public IList<LocationInRadius> GetLocationsWithinRadius(Location inRefLoc, RadiusBox inBounds)
 		{
-			OleDbConnection oleConn = null;
-			OleDbCommand oleCmd = null;
-			OleDbDataReader oleReader = null;
 			IList<LocationInRadius> locs = new List<LocationInRadius>();
-			string strConnString = ConfigurationManager.AppSettings["ZipCodeConnString"];
 			StringBuilder sql = new StringBuilder();
-
-			if (null == strConnString || string.Empty == strConnString)
-				throw new ApplicationException("You must provide a connection string for your MS Access database.");
 
 			sql.Append("SELECT * FROM ZIP_CODES WHERE ");
 			sql.Append("IIf(ISNULL(LATITUDE),999.0,CDbl(LATITUDE)) >= ? AND ");
@@ -173,45 +142,38 @@ namespace SagaraSoftware.ZipCodeUtil
 			sql.Append("IIf(ISNULL(LONGITUDE),999.0,CDbl(LONGITUDE)) <= ? ");
 			sql.Append("ORDER BY CITY, STATE, ZIP");
 
-			oleConn = new OleDbConnection(strConnString);
-			oleCmd = new OleDbCommand(sql.ToString(), oleConn);
-			oleCmd.Parameters.Add(new OleDbParameter("SouthLat", inBounds.BottomLine));
-			oleCmd.Parameters.Add(new OleDbParameter("NorthLat", inBounds.TopLine));
-			oleCmd.Parameters.Add(new OleDbParameter("WestLong", inBounds.LeftLine));
-			oleCmd.Parameters.Add(new OleDbParameter("EastLong", inBounds.RightLine));
-			oleConn.Open();
-
-			try
+			using (var oleConn = new OleDbConnection(ConnectionString))
+			using (var oleCmd = new OleDbCommand(sql.ToString(), oleConn))
 			{
-				oleReader = oleCmd.ExecuteReader();
+				oleCmd.Parameters.Add(new OleDbParameter("SouthLat", inBounds.BottomLine));
+				oleCmd.Parameters.Add(new OleDbParameter("NorthLat", inBounds.TopLine));
+				oleCmd.Parameters.Add(new OleDbParameter("WestLong", inBounds.LeftLine));
+				oleCmd.Parameters.Add(new OleDbParameter("EastLong", inBounds.RightLine));
+				oleConn.Open();
 
-				while (oleReader.Read())
+				using (var oleReader = oleCmd.ExecuteReader())
 				{
-					LocationInRadius loc = new LocationInRadius();
+					LocationInRadius loc = null;
 
-					loc.City = Convert.ToString(oleReader["CITY"]);
-					loc.State = Convert.ToString(oleReader["STATE"]);
-					loc.ZipCode = Convert.ToString(oleReader["ZIP"]);
-					loc.County = Convert.ToString(oleReader["COUNTY"]);
-					loc.Latitude = double.Parse(Convert.ToString(oleReader["LATITUDE"]));
-					loc.Longitude = double.Parse(Convert.ToString(oleReader["LONGITUDE"]));
-					loc.ZipClass = Convert.ToString(oleReader["ZIP_CLASS"]);
-					loc.DistanceToCenter = Distance.GetDistance(inRefLoc, loc);
+					while (oleReader.Read())
+					{
+						loc = new LocationInRadius();
 
-					if (loc.DistanceToCenter <= inBounds.Radius)
-						locs.Add(loc);
+						loc.City = Convert.ToString(oleReader["CITY"]);
+						loc.State = Convert.ToString(oleReader["STATE"]);
+						loc.ZipCode = Convert.ToString(oleReader["ZIP"]);
+						loc.County = Convert.ToString(oleReader["COUNTY"]);
+						loc.Latitude = double.Parse(Convert.ToString(oleReader["LATITUDE"]));
+						loc.Longitude = double.Parse(Convert.ToString(oleReader["LONGITUDE"]));
+						loc.ZipClass = Convert.ToString(oleReader["ZIP_CLASS"]);
+						loc.DistanceToCenter = Distance.GetDistance(inRefLoc, loc);
+
+						if (loc.DistanceToCenter <= inBounds.Radius)
+						{
+							locs.Add(loc);
+						}
+					}
 				}
-			}
-			catch (Exception e)
-			{
-				throw new ApplicationException("Error getting data from database", e);
-			}
-			finally
-			{
-				if (null != oleReader)
-					oleReader.Close();
-				if (null != oleConn)
-					oleConn.Close();
 			}
 
 			return locs
