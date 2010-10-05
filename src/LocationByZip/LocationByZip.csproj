@@ -46,6 +46,7 @@
     <Compile Include="Distance.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="Location.cs" />
+    <Compile Include="LocationInRadius.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Radius.cs" />
     <Compile Include="RadiusBox.cs" />

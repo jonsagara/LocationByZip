@@ -40,12 +40,10 @@ namespace SagaraSoftware.ZipCodeUtil
 		public Location DoLookupByZipCode(string inZipCode)
 		{
 			Location loc = null;
-			StringBuilder sql = new StringBuilder();
-
-			sql.Append("SELECT * FROM ZIP_CODES WHERE ZIP = ?");
+			string sql = "SELECT * FROM ZIP_CODES WHERE ZIP = ?";
 
 			using (var oleConn = new OleDbConnection(ConnectionString))
-			using (var oleCmd = new OleDbCommand(sql.ToString(), oleConn))
+			using (var oleCmd = new OleDbCommand(sql, oleConn))
 			{
 				oleCmd.Parameters.Add(new OleDbParameter("ZIP", inZipCode));
 				oleConn.Open();
@@ -54,15 +52,7 @@ namespace SagaraSoftware.ZipCodeUtil
 				{
 					if (oleReader.Read())
 					{
-						loc = new Location();
-
-						loc.City = Convert.ToString(oleReader["CITY"]);
-						loc.State = Convert.ToString(oleReader["STATE"]);
-						loc.ZipCode = inZipCode;
-						loc.County = Convert.ToString(oleReader["COUNTY"]);
-						loc.Latitude = (DBNull.Value == oleReader["LATITUDE"]) ? double.MinValue : double.Parse(Convert.ToString(oleReader["LATITUDE"]));
-						loc.Longitude = (DBNull.Value == oleReader["LONGITUDE"]) ? double.MinValue : double.Parse(Convert.ToString(oleReader["LONGITUDE"]));
-						loc.ZipClass = Convert.ToString(oleReader["ZIP_CLASS"]);
+						loc = ReadLocation<Location>(oleReader);
 					}
 				}
 			}
@@ -96,17 +86,7 @@ namespace SagaraSoftware.ZipCodeUtil
 				{
 					while (oleReader.Read())
 					{
-						Location loc = new Location();
-
-						loc.City = Convert.ToString(oleReader["CITY"]);
-						loc.State = Convert.ToString(oleReader["STATE"]);
-						loc.ZipCode = Convert.ToString(oleReader["ZIP"]);
-						loc.County = Convert.ToString(oleReader["COUNTY"]);
-						loc.Latitude = double.Parse(Convert.ToString(oleReader["LATITUDE"]));
-						loc.Longitude = double.Parse(Convert.ToString(oleReader["LONGITUDE"]));
-						loc.ZipClass = Convert.ToString(oleReader["ZIP_CLASS"]);
-
-						locs.Add(loc);
+						locs.Add(ReadLocation<Location>(oleReader));
 					}
 				}
 			}
@@ -157,15 +137,7 @@ namespace SagaraSoftware.ZipCodeUtil
 
 					while (oleReader.Read())
 					{
-						loc = new LocationInRadius();
-
-						loc.City = Convert.ToString(oleReader["CITY"]);
-						loc.State = Convert.ToString(oleReader["STATE"]);
-						loc.ZipCode = Convert.ToString(oleReader["ZIP"]);
-						loc.County = Convert.ToString(oleReader["COUNTY"]);
-						loc.Latitude = double.Parse(Convert.ToString(oleReader["LATITUDE"]));
-						loc.Longitude = double.Parse(Convert.ToString(oleReader["LONGITUDE"]));
-						loc.ZipClass = Convert.ToString(oleReader["ZIP_CLASS"]);
+						loc = ReadLocation<LocationInRadius>(oleReader);
 						loc.DistanceToCenter = Distance.GetDistance(inRefLoc, loc);
 
 						if (loc.DistanceToCenter <= inBounds.Radius)
@@ -179,6 +151,27 @@ namespace SagaraSoftware.ZipCodeUtil
 			return locs
 				.OrderBy(loc => loc.DistanceToCenter)
 				.ToList();
+		}
+
+
+		//
+		// Helpers
+		//
+
+		private T ReadLocation<T>(OleDbDataReader reader)
+			where T : Location, new()
+		{
+			var loc = new T();
+
+			loc.City = Convert.ToString(reader["CITY"]);
+			loc.State = Convert.ToString(reader["STATE"]);
+			loc.ZipCode = Convert.ToString(reader["ZIP"]);
+			loc.County = Convert.ToString(reader["COUNTY"]);
+			loc.Latitude = (reader["LATITUDE"] == DBNull.Value) ? double.MinValue : double.Parse(Convert.ToString(reader["LATITUDE"]));
+			loc.Longitude = (reader["LONGITUDE"] == DBNull.Value) ? double.MinValue : double.Parse(Convert.ToString(reader["LONGITUDE"]));
+			loc.ZipClass = Convert.ToString(reader["ZIP_CLASS"]);
+
+			return loc;
 		}
 	}
 }
