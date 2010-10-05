@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.OleDb;
+using System.Linq;
 using System.Text;
 
 namespace SagaraSoftware.ZipCodeUtil
@@ -200,9 +201,6 @@ namespace SagaraSoftware.ZipCodeUtil
 					if (loc.DistanceToCenter <= inBounds.Radius)
 						locs.Add(loc);
 				}
-
-#warning TODO: fix sorting
-				//locs.Sort(new LocationInRadiusComparer());
 			}
 			catch (Exception e)
 			{
@@ -216,28 +214,9 @@ namespace SagaraSoftware.ZipCodeUtil
 					oleConn.Close();
 			}
 
-			return locs;
-		}
-
-
-		/// <summary>
-		/// Allows for sorting of an ArrayList of <see cref="SagaraSoftware.ZipCodeUtil.LocationInRadius" /> 
-		///  objects by DistanceToCenter, ascending.
-		/// </summary>
-		private class LocationInRadiusComparer : IComparer
-		{
-			public int Compare(object x, object y)
-			{
-				LocationInRadius lx = (LocationInRadius)x;
-				LocationInRadius ly = (LocationInRadius)y;
-
-				if (lx.DistanceToCenter < ly.DistanceToCenter)
-					return -1;
-				else if (lx.DistanceToCenter > ly.DistanceToCenter)
-					return 1;
-				else
-					return 0;
-			}
+			return locs
+				.OrderBy(loc => loc.DistanceToCenter)
+				.ToList();
 		}
 	}
 }
