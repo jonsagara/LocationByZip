@@ -32,11 +32,13 @@ namespace LocationByZip.DemoConsoleApp
 				Console.WriteLine(location);
 			}
 
+
 			//	Distance between two locations.
 			Location sf = ZipCodeUtil.LookupByZipCode("94175");
 			Location la = ZipCodeUtil.LookupByZipCode("90185");
 			Double dDistance = sf.DistanceFrom(la);
 			Console.WriteLine("{0} is {1} miles from {2}", sf.City, dDistance, la.City);
+
 
 			//	Other Locations within an X-mile radius of a specific location.
 			IList<LocationInRadius> locsInRadius = sf.LocationsWithinRadius(5.0);

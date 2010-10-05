@@ -1,17 +1,15 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
 
 namespace SagaraSoftware.ZipCodeUtil
 {
 	/// <summary>
-	/// AccessProvider implements the IDataProvider interface, interacting with an MS Access 
-	/// database.
+	/// Implements the IDataProvider interface, interacting with an SQL Server 2005+ database.
 	/// </summary>
-	public class AccessProvider : IDataProvider
+	public class SqlServerProvider : IDataProvider
 	{
 		private string ConnectionString
 		{
@@ -27,6 +25,7 @@ namespace SagaraSoftware.ZipCodeUtil
 		}
 
 
+
 		//
 		// IDataProvider Members
 		//
@@ -40,26 +39,37 @@ namespace SagaraSoftware.ZipCodeUtil
 		public Location DoLookupByZipCode(string zipCode)
 		{
 			Location loc = null;
-			string sql = "SELECT * FROM ZIP_CODES WHERE ZIP = ?";
+			string sql = 
+@"SELECT
+	  ZipCode
+	, Latitude
+	, Longitude
+	, City
+	, [State]
+	, County
+	, ZipClass
+FROM
+	ZipCode
+WHERE
+	ZipCode = @ZipCode";
 
-			using (var oleConn = new OleDbConnection(ConnectionString))
-			using (var oleCmd = new OleDbCommand(sql, oleConn))
+			using (var conn = new SqlConnection(ConnectionString))
+			using (var cmd = new SqlCommand(sql, conn))
 			{
-				oleCmd.Parameters.Add(new OleDbParameter("ZIP", zipCode));
-				oleConn.Open();
+				cmd.Parameters.Add(new SqlParameter("@ZipCode", zipCode));
+				conn.Open();
 
-				using (var oleReader = oleCmd.ExecuteReader())
+				using (var reader = cmd.ExecuteReader())
 				{
-					if (oleReader.Read())
+					if (reader.Read())
 					{
-						loc = ReadLocation<Location>(oleReader);
+						loc = ReadLocation<Location>(reader);
 					}
 				}
 			}
 
 			return loc;
 		}
-
 
 		/// <summary>
 		/// Lookup one or more <see cref="SagaraSoftware.ZipCodeUtil.Location" />s by City/State.
@@ -71,29 +81,41 @@ namespace SagaraSoftware.ZipCodeUtil
 		public IList<Location> DoLookupByCityState(string city, string state)
 		{
 			IList<Location> locs = new List<Location>();
-			StringBuilder sql = new StringBuilder();
+			string sql = 
+@"SELECT
+	  ZipCode
+	, Latitude
+	, Longitude
+	, City
+	, [State]
+	, County
+	, ZipClass
+FROM
+	ZipCode
+WHERE 
+	City = @City 
+	AND [State] = @State 
+ORDER BY 
+	ZipCode";
 
-			sql.Append("SELECT * FROM ZIP_CODES WHERE CITY = ? AND STATE = ? ORDER BY ZIP");
-
-			using (var oleConn = new OleDbConnection(ConnectionString))
-			using (var oleCmd = new OleDbCommand(sql.ToString(), oleConn))
+			using (var conn = new SqlConnection(ConnectionString))
+			using (var cmd = new SqlCommand(sql, conn))
 			{
-				oleCmd.Parameters.Add(new OleDbParameter("CITY", city));
-				oleCmd.Parameters.Add(new OleDbParameter("STATE", state));
-				oleConn.Open();
+				cmd.Parameters.Add(new SqlParameter("@City", city));
+				cmd.Parameters.Add(new SqlParameter("@State", state));
+				conn.Open();
 
-				using (var oleReader = oleCmd.ExecuteReader())
+				using (var reader = cmd.ExecuteReader())
 				{
-					while (oleReader.Read())
+					while (reader.Read())
 					{
-						locs.Add(ReadLocation<Location>(oleReader));
+						locs.Add(ReadLocation<Location>(reader));
 					}
 				}
 			}
 
 			return locs;
 		}
-
 
 		/// <summary>
 		/// Finds all <see cref="SagaraSoftware.ZipCodeUtil.LocationInRadius" />es within X miles
@@ -113,31 +135,43 @@ namespace SagaraSoftware.ZipCodeUtil
 		public IList<LocationInRadius> GetLocationsWithinRadius(Location pointOfReference, RadiusBox bounds)
 		{
 			IList<LocationInRadius> locs = new List<LocationInRadius>();
-			StringBuilder sql = new StringBuilder();
+			string sql =
+@"SELECT
+	  ZipCode
+	, Latitude
+	, Longitude
+	, City
+	, [State]
+	, County
+	, ZipClass
+FROM
+	ZipCode
+WHERE
+	COALESCE(Latitude, 999.0) >= @SouthLat
+	AND COALESCE(Latitude, 999.0) <= @NorthLat
+	AND COALESCE(Longitude, 999.0) >= @WestLon
+	AND COALESCE(Longitude, 999.0) <= @EastLon
+ORDER BY
+	  City
+	, [State]
+	, ZipCode";
 
-			sql.Append("SELECT * FROM ZIP_CODES WHERE ");
-			sql.Append("IIf(ISNULL(LATITUDE),999.0,CDbl(LATITUDE)) >= ? AND ");
-			sql.Append("IIf(ISNULL(LATITUDE),999.0,CDbl(LATITUDE)) <= ? AND ");
-			sql.Append("IIf(ISNULL(LONGITUDE),999.0,CDbl(LONGITUDE)) >= ? AND ");
-			sql.Append("IIf(ISNULL(LONGITUDE),999.0,CDbl(LONGITUDE)) <= ? ");
-			sql.Append("ORDER BY CITY, STATE, ZIP");
-
-			using (var oleConn = new OleDbConnection(ConnectionString))
-			using (var oleCmd = new OleDbCommand(sql.ToString(), oleConn))
+			using (var conn = new SqlConnection(ConnectionString))
+			using (var cmd = new SqlCommand(sql, conn))
 			{
-				oleCmd.Parameters.Add(new OleDbParameter("SouthLat", bounds.BottomLine));
-				oleCmd.Parameters.Add(new OleDbParameter("NorthLat", bounds.TopLine));
-				oleCmd.Parameters.Add(new OleDbParameter("WestLong", bounds.LeftLine));
-				oleCmd.Parameters.Add(new OleDbParameter("EastLong", bounds.RightLine));
-				oleConn.Open();
+				cmd.Parameters.Add(new SqlParameter("@SouthLat", bounds.BottomLine));
+				cmd.Parameters.Add(new SqlParameter("@NorthLat", bounds.TopLine));
+				cmd.Parameters.Add(new SqlParameter("@WestLon", bounds.LeftLine));
+				cmd.Parameters.Add(new SqlParameter("@EastLon", bounds.RightLine));
+				conn.Open();
 
-				using (var oleReader = oleCmd.ExecuteReader())
+				using (var reader = cmd.ExecuteReader())
 				{
 					LocationInRadius loc = null;
 
-					while (oleReader.Read())
+					while (reader.Read())
 					{
-						loc = ReadLocation<LocationInRadius>(oleReader);
+						loc = ReadLocation<LocationInRadius>(reader);
 						loc.DistanceToCenter = Distance.GetDistance(pointOfReference, loc);
 
 						if (loc.DistanceToCenter <= bounds.Radius)
@@ -158,18 +192,18 @@ namespace SagaraSoftware.ZipCodeUtil
 		// Helpers
 		//
 
-		private T ReadLocation<T>(OleDbDataReader reader)
+		private T ReadLocation<T>(SqlDataReader reader)
 			where T : Location, new()
 		{
 			var loc = new T();
 
-			loc.City = Convert.ToString(reader["CITY"]);
-			loc.State = Convert.ToString(reader["STATE"]);
-			loc.ZipCode = Convert.ToString(reader["ZIP"]);
-			loc.County = Convert.ToString(reader["COUNTY"]);
-			loc.Latitude = (reader["LATITUDE"] == DBNull.Value) ? double.MinValue : double.Parse(Convert.ToString(reader["LATITUDE"]));
-			loc.Longitude = (reader["LONGITUDE"] == DBNull.Value) ? double.MinValue : double.Parse(Convert.ToString(reader["LONGITUDE"]));
-			loc.ZipClass = Convert.ToString(reader["ZIP_CLASS"]);
+			loc.City = Convert.ToString(reader["City"]);
+			loc.State = Convert.ToString(reader["State"]);
+			loc.ZipCode = Convert.ToString(reader["ZipCode"]);
+			loc.County = Convert.ToString(reader["County"]);
+			loc.Latitude = (reader["Latitude"] == DBNull.Value) ? double.MinValue : double.Parse(Convert.ToString(reader["Latitude"]));
+			loc.Longitude = (reader["Longitude"] == DBNull.Value) ? double.MinValue : double.Parse(Convert.ToString(reader["Longitude"]));
+			loc.ZipClass = Convert.ToString(reader["ZipClass"]);
 
 			return loc;
 		}

@@ -10,9 +10,9 @@ namespace SagaraSoftware.ZipCodeUtil
 	/// </summary>
 	public interface IDataProvider
 	{
-		Location DoLookupByZipCode(string inZipCode);
-		IList<Location> DoLookupByCityState(string inCity, string inState);
-		IList<LocationInRadius> GetLocationsWithinRadius(Location inRefLoc, RadiusBox inBounds);
+		Location DoLookupByZipCode(string zipCode);
+		IList<Location> DoLookupByCityState(string city, string state);
+		IList<LocationInRadius> GetLocationsWithinRadius(Location pointOfReference, RadiusBox bounds);
 	}
 
 
@@ -34,12 +34,9 @@ namespace SagaraSoftware.ZipCodeUtil
 			IDataProvider dp = null;
 			switch (strProviderType.ToUpper())
 			{
-				case "ACCESS":
-					dp = new AccessProvider();
-					break;
-
 				case "MSSQL":
-					throw new NotImplementedException("SqlProvider is not yet implemented");
+					dp = new SqlServerProvider();
+					break;
 
 				default:
 					throw new Exception("Invalid database provider type specified in config file.");
