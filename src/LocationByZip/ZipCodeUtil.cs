@@ -14,27 +14,21 @@ namespace SagaraSoftware.ZipCodeUtil
 	/// <para>When looking up a City/State by ZIP Code, only one <see cref="SagaraSoftware.ZipCodeUtil.Location" /> 
 	/// will be returned.  ZIP Code is the Primary Key in the database.</para>
 	///	</remarks>
-	public class ZipCodeUtil
+	public static class ZipCodeUtil
 	{
 		/// <summary>
 		/// Queries the database for a City/State whose ZIP Code matches inZipCode.
 		/// </summary>
-		/// <param name="inZipCode">The ZIP Code to search by.</param>
+		/// <param name="zipCode">The ZIP Code to search by.</param>
 		/// <returns>If a matching ZIP Code was found in the database, a <see cref="SagaraSoftware.ZipCodeUtil.Location" />
 		///  object containing information about that ZIP Code.  Otherwise, returns null.</returns>
-		public static Location LookupByZipCode(string inZipCode)
+		public static Location LookupByZipCode(string zipCode)
 		{
-			Debug.Assert(null != inZipCode);
-			Debug.Assert(string.Empty != inZipCode);
-
-			if (inZipCode == null)
-				throw new ArgumentNullException("inZipCode");
-			if (inZipCode == string.Empty)
-				throw new ArgumentException("You must specify a ZIP Code when calling this method.", "inZipCode");
+			VerifyZipCode(zipCode);
 
 			return DataProvider
 				.GetDataProvider()
-				.DoLookupByZipCode(inZipCode);
+				.DoLookupByZipCode(zipCode);
 		}
 
 
@@ -42,69 +36,93 @@ namespace SagaraSoftware.ZipCodeUtil
 		/// Looks up a City/State by City/State.  It is possible for more than one <see cref="SagaraSoftware.ZipCodeUtil.Location" />
 		///  to be returned since there are City/State combos that contain more than one ZIP Code.
 		/// </summary>
-		/// <param name="inCity">The search city.</param>
-		/// <param name="inState">The search state.</param>
+		/// <param name="city">The search city.</param>
+		/// <param name="state">The search state.</param>
 		/// <returns>If any matches were found, an array of <see cref="SagaraSoftware.ZipCodeUtil.Location" /> objects.  Otherwise, null.</returns>
-		public static IList<Location> LookupByCityState(string inCity, string inState)
+		public static IList<Location> LookupByCityState(string city, string state)
 		{
-			Debug.Assert(inCity != null);
-			Debug.Assert(inCity != string.Empty);
-			Debug.Assert(inState != null);
-			Debug.Assert(inState != string.Empty);
-
-			if (inCity == null)
-				throw new ArgumentNullException("inCity");
-			if (inCity == string.Empty)
-				throw new ArgumentException("You must specify a City when calling this method.", "inCity");
-			if (inState == null)
-				throw new ArgumentNullException("inState");
-			if (inState == string.Empty)
-				throw new ArgumentException("You must specify a State when calling this method.", "inState");
+			VerifyCity(city);
+			VerifyState(state);
 
 			return DataProvider
 				.GetDataProvider()
-				.DoLookupByCityState(inCity, inState);
+				.DoLookupByCityState(city, state);
 		}
 
 
 		/// <summary>
-		/// Looks up a City/State by City/State/ZIP.
+		/// Looks up a City/State by City/State/ZIP.  Note: this is the same as looking up a 
+		/// location by ZIP Code alone.
 		/// </summary>
-		/// <param name="inCity">The search city.</param>
-		/// <param name="inState">The search state.</param>
-		/// <param name="inZipCode">The search ZIP Code.</param>
-		/// <returns>If a match is found, then a <see cref="SagaraSoftware.ZipCodeUtil.Location" /> objectd.
+		/// <param name="city">The search city.</param>
+		/// <param name="state">The search state.</param>
+		/// <param name="zipCode">The search ZIP Code.</param>
+		/// <returns>If a match is found, then a <see cref="SagaraSoftware.ZipCodeUtil.Location" /> object.
 		///  Otherwise, null.</returns>
-		public static Location LookupByCityStateZip(string inCity, string inState, string inZipCode)
+		public static Location LookupByCityStateZip(string city, string state, string zipCode)
 		{
-			Debug.Assert(inCity != null);
-			Debug.Assert(inCity != string.Empty);
-			Debug.Assert(inState != null);
-			Debug.Assert(inState != string.Empty);
-			Debug.Assert(inZipCode != null);
-			Debug.Assert(inZipCode != string.Empty);
+			VerifyCity(city);
+			VerifyState(state);
+			VerifyZipCode(zipCode);
 
-			if (inCity == null)
-				throw new ArgumentNullException("inCity");
-			if (inCity == string.Empty)
-				throw new ArgumentException("You must specify a City when calling this method.", "inCity");
-			if (inState == null)
-				throw new ArgumentNullException("inState");
-			if (inState == string.Empty)
-				throw new ArgumentException("You must specify a State when calling this method.", "inState");
-			if (inZipCode == null)
-				throw new ArgumentNullException("inZipCode");
-			if (inZipCode == string.Empty)
-				throw new ArgumentException("You must specify a ZIP Code when calling this method.", "inZipCode");
-
-			Location loc = LookupByZipCode(inZipCode);
+			Location loc = LookupByZipCode(zipCode);
 			if (loc != null)
 			{
-				if (inCity.ToUpper() != loc.City.ToUpper() || inState.ToUpper() != loc.State.ToUpper())
-					throw new Exception(string.Format("The City/State you specified does not match the City/State associated with ZIP Code {0}", inZipCode));
+				if (!city.Equals(loc.City, StringComparison.OrdinalIgnoreCase)
+					|| !state.Equals(loc.State, StringComparison.OrdinalIgnoreCase))
+				{
+					throw new Exception(
+						string.Format(
+							"The input City/State ({0}/{1}) does not match the City/State ({2}/{3}) associated with ZIP Code {4}", 
+							city,
+							state,
+							loc.City,
+							loc.State,
+							zipCode
+							)
+						);
+				}
 			}
 
 			return loc;
+		}
+
+
+		//
+		// Helpers
+		//
+
+		private static void VerifyCity(string city)
+		{
+			Debug.Assert(city != null);
+			Debug.Assert(city != string.Empty);
+
+			if (string.IsNullOrWhiteSpace(city))
+			{
+				throw new ArgumentException("You must specify a City when calling this method.  Current value: " + (city ?? "(null)"));
+			}
+		}
+
+		private static void VerifyState(string state)
+		{
+			Debug.Assert(state != null);
+			Debug.Assert(state != string.Empty);
+
+			if (string.IsNullOrWhiteSpace(state))
+			{
+				throw new ArgumentException("You must specify a State when calling this method.  Current value: " + (state ?? "(null)"));
+			}
+		}
+
+		private static void VerifyZipCode(string zipCode)
+		{
+			Debug.Assert(zipCode != null);
+			Debug.Assert(zipCode != string.Empty);
+
+			if (string.IsNullOrWhiteSpace(zipCode))
+			{
+				throw new ArgumentException("You must specify a ZIP Code when calling this method.  Current value: " + (zipCode ?? "(null)"));
+			}
 		}
 	}
 }
