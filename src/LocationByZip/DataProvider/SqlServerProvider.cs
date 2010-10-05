@@ -39,22 +39,9 @@ namespace LocationByZip.DataProvider
 		public Location DoLookupByZipCode(string zipCode)
 		{
 			Location loc = null;
-			string sql = 
-@"SELECT
-	  ZipCode
-	, Latitude
-	, Longitude
-	, City
-	, [State]
-	, County
-	, ZipClass
-FROM
-	ZipCode
-WHERE
-	ZipCode = @ZipCode";
 
 			using (var conn = new SqlConnection(ConnectionString))
-			using (var cmd = new SqlCommand(sql, conn))
+			using (var cmd = new SqlCommand(GetDoLookupByZipCodeSql(), conn))
 			{
 				cmd.Parameters.Add(new SqlParameter("@ZipCode", zipCode));
 				conn.Open();
@@ -81,25 +68,9 @@ WHERE
 		public IList<Location> DoLookupByCityState(string city, string state)
 		{
 			IList<Location> locs = new List<Location>();
-			string sql = 
-@"SELECT
-	  ZipCode
-	, Latitude
-	, Longitude
-	, City
-	, [State]
-	, County
-	, ZipClass
-FROM
-	ZipCode
-WHERE 
-	City = @City 
-	AND [State] = @State 
-ORDER BY 
-	ZipCode";
 
 			using (var conn = new SqlConnection(ConnectionString))
-			using (var cmd = new SqlCommand(sql, conn))
+			using (var cmd = new SqlCommand(GetDoLookupByCityStateSql(), conn))
 			{
 				cmd.Parameters.Add(new SqlParameter("@City", city));
 				cmd.Parameters.Add(new SqlParameter("@State", state));
@@ -135,29 +106,9 @@ ORDER BY
 		public IList<LocationInRadius> GetLocationsWithinRadius(Location pointOfReference, RadiusBox bounds)
 		{
 			IList<LocationInRadius> locs = new List<LocationInRadius>();
-			string sql =
-@"SELECT
-	  ZipCode
-	, Latitude
-	, Longitude
-	, City
-	, [State]
-	, County
-	, ZipClass
-FROM
-	ZipCode
-WHERE
-	COALESCE(Latitude, 999.0) >= @SouthLat
-	AND COALESCE(Latitude, 999.0) <= @NorthLat
-	AND COALESCE(Longitude, 999.0) >= @WestLon
-	AND COALESCE(Longitude, 999.0) <= @EastLon
-ORDER BY
-	  City
-	, [State]
-	, ZipCode";
 
 			using (var conn = new SqlConnection(ConnectionString))
-			using (var cmd = new SqlCommand(sql, conn))
+			using (var cmd = new SqlCommand(GetLocationsWithinRadiusSql(), conn))
 			{
 				cmd.Parameters.Add(new SqlParameter("@SouthLat", bounds.BottomLine));
 				cmd.Parameters.Add(new SqlParameter("@NorthLat", bounds.TopLine));
@@ -191,6 +142,67 @@ ORDER BY
 		//
 		// Helpers
 		//
+
+		private string GetDoLookupByZipCodeSql()
+		{
+			return
+@"SELECT
+	  ZipCode
+	, Latitude
+	, Longitude
+	, City
+	, [State]
+	, County
+	, ZipClass
+FROM
+	ZipCode
+WHERE
+	ZipCode = @ZipCode";
+		}
+
+		private string GetDoLookupByCityStateSql()
+		{
+			return
+@"SELECT
+	  ZipCode
+	, Latitude
+	, Longitude
+	, City
+	, [State]
+	, County
+	, ZipClass
+FROM
+	ZipCode
+WHERE 
+	City = @City 
+	AND [State] = @State 
+ORDER BY 
+	ZipCode";
+		}
+
+		private string GetLocationsWithinRadiusSql()
+		{
+			return
+@"SELECT
+	  ZipCode
+	, Latitude
+	, Longitude
+	, City
+	, [State]
+	, County
+	, ZipClass
+FROM
+	ZipCode
+WHERE
+	COALESCE(Latitude, 999.0) >= @SouthLat
+	AND COALESCE(Latitude, 999.0) <= @NorthLat
+	AND COALESCE(Longitude, 999.0) >= @WestLon
+	AND COALESCE(Longitude, 999.0) <= @EastLon
+ORDER BY
+	  City
+	, [State]
+	, ZipCode";
+		}
 
 		private T ReadLocation<T>(SqlDataReader reader)
 			where T : Location, new()

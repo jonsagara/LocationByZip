@@ -28,14 +28,14 @@ namespace LocationByZip.DemoConsoleApp
 
 
 			//	Distance between two locations.
-			Location roseville = ZipCodeUtil.LookupByZipCode("95747");
-			Location sacramento = ZipCodeUtil.LookupByZipCode("95814");
-			Console.WriteLine("{0} is {1:F1} miles from {2}", roseville.City, roseville.DistanceFrom(sacramento), sacramento.City);
+			Location slo = ZipCodeUtil.LookupByZipCode("93401");
+			Location paso = ZipCodeUtil.LookupByZipCode("93446");
+			Console.WriteLine("{0} is {1:F1} miles from {2}", slo.City, slo.DistanceFrom(paso), paso.City);
 			Console.WriteLine();
 
 
 			//	Other Locations within an X-mile radius of a specific location.
-			IList<LocationInRadius> locsInRadius = roseville.LocationsWithinRadius(5.0);
+			IList<LocationInRadius> locsInRadius = slo.LocationsWithinRadius(10.0);
 			foreach (Location locInRad in locsInRadius)
 			{
 				Console.WriteLine(locInRad);
