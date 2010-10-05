@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using SagaraSoftware.ZipCodeUtil;
+using LocationByZip;
 
 namespace LocationByZip.DemoConsoleApp
 {

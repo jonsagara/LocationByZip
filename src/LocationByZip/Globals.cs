@@ -1,6 +1,6 @@
 using System;
 
-namespace SagaraSoftware.ZipCodeUtil
+namespace LocationByZip
 {
 	/// <summary>
 	/// Summary description for Globals.

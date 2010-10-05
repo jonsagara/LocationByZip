@@ -1,10 +1,10 @@
 using System;
 using System.Diagnostics;
 
-namespace SagaraSoftware.ZipCodeUtil
+namespace LocationByZip
 {
 	/// <summary>
-	/// The Distance class takes two <see cref="SagaraSoftware.ZipCodeUtil.Location" /> objects and
+	/// The Distance class takes two <see cref="LocationByZip.Location" /> objects and
 	///  uses their Latitude and Longitude to determine the distance between them.  Uses the
 	///  Haversine formula.
 	/// </summary>

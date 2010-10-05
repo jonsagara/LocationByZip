@@ -2,7 +2,9 @@ using System;
 using System.Diagnostics;
 using System.Collections.Generic;
 
-namespace SagaraSoftware.ZipCodeUtil
+using ZipCodeDataProvider = LocationByZip.DataProvider.DataProvider;
+
+namespace LocationByZip
 {
 	/// <summary>
 	/// The ZipCodeUtil class provides methods to lookup City/State by ZIP Code, or ZIP Code by 
@@ -10,8 +12,8 @@ namespace SagaraSoftware.ZipCodeUtil
 	/// </summary>
 	/// <remarks>
 	/// <para>Note that when looking up a ZIP Code by City/State, it is quite possible that more 
-	/// than one <see cref="SagaraSoftware.ZipCodeUtil.Location" /> will be returned.</para>
-	/// <para>When looking up a City/State by ZIP Code, only one <see cref="SagaraSoftware.ZipCodeUtil.Location" /> 
+	/// than one <see cref="LocationByZip.Location" /> will be returned.</para>
+	/// <para>When looking up a City/State by ZIP Code, only one <see cref="LocationByZip.Location" /> 
 	/// will be returned.  ZIP Code is the Primary Key in the database.</para>
 	///	</remarks>
 	public static class ZipCodeUtil
@@ -20,31 +22,31 @@ namespace SagaraSoftware.ZipCodeUtil
 		/// Queries the database for a City/State whose ZIP Code matches inZipCode.
 		/// </summary>
 		/// <param name="zipCode">The ZIP Code to search by.</param>
-		/// <returns>If a matching ZIP Code was found in the database, a <see cref="SagaraSoftware.ZipCodeUtil.Location" />
+		/// <returns>If a matching ZIP Code was found in the database, a <see cref="LocationByZip.Location" />
 		///  object containing information about that ZIP Code.  Otherwise, returns null.</returns>
 		public static Location LookupByZipCode(string zipCode)
 		{
 			VerifyZipCode(zipCode);
 
-			return DataProvider
+			return ZipCodeDataProvider
 				.GetDataProvider()
 				.DoLookupByZipCode(zipCode);
 		}
 
 
 		/// <summary>
-		/// Looks up a City/State by City/State.  It is possible for more than one <see cref="SagaraSoftware.ZipCodeUtil.Location" />
+		/// Looks up a City/State by City/State.  It is possible for more than one <see cref="LocationByZip.Location" />
 		///  to be returned since there are City/State combos that contain more than one ZIP Code.
 		/// </summary>
 		/// <param name="city">The search city.</param>
 		/// <param name="state">The search state.</param>
-		/// <returns>If any matches were found, an array of <see cref="SagaraSoftware.ZipCodeUtil.Location" /> objects.  Otherwise, null.</returns>
+		/// <returns>If any matches were found, an array of <see cref="LocationByZip.Location" /> objects.  Otherwise, null.</returns>
 		public static IList<Location> LookupByCityState(string city, string state)
 		{
 			VerifyCity(city);
 			VerifyState(state);
 
-			return DataProvider
+			return ZipCodeDataProvider
 				.GetDataProvider()
 				.DoLookupByCityState(city, state);
 		}
@@ -57,7 +59,7 @@ namespace SagaraSoftware.ZipCodeUtil
 		/// <param name="city">The search city.</param>
 		/// <param name="state">The search state.</param>
 		/// <param name="zipCode">The search ZIP Code.</param>
-		/// <returns>If a match is found, then a <see cref="SagaraSoftware.ZipCodeUtil.Location" /> object.
+		/// <returns>If a match is found, then a <see cref="LocationByZip.Location" /> object.
 		///  Otherwise, null.</returns>
 		public static Location LookupByCityStateZip(string city, string state, string zipCode)
 		{

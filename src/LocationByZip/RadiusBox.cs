@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SagaraSoftware.ZipCodeUtil
+namespace LocationByZip
 {
 	/// <summary>
 	/// A RadiusBox encloses a "box" area around a location, where each side of the square is

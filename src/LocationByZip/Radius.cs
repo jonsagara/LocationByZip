@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace SagaraSoftware.ZipCodeUtil
+using ZipCodeDataProvider = LocationByZip.DataProvider.DataProvider;
+
+namespace LocationByZip
 {
 	/// <summary>
 	/// Summary description for Radius.
@@ -22,7 +24,7 @@ namespace SagaraSoftware.ZipCodeUtil
 
 			RadiusBox radBox = RadiusBox.Create(location, radius);
 
-			return DataProvider
+			return ZipCodeDataProvider
 				.GetDataProvider()
 				.GetLocationsWithinRadius(location, radBox);
 		}

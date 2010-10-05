@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 
-namespace SagaraSoftware.ZipCodeUtil
+namespace LocationByZip.DataProvider
 {
 	/// <summary>
 	/// Defines methods common to all data providers.  An instance of this interface is used to 

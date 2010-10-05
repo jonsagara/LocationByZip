@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SagaraSoftware.ZipCodeUtil
+namespace LocationByZip
 {
 	/// <summary>
 	/// A Location is represented by a City, State, ZIP Code, County, Latitude, Longitude, and ZIP 
