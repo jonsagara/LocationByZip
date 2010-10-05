@@ -201,8 +201,8 @@ ORDER BY
 			loc.State = Convert.ToString(reader["State"]);
 			loc.ZipCode = Convert.ToString(reader["ZipCode"]);
 			loc.County = Convert.ToString(reader["County"]);
-			loc.Latitude = (reader["Latitude"] == DBNull.Value) ? double.MinValue : double.Parse(Convert.ToString(reader["Latitude"]));
-			loc.Longitude = (reader["Longitude"] == DBNull.Value) ? double.MinValue : double.Parse(Convert.ToString(reader["Longitude"]));
+			loc.Latitude = (reader["Latitude"] == DBNull.Value) ? double.MinValue : Convert.ToDouble(reader["Latitude"]);
+			loc.Longitude = (reader["Longitude"] == DBNull.Value) ? double.MinValue : Convert.ToDouble(reader["Longitude"]);
 			loc.ZipClass = Convert.ToString(reader["ZipClass"]);
 
 			return loc;
