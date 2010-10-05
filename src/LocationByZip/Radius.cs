@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace SagaraSoftware.ZipCodeUtil
 {
@@ -14,7 +15,7 @@ namespace SagaraSoftware.ZipCodeUtil
 		/// <param name="inLocation">The Location around which to search.</param>
 		/// <param name="inRadius">Search radius in miles.</param>
 		/// <returns></returns>
-		public static LocationInRadius[] LocationsWithinRadius(Location inLocation, double inRadius)
+		public static IList<LocationInRadius> LocationsWithinRadius(Location inLocation, double inRadius)
 		{
 			Debug.Assert(null != inLocation);
 			Debug.Assert(inRadius > 0.0);
@@ -35,7 +36,7 @@ namespace SagaraSoftware.ZipCodeUtil
 
 			RadiusBox radBox = RadiusBox.Create(inLocation, inRadius);
 			IDataProvider db = null;
-			LocationInRadius[] locs = null;
+			IList<LocationInRadius> locs = null;
 
 			try
 			{

@@ -36,10 +36,10 @@ namespace LocationByZip.DemoConsoleApp
 			Console.WriteLine("{0} is {1} miles from {2}", sf.City, dDistance, la.City);
 
 			//	Other Locations within an X-mile radius of a specific location.
-			locs = sf.LocationsWithinRadius(5.0);
-			if (null != locs && locs.Count > 0)
+			IList<LocationInRadius> locsInRadius = sf.LocationsWithinRadius(5.0);
+			if (locsInRadius != null && locs.Count > 0)
 			{
-				foreach (Location loc in locs)
+				foreach (Location loc in locsInRadius)
 				{
 					Console.WriteLine(loc.ToString());
 				}

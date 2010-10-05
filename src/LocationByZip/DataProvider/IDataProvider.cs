@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 
 namespace SagaraSoftware.ZipCodeUtil
@@ -10,8 +11,8 @@ namespace SagaraSoftware.ZipCodeUtil
 	public interface IDataProvider
 	{
 		Location DoLookupByZipCode(string inZipCode);
-		Location[] DoLookupByCityState(string inCity, string inState);
-		LocationInRadius[] GetLocationsWithinRadius(Location inRefLoc, RadiusBox inBounds);
+		IList<Location> DoLookupByCityState(string inCity, string inState);
+		IList<LocationInRadius> GetLocationsWithinRadius(Location inRefLoc, RadiusBox inBounds);
 	}
 
 

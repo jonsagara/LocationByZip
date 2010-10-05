@@ -25,7 +25,7 @@ namespace SagaraSoftware.ZipCodeUtil
 		}
 
 
-		public IList<Location> LocationsWithinRadius(double inRadius)
+		public IList<LocationInRadius> LocationsWithinRadius(double inRadius)
 		{
 			return Radius.LocationsWithinRadius(this, inRadius);
 		}

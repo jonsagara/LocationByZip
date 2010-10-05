@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data.OleDb;
 using System.Text;
@@ -81,12 +82,12 @@ namespace SagaraSoftware.ZipCodeUtil
 		/// <param name="inCity">Name of the City.</param>
 		/// <param name="inState">Name of the State.</param>
 		/// <returns>An array of <see cref="SagaraSoftware.ZipCodeUtil.Location" /> objects whose City/State matches the input City/State.</returns>
-		public Location[] DoLookupByCityState(string inCity, string inState)
+		public IList<Location> DoLookupByCityState(string inCity, string inState)
 		{
 			OleDbConnection oleConn = null;
 			OleDbCommand oleCmd = null;
 			OleDbDataReader oleReader = null;
-			ArrayList locs = new ArrayList();
+			IList<Location> locs = new List<Location>();
 			string strConnString = ConfigurationManager.AppSettings["ZipCodeConnString"];
 			StringBuilder sql = new StringBuilder();
 
@@ -133,7 +134,7 @@ namespace SagaraSoftware.ZipCodeUtil
 					oleConn.Close();
 			}
 
-			return (Location[])locs.ToArray(typeof(Location));
+			return locs;
 		}
 
 
@@ -152,12 +153,12 @@ namespace SagaraSoftware.ZipCodeUtil
 		/// <param name="inBounds">A class containing the "box" that encloses inRefLoc.  Used to approximate a circle of Radius R centered around the point inRefLoc.</param>
 		/// <returns>0 or more <see cref="SagaraSoftware.ZipCodeUtil.LocationInRadius" />es that are
 		///  within Radius miles of inRefLoc.</returns>
-		public LocationInRadius[] GetLocationsWithinRadius(Location inRefLoc, RadiusBox inBounds)
+		public IList<LocationInRadius> GetLocationsWithinRadius(Location inRefLoc, RadiusBox inBounds)
 		{
 			OleDbConnection oleConn = null;
 			OleDbCommand oleCmd = null;
 			OleDbDataReader oleReader = null;
-			ArrayList locs = new ArrayList();
+			IList<LocationInRadius> locs = new List<LocationInRadius>();
 			string strConnString = ConfigurationManager.AppSettings["ZipCodeConnString"];
 			StringBuilder sql = new StringBuilder();
 
@@ -199,6 +200,9 @@ namespace SagaraSoftware.ZipCodeUtil
 					if (loc.DistanceToCenter <= inBounds.Radius)
 						locs.Add(loc);
 				}
+
+#warning TODO: fix sorting
+				//locs.Sort(new LocationInRadiusComparer());
 			}
 			catch (Exception e)
 			{
@@ -210,10 +214,9 @@ namespace SagaraSoftware.ZipCodeUtil
 					oleReader.Close();
 				if (null != oleConn)
 					oleConn.Close();
-				locs.Sort(new LocationInRadiusComparer());
 			}
 
-			return (LocationInRadius[])locs.ToArray(typeof(LocationInRadius));
+			return locs;
 		}
 
 
