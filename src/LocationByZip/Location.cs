@@ -1,25 +1,4 @@
-#region FILE HEADER
-/// <project>ZipCodeUtil</project>
-/// <assembly>SagaraSoftware.ZipCodeUtil.dll</assembly>
-/// <filename>Location.cs</filename>
-/// <creator>Jon Sagara</creator>
-/// <description>
-/// Contains the Location and LocationInRadius classes.
-/// </description>
-/// <copyright>
-/// Copyright (c) 2004 Sagara Software.  All rights reserved.
-/// </copyright>
-/// <disclaimer>
-/// This file is provided "as is" with no expressed or implied warranty.  The author accepts no 
-///  liability for any damage/loss of business that this product may cause.
-/// </disclaimer>
-/// <history>
-///	<change date="12/29/2004" changedby="Jon Sagara">File created.</changed>
-/// </history>
-#endregion
-
 using System;
-using System.Diagnostics;
 using System.Text;
 
 namespace SagaraSoftware.ZipCodeUtil
@@ -30,17 +9,14 @@ namespace SagaraSoftware.ZipCodeUtil
 	/// </summary>
 	public class Location
 	{
-		#region CONSTRUCTORS
 		/// <summary>
 		/// Default constructor.  Does nothing.
 		/// </summary>
 		public Location ()
 		{
 		}
-		#endregion
 
 
-		#region PROPERTIES
 		public String City
 		{
 			get
@@ -124,10 +100,8 @@ namespace SagaraSoftware.ZipCodeUtil
 				_strZipClass = value;
 			}
 		}
-		#endregion
 
 
-		#region METHODS
 		public Double DistanceFrom (Location inRemoteLocation)
 		{
 			return Distance.GetDistance (this, inRemoteLocation);
@@ -152,10 +126,7 @@ namespace SagaraSoftware.ZipCodeUtil
 			return str.ToString ();
 		}
 
-		#endregion
 
-
-		#region MEMBER DATA
 		private string _strCity;
 		private string _strState;
 		private string _strZipCode;
@@ -163,21 +134,17 @@ namespace SagaraSoftware.ZipCodeUtil
 		private double _dLatitude;
 		private double _dLongitude;
 		private string _strZipClass;
-		#endregion
 	}
 
 
 	public class LocationInRadius : Location
 	{
-		#region CONSTRUCTOR
 		public LocationInRadius () : base ()
 		{
 			DistanceToCenter = Double.MinValue;
 		}
-		#endregion
 
 
-		#region PROPERTIES
 		public Double DistanceToCenter
 		{
 			get
@@ -189,10 +156,8 @@ namespace SagaraSoftware.ZipCodeUtil
 				_dDistToCenter = value;
 			}
 		}
-		#endregion
 
 
-		#region METHODS
 		public override string ToString ()
 		{
 			StringBuilder str = new StringBuilder ();
@@ -205,11 +170,8 @@ namespace SagaraSoftware.ZipCodeUtil
 
 			return str.ToString ();
 		}
-		#endregion
 
 
-		#region MEMBER DATA 
 		private double _dDistToCenter;
-		#endregion
 	}
 }

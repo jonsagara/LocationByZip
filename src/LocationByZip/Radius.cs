@@ -1,25 +1,4 @@
-#region FILE HEADER
-/// <project>ZipCodeUtil</project>
-/// <assembly>SagaraSoftware.ZipCodeUtil.dll</assembly>
-/// <filename>Radius.cs</filename>
-/// <creator>Jon Sagara</creator>
-/// <description>
-/// Contains the Radius and RadiusBox classes.  
-/// </description>
-/// <copyright>
-/// Copyright (c) 2004 Sagara Software.  All rights reserved.
-/// </copyright>
-/// <disclaimer>
-/// This file is provided "as is" with no expressed or implied warranty.  The author accepts no 
-///  liability for any damage/loss of business that this product may cause.
-/// </disclaimer>
-/// <history>
-///	<change date="12/29/2004" changedby="Jon Sagara">File created.</changed>
-/// </history>
-#endregion
-
 using System;
-using System.Collections;
 using System.Diagnostics;
 
 namespace SagaraSoftware.ZipCodeUtil
@@ -29,7 +8,6 @@ namespace SagaraSoftware.ZipCodeUtil
 	/// </summary>
 	public class Radius
 	{
-		#region CLASS METHODS
 		/// <summary>
 		/// 
 		/// </summary>
@@ -72,7 +50,6 @@ namespace SagaraSoftware.ZipCodeUtil
 
 			return locs;
 		}
-		#endregion
 	}
 
 	/// <summary>
@@ -82,14 +59,11 @@ namespace SagaraSoftware.ZipCodeUtil
 	/// </summary>
 	public class RadiusBox
 	{
-		#region CONSTRUCTORS
 		public RadiusBox ()
 		{
 		}
-		#endregion
 
 
-		#region PROPERTIES
 		/// <summary>
 		/// Represents the Southern latitude line.
 		/// </summary>
@@ -168,19 +142,15 @@ namespace SagaraSoftware.ZipCodeUtil
 				_dRadius = value;
 			}
 		}
-		#endregion
 
 
-		#region MEMBER DATA
 		private double _dBottomLatLine;
 		private double _dTopLatLine;
 		private double _dLeftLongLine;
 		private double _dRightLongLine;
 		private double _dRadius;
-		#endregion
 
 
-		#region CLASS METHODS
 		/// <summary>
 		/// Creates a box that encloses the specified location, where the sides of the square
 		///  are inRadius miles away from the location at the perpendicular.  Note that we do
@@ -252,6 +222,5 @@ namespace SagaraSoftware.ZipCodeUtil
 
 			return box;
 		}
-		#endregion
 	}
 }

@@ -1,23 +1,3 @@
-#region FILE HEADER
-/// <project>ZipCodeUtil</project>
-/// <assembly>SagaraSoftware.ZipCodeUtil.dll</assembly>
-/// <filename>Distance.cs</filename>
-/// <creator>Jon Sagara</creator>
-/// <description>
-/// Contains the Distance class.
-/// </description>
-/// <copyright>
-/// Copyright (c) 2004 Sagara Software.  All rights reserved.
-/// </copyright>
-/// <disclaimer>
-/// This file is provided "as is" with no expressed or implied warranty.  The author accepts no 
-///  liability for any damage/loss of business that this product may cause.
-/// </disclaimer>
-/// <history>
-///	<change date="12/29/2004" changedby="Jon Sagara">File created.</changed>
-/// </history>
-#endregion
-
 using System;
 using System.Diagnostics;
 
@@ -30,7 +10,6 @@ namespace SagaraSoftware.ZipCodeUtil
 	/// </summary>
 	public class Distance
 	{
-		#region CLASS METHODS
 		/// <summary>
 		/// Returns the distance in miles between two locations, calculated using the Haversine
 		///  forumula.
@@ -112,6 +91,5 @@ namespace SagaraSoftware.ZipCodeUtil
 
 			return dDistance;
 		}
-		#endregion
 	}
 }

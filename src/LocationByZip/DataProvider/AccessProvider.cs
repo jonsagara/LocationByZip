@@ -1,27 +1,6 @@
-#region FILE HEADER
-/// <project>ZipCodeUtil</project>
-/// <assembly>SagaraSoftware.ZipCodeUtil.dll</assembly>
-/// <filename>AccessProvider.cs</filename>
-/// <creator>Jon Sagara</creator>
-/// <description>
-/// Contains the AccessProvider class, which is used to read data from MS Access. 
-/// </description>
-/// <copyright>
-/// Copyright (c) 2004 Sagara Software.  All rights reserved.
-/// </copyright>
-/// <disclaimer>
-/// This file is provided "as is" with no expressed or implied warranty.  The author accepts no 
-///  liability for any damage/loss of business that this product may cause.
-/// </disclaimer>
-/// <history>
-///	<change date="12/29/2004" changedby="Jon Sagara">File created.</changed>
-/// </history>
-#endregion
-
 using System;
 using System.Collections;
 using System.Configuration;
-using System.Data;
 using System.Data.OleDb;
 using System.Text;
 
@@ -33,18 +12,17 @@ namespace SagaraSoftware.ZipCodeUtil
 	/// </summary>
 	public class AccessProvider : IDataProvider
 	{
-		#region CONSTRUCTORS
 		/// <summary>
 		/// Default constructor.  Does nothing.
 		/// </summary>
 		public AccessProvider ()
 		{
 		}
-		#endregion
 
 
-		#region IDataProvider Members
-
+		//
+		// IDataProvider Members
+		//
 
 		/// <summary>
 		/// Look up a <see cref="SagaraSoftware.ZipCodeUtil.Location" /> by ZIP Code.  If Latitude
@@ -245,8 +223,6 @@ namespace SagaraSoftware.ZipCodeUtil
 
 			return (LocationInRadius[]) locs.ToArray (typeof (LocationInRadius));
 		}
-
-		#endregion
 
 
 		/// <summary>

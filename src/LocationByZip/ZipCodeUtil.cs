@@ -1,24 +1,3 @@
-#region FILE HEADER
-/// <project>ZipCodeUtil</project>
-/// <assembly>SagaraSoftware.ZipCodeUtil.dll</assembly>
-/// <filename>ZipCodeUtil.cs</filename>
-/// <creator>Jon Sagara</creator>
-/// <description>
-/// Contains the ZipCodeUtil class.  The user will use this class to perform ZIP Code and City/State
-///  lookups.
-/// </description>
-/// <copyright>
-/// Copyright (c) 2004 Sagara Software.  All rights reserved.
-/// </copyright>
-/// <disclaimer>
-/// This file is provided "as is" with no expressed or implied warranty.  The author accepts no 
-///  liability for any damage/loss of business that this product may cause.
-/// </disclaimer>
-/// <history>
-///	<change date="12/29/2004" changedby="Jon Sagara">File created.</changed>
-/// </history>
-#endregion
-
 using System;
 using System.Diagnostics;
 

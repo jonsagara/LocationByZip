@@ -1,26 +1,3 @@
-#region FILE HEADER
-/// <project>ZipCodeUtil</project>
-/// <assembly>SagaraSoftware.ZipCodeUtil.dll</assembly>
-/// <filename>IDataProvider.cs</filename>
-/// <creator>Jon Sagara</creator>
-/// <description>
-/// Contains the IDataProvider interface and the DataProvider class.
-/// 
-/// The original MS Access database was obtained from CFDynamics at 
-/// http://www.cfdynamics.com/zipbase/.  
-/// </description>
-/// <copyright>
-/// Copyright (c) 2004 Sagara Software.  All rights reserved.
-/// </copyright>
-/// <disclaimer>
-/// This file is provided "as is" with no expressed or implied warranty.  The author accepts no 
-///  liability for any damage/loss of business that this product may cause.
-/// </disclaimer>
-/// <history>
-///	<change date="12/29/2004" changedby="Jon Sagara">File created.</changed>
-/// </history>
-#endregion
-
 using System;
 
 namespace SagaraSoftware.ZipCodeUtil
