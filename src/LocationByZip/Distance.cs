@@ -8,7 +8,7 @@ namespace SagaraSoftware.ZipCodeUtil
 	///  uses their Latitude and Longitude to determine the distance between them.  Uses the
 	///  Haversine formula.
 	/// </summary>
-	public static class Distance
+	internal static class Distance
 	{
 		/// <summary>
 		/// Returns the distance in miles between two locations, calculated using the Haversine
