@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace SagaraSoftware.ZipCodeUtil
@@ -9,89 +10,13 @@ namespace SagaraSoftware.ZipCodeUtil
 	/// </summary>
 	public class Location
 	{
-		public string City
-		{
-			get
-			{
-				return _strCity;
-			}
-			set
-			{
-				_strCity = value;
-			}
-		}
-
-		public string State
-		{
-			get
-			{
-				return _strState;
-			}
-			set
-			{
-				_strState = value;
-			}
-		}
-
-		public string ZipCode
-		{
-			get
-			{
-				return _strZipCode;
-			}
-			set
-			{
-				_strZipCode = value;
-			}
-		}
-
-		public string County
-		{
-			get
-			{
-				return _strCounty;
-			}
-			set
-			{
-				_strCounty = value;
-			}
-		}
-
-		public double Latitude
-		{
-			get
-			{
-				return _dLatitude;
-			}
-			set
-			{
-				_dLatitude = value;
-			}
-		}
-
-		public double Longitude
-		{
-			get
-			{
-				return _dLongitude;
-			}
-			set
-			{
-				_dLongitude = value;
-			}
-		}
-
-		public string ZipClass
-		{
-			get
-			{
-				return _strZipClass;
-			}
-			set
-			{
-				_strZipClass = value;
-			}
-		}
+		public string City { get; set; }
+		public string State { get; set; }
+		public string ZipCode { get; set; }
+		public string County { get; set; }
+		public double Latitude { get; set; }
+		public double Longitude { get; set; }
+		public string ZipClass { get; set; }
 
 
 		public double DistanceFrom(Location inRemoteLocation)
@@ -100,7 +25,7 @@ namespace SagaraSoftware.ZipCodeUtil
 		}
 
 
-		public Location[] LocationsWithinRadius(double inRadius)
+		public IList<Location> LocationsWithinRadius(double inRadius)
 		{
 			return Radius.LocationsWithinRadius(this, inRadius);
 		}
@@ -117,38 +42,12 @@ namespace SagaraSoftware.ZipCodeUtil
 
 			return str.ToString();
 		}
-
-
-		private string _strCity;
-		private string _strState;
-		private string _strZipCode;
-		private string _strCounty;
-		private double _dLatitude;
-		private double _dLongitude;
-		private string _strZipClass;
 	}
 
 
 	public class LocationInRadius : Location
 	{
-		public LocationInRadius()
-			: base()
-		{
-			DistanceToCenter = double.MinValue;
-		}
-
-
-		public double DistanceToCenter
-		{
-			get
-			{
-				return _dDistToCenter;
-			}
-			set
-			{
-				_dDistToCenter = value;
-			}
-		}
+		public double DistanceToCenter { get; set; }
 
 
 		public override string ToString()
@@ -163,8 +62,5 @@ namespace SagaraSoftware.ZipCodeUtil
 
 			return str.ToString();
 		}
-
-
-		private double _dDistToCenter;
 	}
 }

@@ -87,7 +87,7 @@ namespace SagaraSoftware.ZipCodeUtil
 			double c = 2.0 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1.0 - a));
 
 			// Distance.
-			dDistance = Globals.kEarthRadiusMiles * c;
+			dDistance = Globals.EarthRadiusMiles * c;
 
 			return dDistance;
 		}

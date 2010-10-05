@@ -62,88 +62,31 @@ namespace SagaraSoftware.ZipCodeUtil
 		/// <summary>
 		/// Represents the Southern latitude line.
 		/// </summary>
-		public double BottomLine
-		{
-			get
-			{
-				return _dBottomLatLine;
-			}
-			set
-			{
-				_dBottomLatLine = value;
-			}
-		}
+		public double BottomLine { get; set; }
 
 
 		/// <summary>
 		/// Represents the Northern latitude line.
 		/// </summary>
-		public double TopLine
-		{
-			get
-			{
-				return _dTopLatLine;
-			}
-			set
-			{
-				_dTopLatLine = value;
-			}
-		}
+		public double TopLine { get; set; }
 
 
 		/// <summary>
 		/// Represents the Western longitude line.
 		/// </summary>
-		public double LeftLine
-		{
-			get
-			{
-				return _dLeftLongLine;
-			}
-			set
-			{
-				_dLeftLongLine = value;
-			}
-		}
+		public double LeftLine { get; set; }
 
 
 		/// <summary>
 		/// Represents the Eastern longitude line.
 		/// </summary>
-		public double RightLine
-		{
-			get
-			{
-				return _dRightLongLine;
-			}
-			set
-			{
-				_dRightLongLine = value;
-			}
-		}
+		public double RightLine { get; set; }
 
 
 		/// <summary>
 		/// Represents the radius of the search area.
 		/// </summary>
-		public double Radius
-		{
-			get
-			{
-				return _dRadius;
-			}
-			set
-			{
-				_dRadius = value;
-			}
-		}
-
-
-		private double _dBottomLatLine;
-		private double _dTopLatLine;
-		private double _dLeftLongLine;
-		private double _dRightLongLine;
-		private double _dRadius;
+		public double Radius { get; set; }
 
 
 		/// <summary>
@@ -176,7 +119,7 @@ namespace SagaraSoftware.ZipCodeUtil
 			double dlon;
 			double dLatInRads = inLocation.Latitude * (Math.PI / 180.0);
 			double dLongInRads = inLocation.Longitude * (Math.PI / 180.0);
-			double dDistInRad = inRadius / Globals.kEarthRadiusMiles;
+			double dDistInRad = inRadius / Globals.EarthRadiusMiles;
 			RadiusBox box = new RadiusBox();
 			box.Radius = inRadius;
 
