@@ -35,20 +35,10 @@ namespace SagaraSoftware.ZipCodeUtil
 
 
 			RadiusBox radBox = RadiusBox.Create(inLocation, inRadius);
-			IDataProvider db = null;
-			IList<LocationInRadius> locs = null;
 
-			try
-			{
-				db = DataProvider.GetDataProvider();
-				locs = db.GetLocationsWithinRadius(inLocation, radBox);
-			}
-			catch (Exception e)
-			{
-				throw new ApplicationException("Rethrowing exception", e);
-			}
-
-			return locs;
+			return DataProvider
+				.GetDataProvider()
+				.GetLocationsWithinRadius(inLocation, radBox);
 		}
 	}
 

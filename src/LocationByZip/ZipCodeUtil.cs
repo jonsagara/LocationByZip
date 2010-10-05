@@ -32,21 +32,9 @@ namespace SagaraSoftware.ZipCodeUtil
 			if (inZipCode == string.Empty)
 				throw new ArgumentException("You must specify a ZIP Code when calling this method.", "inZipCode");
 
-			Location loc = null;
-			IDataProvider db = null;
-
-			try
-			{
-				db = DataProvider.GetDataProvider();
-				loc = db.DoLookupByZipCode(inZipCode);
-			}
-			catch (Exception e)
-			{
-				// JonJon: Need to implement logging.
-				throw new ApplicationException("Rethrowing exception", e);
-			}
-
-			return loc;
+			return DataProvider
+				.GetDataProvider()
+				.DoLookupByZipCode(inZipCode);
 		}
 
 
@@ -73,21 +61,9 @@ namespace SagaraSoftware.ZipCodeUtil
 			if (inState == string.Empty)
 				throw new ArgumentException("You must specify a State when calling this method.", "inState");
 
-			IList<Location> locs = null;
-			IDataProvider db = null;
-
-			try
-			{
-				db = DataProvider.GetDataProvider();
-				locs = db.DoLookupByCityState(inCity, inState);
-			}
-			catch (Exception e)
-			{
-				// JonJon: Need to implement logging.
-				throw new ApplicationException("Rethrowing exception", e);
-			}
-
-			return locs;
+			return DataProvider
+				.GetDataProvider()
+				.DoLookupByCityState(inCity, inState);
 		}
 
 
@@ -125,7 +101,7 @@ namespace SagaraSoftware.ZipCodeUtil
 			if (loc != null)
 			{
 				if (inCity.ToUpper() != loc.City.ToUpper() || inState.ToUpper() != loc.State.ToUpper())
-					throw new ApplicationException(string.Format("The City/State you specified does not match the City/State associated with ZIP Code {0}", inZipCode));
+					throw new Exception(string.Format("The City/State you specified does not match the City/State associated with ZIP Code {0}", inZipCode));
 			}
 
 			return loc;

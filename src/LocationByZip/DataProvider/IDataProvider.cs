@@ -42,7 +42,7 @@ namespace SagaraSoftware.ZipCodeUtil
 					throw new NotImplementedException("SqlProvider is not yet implemented");
 
 				default:
-					throw new ApplicationException("Invalid database provider type specified in config file.");
+					throw new Exception("Invalid database provider type specified in config file.");
 			}
 
 			if (dp == null)
