@@ -45,17 +45,16 @@ namespace LocationByZip
 
 		public IEnumerable<LocationInRadius> GetLocationsInRadius(string zipCode, double radius)
 		{
-			ValidateZipCodeArgument(zipCode);
 			ValidateRadiusArgument(radius);
 
-			IEnumerable<LocationInRadius> locationsNearby = new List<LocationInRadius>();
+			var locationsNearby = new List<LocationInRadius>();
 			Location origin = GetByZipCode(zipCode);
 
 			if (origin != null)
 			{
 				RadiusBox bounds = RadiusBox.Create(origin, radius);
 
-				locationsNearby = locationRepository.GetLocationsInRadius(bounds);
+				locationsNearby.AddRange(locationRepository.GetLocationsInRadius(bounds));
 			}
 
 			return locationsNearby;
