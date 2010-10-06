@@ -123,7 +123,7 @@ namespace LocationByZip.DataProvider
 					while (reader.Read())
 					{
 						loc = ReadLocation<LocationInRadius>(reader);
-						loc.DistanceToCenter = Distance.GetDistance(pointOfReference, loc);
+						loc.DistanceToCenter = pointOfReference.DistanceFrom(loc);
 
 						if (loc.DistanceToCenter <= bounds.Radius)
 						{
