@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-using ZipCodeDataProvider = LocationByZip.DataProvider.DataProvider;
+using LocationByZip.DataProvider;
 
 namespace LocationByZip
 {
@@ -24,9 +24,7 @@ namespace LocationByZip
 
 			RadiusBox radBox = RadiusBox.Create(location, radius);
 
-			return ZipCodeDataProvider
-				.GetDataProvider()
-				.GetLocationsWithinRadius(location, radBox);
+			return DataProviderFactory.Create().GetLocationsWithinRadius(location, radBox);
 		}
 
 

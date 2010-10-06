@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-using ZipCodeDataProvider = LocationByZip.DataProvider.DataProvider;
+using LocationByZip.DataProvider;
 
 namespace LocationByZip
 {
@@ -28,9 +28,7 @@ namespace LocationByZip
 		{
 			VerifyZipCode(zipCode);
 
-			return ZipCodeDataProvider
-				.GetDataProvider()
-				.DoLookupByZipCode(zipCode);
+			return DataProviderFactory.Create().DoLookupByZipCode(zipCode);
 		}
 
 
@@ -46,9 +44,7 @@ namespace LocationByZip
 			VerifyCity(city);
 			VerifyState(state);
 
-			return ZipCodeDataProvider
-				.GetDataProvider()
-				.DoLookupByCityState(city, state);
+			return DataProviderFactory.Create().DoLookupByCityState(city, state);
 		}
 
 
