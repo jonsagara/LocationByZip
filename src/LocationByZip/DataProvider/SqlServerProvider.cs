@@ -15,7 +15,7 @@ namespace LocationByZip.DataProvider
 		{
 			get
 			{
-				string connStr = ConfigurationManager.AppSettings["ZipCodeConnString"];
+				string connStr = ConfigurationManager.ConnectionStrings["ZipCodeDatabase"].ConnectionString;
 
 				if (string.IsNullOrWhiteSpace(connStr))
 					throw new Exception("You must provide a connection string for your MS Access database.");
