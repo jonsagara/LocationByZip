@@ -177,5 +177,20 @@ namespace LocationByZip.UnitTests
 			var argEx = Assert.Throws<ArgumentException>(() => locationService.GetByCityState("San Luis Obispo", "\t "));
 			Assert.True(argEx.Message.StartsWith("State must be non-null"));
 		}
+
+
+		//
+		// GetLocationsInRadius
+		//
+
+		[Fact]
+		public void GetLocationsInRadius_ValidZipCodeValidRadiusExistingLocationsNearby_ReturnsNonEmptyList()
+		{
+			var locationService = new LocationService(new FakeLocationRepository());
+
+			IEnumerable<LocationInRadius> locationsNearby = locationService.GetLocationsInRadius("95814", 5.0);
+
+			Assert.NotEqual(0, locationsNearby.Count());
+		}
 	}
 }

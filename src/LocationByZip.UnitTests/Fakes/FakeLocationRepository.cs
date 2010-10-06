@@ -31,5 +31,10 @@ namespace LocationByZip.UnitTests.Fakes
 			return Locations
 				.Where(loc => loc.City.Equals(city, StringComparison.OrdinalIgnoreCase) && loc.State.Equals(state, StringComparison.OrdinalIgnoreCase));
 		}
+
+		public IEnumerable<LocationInRadius> GetLocationsInRadius(RadiusBox bounds)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

@@ -43,6 +43,24 @@ namespace LocationByZip
 			return locationRepository.GetByCityState(city, state);
 		}
 
+		public IEnumerable<LocationInRadius> GetLocationsInRadius(string zipCode, double radius)
+		{
+			ValidateZipCodeArgument(zipCode);
+			ValidateRadiusArgument(radius);
+
+			IEnumerable<LocationInRadius> locationsNearby = new List<LocationInRadius>();
+			Location origin = GetByZipCode(zipCode);
+
+			if (origin != null)
+			{
+				RadiusBox bounds = RadiusBox.Create(origin, radius);
+
+				locationsNearby = locationRepository.GetLocationsInRadius(bounds);
+			}
+
+			return locationsNearby;
+		}
+
 
 		//
 		// Helpers
@@ -69,6 +87,14 @@ namespace LocationByZip
 			if (string.IsNullOrWhiteSpace(state))
 			{
 				throw new ArgumentException("State must be non-null, non-white space string", "state");
+			}
+		}
+
+		private void ValidateRadiusArgument(double radius)
+		{
+			if (radius <= 0.0)
+			{
+				throw new ArgumentOutOfRangeException("radius", radius, "Radius must be greater than 0");
 			}
 		}
 	}

@@ -9,5 +9,6 @@ namespace LocationByZip
 	{
 		Location GetByZipCode(string zipCode);
 		IEnumerable<Location> GetByCityState(string city, string state);
+		IEnumerable<LocationInRadius> GetLocationsInRadius(RadiusBox bounds);
 	}
 }
