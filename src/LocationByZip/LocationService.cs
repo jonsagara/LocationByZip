@@ -60,6 +60,11 @@ namespace LocationByZip
 			return locationsNearby;
 		}
 
+		public double GetDistanceBetweenLocations(string zipCode1, string zipCode2)
+		{
+			throw new NotImplementedException();
+		}
+
 
 		//
 		// Helpers
