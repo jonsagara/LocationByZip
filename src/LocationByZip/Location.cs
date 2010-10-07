@@ -10,6 +10,10 @@ namespace LocationByZip
 	/// </summary>
 	public class Location
 	{
+		//
+		// Instance Properties
+		//
+
 		public string City { get; set; }
 		public string State { get; set; }
 		public string ZipCode { get; set; }
@@ -19,6 +23,10 @@ namespace LocationByZip
 		public string ZipClass { get; set; }
 
 
+		//
+		// Instance Methods
+		//
+
 		public double DistanceFrom(Location remoteLocation)
 		{
 			Verify(this);
@@ -26,6 +34,7 @@ namespace LocationByZip
 
 			return GetDistanceBetweenLocations(this, remoteLocation);
 		}
+
 
 		public override string ToString()
 		{
@@ -37,6 +46,37 @@ namespace LocationByZip
 			str.AppendFormat("\tZip Class:\t{0}", ZipClass);
 
 			return str.ToString();
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (obj == null)
+			{
+				return false;
+			}
+
+			Location other = obj as Location;
+			if (other == null)
+			{
+				return false;
+			}
+
+			return ZipCode.Equals(other.ZipCode, StringComparison.OrdinalIgnoreCase);
+		}
+
+		public override int GetHashCode()
+		{
+			unchecked // Overflow is fine; just wrap.
+			{
+				int hash = 17;
+
+				if (ZipCode != null)
+				{
+					hash = hash * 23 + ZipCode.GetHashCode();
+				}
+
+				return hash;
+			}
 		}
 
 
@@ -130,6 +170,35 @@ namespace LocationByZip
 			{
 				throw new ArgumentOutOfRangeException("inRadius", radius, "Invalid value for radius passed in.");
 			}
+		}
+
+
+		//
+		// Operator Overloads
+		//
+
+		public static bool operator ==(Location a, Location b)
+		{
+			// If both are null, or both are the same instance, return true.
+			if (object.ReferenceEquals(a, b))
+			{
+				return true;
+			}
+
+			// If one is null, but not both, return false.
+			// Cast to object is necessary, else we will get a StackOverflowException
+			//  due to repeatedly calling this method.
+			if ((object)a == null || (object)b == null)
+			{
+				return false;
+			}
+
+			return a.Equals(b);
+		}
+
+		public static bool operator !=(Location a, Location b)
+		{
+			return !(a == b);
 		}
 	}
 }
