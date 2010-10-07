@@ -54,7 +54,7 @@ namespace LocationByZip
 			{
 				RadiusBox bounds = RadiusBox.Create(origin, radius);
 
-				locationsNearby.AddRange(locationRepository.GetLocationsInRadius(bounds));
+				locationsNearby.AddRange(locationRepository.GetLocationsInRadius(origin, bounds));
 			}
 
 			return locationsNearby;
