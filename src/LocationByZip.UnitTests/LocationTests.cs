@@ -192,5 +192,54 @@ namespace LocationByZip.UnitTests
 
 			Assert.NotEqual(0, locationsNearby.Count());
 		}
+
+		[Fact]
+		public void GetLocationsInRadius_InvalidZipCodeValidRadiusExistingLocationsNearby_ReturnsEmptyList()
+		{
+			var locationService = new LocationService(new FakeLocationRepository());
+
+			IEnumerable<LocationInRadius> locationsNearby = locationService.GetLocationsInRadius("-12345", 5.0);
+
+			Assert.Equal(0, locationsNearby.Count());
+		}
+
+		[Fact]
+		public void GetLocationsInRadius_ValidZipCode0RadiusExistingLocationsNearby_ThrowsArgumentOutOfRangeException()
+		{
+			var locationService = new LocationService(new FakeLocationRepository());
+
+			var ex = Assert.Throws<ArgumentOutOfRangeException>(() => locationService.GetLocationsInRadius("95814", 0.0));
+			Assert.True(ex.Message.StartsWith("Radius must be greater than 0"));
+		}
+
+		[Fact]
+		public void GetLocationsInRadius_ValidZipCodeNegativeRadiusExistingLocationsNearby_ThrowsArgumentOutOfRangeException()
+		{
+			var locationService = new LocationService(new FakeLocationRepository());
+
+			var ex = Assert.Throws<ArgumentOutOfRangeException>(() => locationService.GetLocationsInRadius("95814", -100.0));
+			Assert.True(ex.Message.StartsWith("Radius must be greater than 0"));
+		}
+
+		[Fact]
+		public void GetLocationsInRadius_ValidZipCodeValidRadiusNoExistingLocationsNearby_ReturnsEmptyList()
+		{
+			var locationService = new LocationService(new FakeLocationRepository());
+
+			// There should be nothing within one mile of this ZIP code (see FakeLocationRepository's constructor).
+			IEnumerable<LocationInRadius> locationsNearby = locationService.GetLocationsInRadius("99950", 1.0);
+
+			// The Location itself is returned.
+			Assert.Equal(1, locationsNearby.Count());
+		}
+
+		[Fact]
+		public void GetLocationsInRadius_InvalidZipCodeInvalidRadiusExistingLocationsNearby_ThrowsArgumentOutOfRangeException()
+		{
+			var locationService = new LocationService(new FakeLocationRepository());
+
+			var ex = Assert.Throws<ArgumentOutOfRangeException>(() => locationService.GetLocationsInRadius("abcdefkjkjkjkjk", -3.14159));
+			Assert.True(ex.Message.StartsWith("Radius must be greater than 0"));
+		}
 	}
 }
