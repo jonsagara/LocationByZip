@@ -119,6 +119,10 @@ namespace LocationByZip.UnitTests.Fakes
 			Locations.Add(new Location { ZipCode = "95899", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "UNIQUE" });
 			#endregion
 
+			#region Lathrop, CA
+			Locations.Add(new Location { ZipCode = "95330", Latitude = 37.811976, Longitude = -121.287362, City = "LATHROP", State = "CA", ZipClass = "STANDARD" });
+			#endregion
+
 			#region Ketchikan, AK
 			Locations.Add(new Location { ZipCode = "99901", Latitude = 55.400674, Longitude = -131.674090, City = "KETCHIKAN", State = "AK", ZipClass = "STANDARD" });
 			Locations.Add(new Location { ZipCode = "99950", Latitude = 55.542007, Longitude = -131.432682, City = "KETCHIKAN", State = "AK", ZipClass = "STANDARD" });

@@ -241,5 +241,20 @@ namespace LocationByZip.UnitTests
 			var ex = Assert.Throws<ArgumentOutOfRangeException>(() => locationService.GetLocationsInRadius("abcdefkjkjkjkjk", -3.14159));
 			Assert.True(ex.Message.StartsWith("Radius must be greater than 0"));
 		}
+
+
+		//
+		// GetDistanceBetweenLocations
+		//
+
+		[Fact]
+		public void GetDistanceBetweenLocations_ValidZip1ValidZip2_ReturnsDistanceGreaterThan0()
+		{
+			var locationService = new LocationService(new FakeLocationRepository());
+
+			double distance = locationService.GetDistanceBetweenLocations("95814", "95330");
+
+			Assert.True(distance > 0.0);
+		}
 	}
 }

@@ -62,7 +62,19 @@ namespace LocationByZip
 
 		public double GetDistanceBetweenLocations(string zipCode1, string zipCode2)
 		{
-			throw new NotImplementedException();
+			ValidateZipCodeArgument(zipCode1);
+			ValidateZipCodeArgument(zipCode2);
+
+			double distance = 0.0;
+			Location location1 = GetByZipCode(zipCode1);
+			Location location2 = GetByZipCode(zipCode2);
+
+			if (location1 != null && location2 != null)
+			{
+				distance = location1.DistanceFrom(location2);
+			}
+
+			return distance;
 		}
 
 
