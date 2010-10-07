@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace LocationByZip
 {
@@ -17,6 +15,11 @@ namespace LocationByZip
 		//
 		// Instance Constructors
 		//
+
+		public LocationService()
+			: this(new SqlLocationRepository())
+		{
+		}
 
 		public LocationService(ILocationRepository locationRepository)
 		{

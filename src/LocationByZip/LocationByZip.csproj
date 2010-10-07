@@ -41,9 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataProvider\DataProviderFactory.cs" />
-    <Compile Include="DataProvider\IDataProvider.cs" />
-    <Compile Include="DataProvider\SqlServerProvider.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="ILocationRepository.cs" />
     <Compile Include="ILocationService.cs" />
@@ -52,7 +49,7 @@
     <Compile Include="LocationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RadiusBox.cs" />
-    <Compile Include="ZipCodeUtil.cs" />
+    <Compile Include="SqlLocationRepository.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

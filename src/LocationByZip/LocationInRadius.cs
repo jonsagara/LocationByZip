@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
+using System;
 
 namespace LocationByZip
 {
@@ -14,11 +12,11 @@ namespace LocationByZip
 		{
 			StringBuilder str = new StringBuilder();
 
-			str.AppendFormat("Location: {0}, {1} {2} in {3} County\n", City, State, ZipCode, County);
-			str.AppendFormat("\tLatitude:\t{0}\n", Latitude);
-			str.AppendFormat("\tLongitude:\t{0}\n", Longitude);
-			str.AppendFormat("\tZip Class:\t{0}\n", ZipClass);
-			str.AppendFormat("\tDistance to original location:\t{0}\n", DistanceToCenter);
+			str.AppendFormat("Location: {0}, {1} {2} in {3} County{4}", City, State, ZipCode, County, Environment.NewLine);
+			str.AppendFormat("\tLatitude:\t{0}{1}", Latitude, Environment.NewLine);
+			str.AppendFormat("\tLongitude:\t{0}{1}", Longitude, Environment.NewLine);
+			str.AppendFormat("\tZip Class:\t{0}{1}", ZipClass, Environment.NewLine);
+			str.AppendFormat("\tDistance to original location:\t{0:F1} miles", DistanceToCenter);
 
 			return str.ToString();
 		}

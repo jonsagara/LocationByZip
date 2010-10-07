@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
+using System.Configuration;
 
-namespace LocationByZip.DataProvider
+namespace LocationByZip
 {
-	/// <summary>
-	/// Implements the IDataProvider interface, interacting with an SQL Server 2005+ database.
-	/// </summary>
-	public class SqlServerProvider : IDataProvider
+	public class SqlLocationRepository : ILocationRepository
 	{
+		//
+		// Instance Properties
+		//
+
 		private string ConnectionString
 		{
 			get
@@ -18,25 +20,26 @@ namespace LocationByZip.DataProvider
 				string connStr = ConfigurationManager.ConnectionStrings["ZipCodeDatabase"].ConnectionString;
 
 				if (string.IsNullOrWhiteSpace(connStr))
-					throw new Exception("You must provide a connection string for your MS Access database.");
+				{
+					throw new Exception("You must provide a connection string for your SQL Server database.");
+				}
 
 				return connStr;
 			}
 		}
 
 
-
 		//
-		// IDataProvider Members
+		// ILocationRepository Members
 		//
 
 		/// <summary>
 		/// Look up a <see cref="LocationByZip.Location" /> by ZIP Code.  If Latitude
-		///  or Longitude are NULL, they are set to double.MinValue.
+		/// or Longitude are NULL, they are set to double.MinValue.
 		/// </summary>
 		/// <param name="zipCode">ZIP Code to lookup.</param>
 		/// <returns><see cref="LocationByZip.Location" /> of the ZIP Code.</returns>
-		public Location DoLookupByZipCode(string zipCode)
+		public Location GetByZipCode(string zipCode)
 		{
 			Location loc = null;
 
@@ -65,7 +68,7 @@ namespace LocationByZip.DataProvider
 		/// <param name="city">Name of the City.</param>
 		/// <param name="state">Name of the State.</param>
 		/// <returns>An array of <see cref="LocationByZip.Location" /> objects whose City/State matches the input City/State.</returns>
-		public IList<Location> DoLookupByCityState(string city, string state)
+		public IEnumerable<Location> GetByCityState(string city, string state)
 		{
 			IList<Location> locs = new List<Location>();
 
@@ -99,11 +102,11 @@ namespace LocationByZip.DataProvider
 		///  miles from inRefLoc are returned.  This has the unfortunate side effect of selecting
 		///  from ~22% more area than is necessary.
 		/// </remarks>
-		/// <param name="pointOfReference">The central location from which we are trying to find other locations within the specified radius.</param>
+		/// <param name="origin">The central location from which we are trying to find other locations within the specified radius.</param>
 		/// <param name="bounds">A class containing the "box" that encloses inRefLoc.  Used to approximate a circle of Radius R centered around the point inRefLoc.</param>
 		/// <returns>0 or more <see cref="LocationByZip.LocationInRadius" />es that are
 		///  within Radius miles of inRefLoc.</returns>
-		public IList<LocationInRadius> GetLocationsWithinRadius(Location pointOfReference, RadiusBox bounds)
+		public IEnumerable<LocationInRadius> GetLocationsInRadius(Location origin, RadiusBox bounds)
 		{
 			IList<LocationInRadius> locs = new List<LocationInRadius>();
 
@@ -123,7 +126,7 @@ namespace LocationByZip.DataProvider
 					while (reader.Read())
 					{
 						loc = ReadLocation<LocationInRadius>(reader);
-						loc.DistanceToCenter = pointOfReference.DistanceFrom(loc);
+						loc.DistanceToCenter = loc.DistanceFrom(origin);
 
 						if (loc.DistanceToCenter <= bounds.Radius)
 						{

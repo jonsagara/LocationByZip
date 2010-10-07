@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
-using LocationByZip.DataProvider;
-
 namespace LocationByZip
 {
 	/// <summary>
@@ -28,11 +26,6 @@ namespace LocationByZip
 			Verify(remoteLocation);
 
 			return GetDistanceBetweenLocations(this, remoteLocation);
-		}
-
-		public IList<LocationInRadius> LocationsWithinRadius(double radius)
-		{
-			return GetLocationsInRadius(radius);
 		}
 
 		public override string ToString()
@@ -102,15 +95,6 @@ namespace LocationByZip
 			dDistance = Globals.EarthRadiusMiles * c;
 
 			return dDistance;
-		}
-
-		private IList<LocationInRadius> GetLocationsInRadius(double radius)
-		{
-			Verify(this);
-
-			RadiusBox bounds = RadiusBox.Create(this, radius);
-
-			return DataProviderFactory.Create().GetLocationsWithinRadius(this, bounds);
 		}
 
 		internal void Verify()

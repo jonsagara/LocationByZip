@@ -9,41 +9,46 @@ namespace LocationByZip.DemoConsoleApp
 	{
 		static void Main(string[] args)
 		{
+			ILocationService locationSvc = new LocationService();
+
+
 			//	Location by ZIP Code.
-			Location location = ZipCodeUtil.LookupByZipCode("93275");
+			Location location = locationSvc.GetByZipCode("93275");
 			if (location != null)
 			{
-				Console.WriteLine(location);
-				Console.WriteLine();
+				DisplayLocation(location);
 			}
 
 
 			//	Location(s) by City/State.
-			IList<Location> locs = ZipCodeUtil.LookupByCityState("Tulare", "CA");
+			IEnumerable<Location> locs = locationSvc.GetByCityState("Tulare", "CA");
 			foreach (Location loc in locs)
 			{
-				Console.WriteLine(loc);
-				Console.WriteLine();
+				DisplayLocation(loc);
 			}
 
 
 			//	Distance between two locations.
-			Location slo = ZipCodeUtil.LookupByZipCode("93401");
-			Location paso = ZipCodeUtil.LookupByZipCode("93446");
-			Console.WriteLine("{0} is {1:F1} miles from {2}", slo.City, slo.DistanceFrom(paso), paso.City);
+			double distance = locationSvc.GetDistanceBetweenLocations("93401", "93446");
+			Console.WriteLine("93401 is {0:F1} miles from 93446", distance);
 			Console.WriteLine();
 
 
 			//	Other Locations within an X-mile radius of a specific location.
-			IList<LocationInRadius> locsInRadius = slo.LocationsWithinRadius(10.0);
+			IEnumerable<LocationInRadius> locsInRadius = locationSvc.GetLocationsInRadius("93401", 10.0);
 			foreach (Location locInRad in locsInRadius)
 			{
-				Console.WriteLine(locInRad);
-				Console.WriteLine();
+				DisplayLocation(locInRad);
 			}
 
 
 			Console.ReadLine();
+		}
+
+		static void DisplayLocation(Location location)
+		{
+			Console.WriteLine(location);
+			Console.WriteLine();
 		}
 	}
 }
