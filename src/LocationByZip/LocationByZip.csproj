@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Globals.cs" />
+    <Compile Include="Haversine.cs" />
     <Compile Include="ILocationRepository.cs" />
     <Compile Include="ILocationService.cs" />
     <Compile Include="Location.cs" />
