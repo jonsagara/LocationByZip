@@ -31,7 +31,7 @@ namespace LocationByZip
 			Verify(this);
 			Verify(remoteLocation);
 
-			return GetDistanceBetweenLocations(this, remoteLocation);
+			return Haversine.CalculateDistance(this, remoteLocation);
 		}
 
 
@@ -82,11 +82,6 @@ namespace LocationByZip
 		//
 		// Helpers
 		//
-
-		internal double GetDistanceBetweenLocations(Location loc1, Location loc2)
-		{
-			return Haversine.CalculateDistance(loc1, loc2);
-		}
 
 		internal void Verify()
 		{
