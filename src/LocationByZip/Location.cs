@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Text;
 
 namespace LocationByZip
@@ -143,19 +142,16 @@ namespace LocationByZip
 
 		internal static void Verify(Location location)
 		{
-			Debug.Assert(location != null);
 			if (location == null)
 			{
 				throw new ArgumentNullException("location");
 			}
 
-			Debug.Assert(location.Latitude != double.MinValue);
-			Debug.Assert(location.Longitude != double.MinValue);
-
 			if (location.Latitude == double.MinValue)
 			{
 				throw new ArgumentException("inLoc1.Latitude", string.Format("The database does not contain latitude information for {0}, {1}.", location.City, location.State));
 			}
+			
 			if (location.Longitude == double.MinValue)
 			{
 				throw new ArgumentException("inLoc1.Longitude", string.Format("The database does not contain longitude information for {0}, {1}.", location.City, location.State));
@@ -164,8 +160,6 @@ namespace LocationByZip
 
 		private void VerifyRadius(double radius)
 		{
-			Debug.Assert(radius > 0.0);
-
 			if (radius <= 0.0)
 			{
 				throw new ArgumentOutOfRangeException("inRadius", radius, "Invalid value for radius passed in.");
