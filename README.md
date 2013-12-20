@@ -10,7 +10,7 @@ This library provides a small set of methods to work with U.S. ZIP Codes. With i
 
 This is a code refresh of an article I wrote at The Code Project: [ZIP Code Utility](http://www.codeproject.com/Articles/9198/ZIP-Code-Utility)
 
-Instead of an Access database (which is no longer available for download), this code assumes you are using a SQL Server 2005+ database server. From the [Downloads](http://bitbucket.org/jonsagara/locationbyzip/downloads) tab, you can download the SQL script that creates and populates the ZipCode table.
+Instead of an Access database (which is no longer available for download), this code assumes you are using a SQL Server 2005+ database server. From the [Releases](https://github.com/jonsagara/LocationByZip/releases/tag/3.0.0) page, you can download the SQL script that creates and populates the ZipCode table.
 
 Usage
 -----
@@ -54,7 +54,7 @@ Creating the ZipCode table
 
 This assumes that you are using SQL Server 2005 or above.
 
-1. From the [Downloads](http://bitbucket.org/jonsagara/locationbyzip/downloads) tab, download ZipCode.7z.
+1. From the [Releases](https://github.com/jonsagara/LocationByZip/releases/tag/3.0.0) page, download ZipCode.7z.
 2. Using [7-Zip](http://www.7-zip.org/) or your favorite decompressor, extract ZipCode.sql from ZipCode.7z.
 3. In SQL Server Management Studio, create or select a database where you want the ZipCode table to live.
 4. Open ZipCode.sql in a new query window, and ensure your database is selected.
