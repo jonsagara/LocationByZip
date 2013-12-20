@@ -8,7 +8,7 @@ This library provides a small set of methods to work with U.S. ZIP Codes. With i
 * Retrieve a collection of locations that fall within a given radius of a certain ZIP Code
 * Determine the distance (in miles) between two ZIP Codes
 
-This is a code refresh of an article I wrote at The Code Project: [ZIP Code Utility](http://www.codeproject.com/KB/cs/zipcodeutil.aspx)
+This is a code refresh of an article I wrote at The Code Project: [ZIP Code Utility](http://www.codeproject.com/Articles/9198/ZIP-Code-Utility)
 
 Instead of an Access database (which is no longer available for download), this code assumes you are using a SQL Server 2005+ database server. From the [Downloads](http://bitbucket.org/jonsagara/locationbyzip/downloads) tab, you can download the SQL script that creates and populates the ZipCode table.
 
