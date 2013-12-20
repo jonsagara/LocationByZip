@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using LocationByZip.UnitTests.Fakes;
-using Xunit;
+using NUnit.Framework;
 
 namespace LocationByZip.UnitTests
 {
+    [TestFixture]
     public class LocationTests
     {
         //
         // GetByZipCode
         //
 
-        [Fact]
+        [Test]
         public void GetByZipCode_ValidZipCode_ReturnsNonNullLocation()
         {
             // Arrange
@@ -26,7 +26,7 @@ namespace LocationByZip.UnitTests
             Assert.NotNull(sacto);
         }
 
-        [Fact]
+        [Test]
         public void GetByZipCode_InvalidZipCode_ReturnsNullLocation()
         {
             // Arrange
@@ -39,7 +39,7 @@ namespace LocationByZip.UnitTests
             Assert.Null(fantasyLand);
         }
 
-        [Fact]
+        [Test]
         public void GetByZipCode_NullZipCode_ThrowsArgumentException()
         {
             var locationService = new LocationService(new FakeLocationRepository());
@@ -48,7 +48,7 @@ namespace LocationByZip.UnitTests
             Assert.True(argEx.Message.StartsWith("ZIP Code must be"));
         }
 
-        [Fact]
+        [Test]
         public void GetByZipCode_EmptyZipCode_ThrowsArgumentException()
         {
             var locationService = new LocationService(new FakeLocationRepository());
@@ -57,7 +57,7 @@ namespace LocationByZip.UnitTests
             Assert.True(argEx.Message.StartsWith("ZIP Code must be"));
         }
 
-        [Fact]
+        [Test]
         public void GetByZipCode_WhiteSpaceZipCode_ThrowsArgumentException()
         {
             var locationService = new LocationService(new FakeLocationRepository());
@@ -71,7 +71,7 @@ namespace LocationByZip.UnitTests
         // GetByCityState
         //
 
-        [Fact]
+        [Test]
         public void GetByCityState_ValidCityValidState_ReturnsNonEmptyList()
         {
             // Arrange
@@ -84,7 +84,7 @@ namespace LocationByZip.UnitTests
             Assert.True(sactoLocations.Count() > 0);
         }
 
-        [Fact]
+        [Test]
         public void GetByCityState_InvalidCityValidState_ReturnsEmptyList()
         {
             // Arrange
@@ -97,7 +97,7 @@ namespace LocationByZip.UnitTests
             Assert.True(nonsenseLocations.Count() == 0);
         }
 
-        [Fact]
+        [Test]
         public void GetByCityState_ValidCityInvalidState_ReturnsEmptyList()
         {
             // Arrange
@@ -110,7 +110,7 @@ namespace LocationByZip.UnitTests
             Assert.True(nonsenseLocations.Count() == 0);
         }
 
-        [Fact]
+        [Test]
         public void GetByCityState_InvalidCityInvalidState_ReturnsEmptyList()
         {
             // Arrange
@@ -123,7 +123,7 @@ namespace LocationByZip.UnitTests
             Assert.True(nonsenseLocations.Count() == 0);
         }
 
-        [Fact]
+        [Test]
         public void GetByCityState_NullCityValidState_ThrowsArgumentException()
         {
             var locationService = new LocationService(new FakeLocationRepository());
@@ -132,7 +132,7 @@ namespace LocationByZip.UnitTests
             Assert.True(argEx.Message.StartsWith("City must be non-null"));
         }
 
-        [Fact]
+        [Test]
         public void GetByCityState_EmptyCityValidState_ThrowsArgumentException()
         {
             var locationService = new LocationService(new FakeLocationRepository());
@@ -141,7 +141,7 @@ namespace LocationByZip.UnitTests
             Assert.True(argEx.Message.StartsWith("City must be non-null"));
         }
 
-        [Fact]
+        [Test]
         public void GetByCityState_WhiteSpaceCityValidState_ThrowsArgumentException()
         {
             var locationService = new LocationService(new FakeLocationRepository());
@@ -150,7 +150,7 @@ namespace LocationByZip.UnitTests
             Assert.True(argEx.Message.StartsWith("City must be non-null"));
         }
 
-        [Fact]
+        [Test]
         public void GetByCityState_ValidCityNullState_ThrowsArgumentException()
         {
             var locationService = new LocationService(new FakeLocationRepository());
@@ -159,7 +159,7 @@ namespace LocationByZip.UnitTests
             Assert.True(argEx.Message.StartsWith("State must be non-null"));
         }
 
-        [Fact]
+        [Test]
         public void GetByCityState_ValidCityEmptyState_ThrowsArgumentException()
         {
             var locationService = new LocationService(new FakeLocationRepository());
@@ -168,7 +168,7 @@ namespace LocationByZip.UnitTests
             Assert.True(argEx.Message.StartsWith("State must be non-null"));
         }
 
-        [Fact]
+        [Test]
         public void GetByCityState_ValidCityWhiteSpaceState_ThrowsArgumentException()
         {
             var locationService = new LocationService(new FakeLocationRepository());
@@ -182,27 +182,27 @@ namespace LocationByZip.UnitTests
         // GetLocationsInRadius
         //
 
-        [Fact]
+        [Test]
         public void GetLocationsInRadius_ValidZipCodeValidRadiusExistingLocationsNearby_ReturnsNonEmptyList()
         {
             var locationService = new LocationService(new FakeLocationRepository());
 
             IEnumerable<LocationInRadius> locationsNearby = locationService.GetLocationsInRadius("95814", 5.0);
 
-            Assert.NotEqual(0, locationsNearby.Count());
+            Assert.AreNotEqual(0, locationsNearby.Count());
         }
 
-        [Fact]
+        [Test]
         public void GetLocationsInRadius_InvalidZipCodeValidRadiusExistingLocationsNearby_ReturnsEmptyList()
         {
             var locationService = new LocationService(new FakeLocationRepository());
 
             IEnumerable<LocationInRadius> locationsNearby = locationService.GetLocationsInRadius("-12345", 5.0);
 
-            Assert.Equal(0, locationsNearby.Count());
+            Assert.AreEqual(0, locationsNearby.Count());
         }
 
-        [Fact]
+        [Test]
         public void GetLocationsInRadius_ValidZipCode0RadiusExistingLocationsNearby_ThrowsArgumentOutOfRangeException()
         {
             var locationService = new LocationService(new FakeLocationRepository());
@@ -211,7 +211,7 @@ namespace LocationByZip.UnitTests
             Assert.True(ex.Message.StartsWith("Radius must be greater than 0"));
         }
 
-        [Fact]
+        [Test]
         public void GetLocationsInRadius_ValidZipCodeNegativeRadiusExistingLocationsNearby_ThrowsArgumentOutOfRangeException()
         {
             var locationService = new LocationService(new FakeLocationRepository());
@@ -220,7 +220,7 @@ namespace LocationByZip.UnitTests
             Assert.True(ex.Message.StartsWith("Radius must be greater than 0"));
         }
 
-        [Fact]
+        [Test]
         public void GetLocationsInRadius_ValidZipCodeValidRadiusNoExistingLocationsNearby_ReturnsEmptyList()
         {
             var locationService = new LocationService(new FakeLocationRepository());
@@ -229,10 +229,10 @@ namespace LocationByZip.UnitTests
             IEnumerable<LocationInRadius> locationsNearby = locationService.GetLocationsInRadius("99950", 1.0);
 
             // The Location itself is returned.
-            Assert.Equal(1, locationsNearby.Count());
+            Assert.AreEqual(1, locationsNearby.Count());
         }
 
-        [Fact]
+        [Test]
         public void GetLocationsInRadius_InvalidZipCodeInvalidRadiusExistingLocationsNearby_ThrowsArgumentOutOfRangeException()
         {
             var locationService = new LocationService(new FakeLocationRepository());
@@ -246,7 +246,7 @@ namespace LocationByZip.UnitTests
         // GetDistanceBetweenLocations
         //
 
-        [Fact]
+        [Test]
         public void GetDistanceBetweenLocations_ValidZip1ValidZip2_ReturnsDistanceGreaterThan0()
         {
             var locationService = new LocationService(new FakeLocationRepository());
