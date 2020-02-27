@@ -16,10 +16,10 @@ namespace LocationByZip
         // Instance Constructors
         //
 
-        public LocationService()
-            : this(new SqlLocationRepository())
-        {
-        }
+        //public LocationService()
+        //    : this(new SqlLocationRepository())
+        //{
+        //}
 
         public LocationService(ILocationRepository locationRepository)
         {
