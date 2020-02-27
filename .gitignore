@@ -13,4 +13,8 @@ _ReSharper*/
 src/packages/
 *.orig
 ClientBin/
+App_Data/
+.vs/
+Logs/
+Files/
 
