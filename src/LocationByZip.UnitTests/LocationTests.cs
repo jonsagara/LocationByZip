@@ -237,7 +237,7 @@ namespace LocationByZip.UnitTests
             var locationService = new LocationService(new FakeLocationRepository());
 
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => locationService.GetLocationsInRadius("abcdefkjkjkjkjk", -3.14159));
-            Assert.True(ex.Message.StartsWith("Radius must be greater than 0"));
+            Assert.StartsWith("Radius must be greater than 0", ex.Message);
         }
 
 
