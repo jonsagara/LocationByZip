@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace LocationByZip
 {
@@ -11,7 +12,7 @@ namespace LocationByZip
         /// <remarks>See: http://en.wikipedia.org/wiki/Haversine_formula</remarks>
         /// <param name="location1">The first location.</param>
         /// <param name="location2">The second location.</param>
-        public static double CalculateDistance(Location? location1, Location? location2)
+        public static double CalculateDistance([AllowNull] Location location1, [AllowNull] Location location2)
         {
             if (location1 is null)
             {
