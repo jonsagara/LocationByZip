@@ -1,9 +1,6 @@
 ﻿using System;
-using System.IO;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace LocationByZip.DemoConsoleApp
@@ -14,45 +11,10 @@ namespace LocationByZip.DemoConsoleApp
         {
             try
             {
-                var builder = new HostBuilder()
-                    .ConfigureHostConfiguration(
-                        configHost =>
-                        {
-                            configHost.SetBasePath(Directory.GetCurrentDirectory());
-                            configHost.AddJsonFile("hostsettings.json", optional: true);
+                // Build the generic host.
+                var host = HostBuilderHelper.BuildHost(args);
 
-                            if (args != null)
-                            {
-                                configHost.AddCommandLine(args);
-                            }
-                        })
-                    .ConfigureAppConfiguration(
-                        (hostContext, configApp) =>
-                        {
-                            configApp.AddJsonFile("appsettings.json", optional: true);
-                            configApp.AddJsonFile($"appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json", optional: true);
-
-                            if (args != null)
-                            {
-                                configApp.AddCommandLine(args);
-                            }
-                        })
-                    .ConfigureServices(
-                        (hostContext, services) =>
-                        {
-                            Console.WriteLine($"Environment: {hostContext.HostingEnvironment.EnvironmentName}");
-                            services.AddTransient<LocationService, LocationService>();
-                            services.AddTransient<ILocationRepository, SqlLocationRepository>();
-                        })
-                    .ConfigureLogging(
-                        (hostContext, configLogging) =>
-                        {
-                            configLogging.AddConsole();
-                        })
-                    .UseConsoleLifetime();
-
-                var host = builder.Build();
-
+                // Demo the location service.
                 using (var serviceScope = host.Services.CreateScope())
                 {
                     var services = serviceScope.ServiceProvider;
@@ -69,7 +31,6 @@ namespace LocationByZip.DemoConsoleApp
                             DisplayLocation(location);
                         }
 
-
                         // Location(s) by City/State
                         Console.WriteLine();
                         Console.WriteLine("=== Location(s) by City/State ===");
@@ -79,7 +40,6 @@ namespace LocationByZip.DemoConsoleApp
                         {
                             DisplayLocation(loc);
                         }
-
 
                         // Location(s) in Radius
                         Console.WriteLine();
@@ -91,7 +51,6 @@ namespace LocationByZip.DemoConsoleApp
                             DisplayLocation(locInRad);
                         }
 
-
                         //	Distance between two locations.
                         Console.WriteLine();
                         Console.WriteLine("=== Distance between two ZIP Codes ===");
@@ -99,9 +58,6 @@ namespace LocationByZip.DemoConsoleApp
                         var distance = await locationSvc.GetDistanceBetweenLocationsAsync("93401", "93446");
                         Console.WriteLine("93401 is {0:F1} miles from 93446", distance);
                         Console.WriteLine();
-
-
-                        Console.ReadLine();
                     }
                     catch (Exception ex)
                     {
