@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using LocationByZip.UnitTests.Fakes;
 using Xunit;
 
@@ -13,55 +13,55 @@ namespace LocationByZip.UnitTests
         //
 
         [Fact]
-        public void GetByZipCode_ValidZipCode_ReturnsNonNullLocation()
+        public async Task GetByZipCode_ValidZipCode_ReturnsNonNullLocation()
         {
             // Arrange
             var locationService = new LocationService(new FakeLocationRepository());
 
             // Act
-            Location sacto = locationService.GetByZipCode("95814");
+            var sacto = await locationService.GetByZipCodeAsync("95814");
 
             // Assert
             Assert.NotNull(sacto);
         }
 
         [Fact]
-        public void GetByZipCode_InvalidZipCode_ReturnsNullLocation()
+        public async Task GetByZipCode_InvalidZipCode_ReturnsNullLocation()
         {
             // Arrange
             var locationService = new LocationService(new FakeLocationRepository());
 
             // Act
-            Location fantasyLand = locationService.GetByZipCode("xzy123");
+            var fantasyLand = await locationService.GetByZipCodeAsync("xzy123");
 
             // Assert
             Assert.Null(fantasyLand);
         }
 
         [Fact]
-        public void GetByZipCode_NullZipCode_ThrowsArgumentException()
+        public async Task GetByZipCode_NullZipCode_ThrowsArgumentException()
         {
             var locationService = new LocationService(new FakeLocationRepository());
 
-            var argEx = Assert.Throws<ArgumentException>(() => locationService.GetByZipCode(null));
+            var argEx = await Assert.ThrowsAsync<ArgumentException>(async () => await locationService.GetByZipCodeAsync(null));
             Assert.StartsWith("ZIP Code must be", argEx.Message);
         }
 
         [Fact]
-        public void GetByZipCode_EmptyZipCode_ThrowsArgumentException()
+        public async Task GetByZipCode_EmptyZipCode_ThrowsArgumentException()
         {
             var locationService = new LocationService(new FakeLocationRepository());
 
-            var argEx = Assert.Throws<ArgumentException>(() => locationService.GetByZipCode(string.Empty));
+            var argEx = await Assert.ThrowsAsync<ArgumentException>(async () => await locationService.GetByZipCodeAsync(string.Empty));
             Assert.StartsWith("ZIP Code must be", argEx.Message);
         }
 
         [Fact]
-        public void GetByZipCode_WhiteSpaceZipCode_ThrowsArgumentException()
+        public async Task GetByZipCode_WhiteSpaceZipCode_ThrowsArgumentException()
         {
             var locationService = new LocationService(new FakeLocationRepository());
 
-            var argEx = Assert.Throws<ArgumentException>(() => locationService.GetByZipCode("\t "));
+            var argEx = await Assert.ThrowsAsync<ArgumentException>(async () => await locationService.GetByZipCodeAsync("\t "));
             Assert.StartsWith("ZIP Code must be", argEx.Message);
         }
 
@@ -71,108 +71,108 @@ namespace LocationByZip.UnitTests
         //
 
         [Fact]
-        public void GetByCityState_ValidCityValidState_ReturnsNonEmptyList()
+        public async Task GetByCityState_ValidCityValidState_ReturnsNonEmptyList()
         {
             // Arrange
             var locationService = new LocationService(new FakeLocationRepository());
 
             // Act
-            IEnumerable<Location> sactoLocations = locationService.GetByCityState("Sacramento", "CA");
+            var sactoLocations = await locationService.GetByCityStateAsync("Sacramento", "CA");
 
             // Assert
-            Assert.True(sactoLocations.Count() > 0);
+            Assert.NotEmpty(sactoLocations);
         }
 
         [Fact]
-        public void GetByCityState_InvalidCityValidState_ReturnsEmptyList()
+        public async Task GetByCityState_InvalidCityValidState_ReturnsEmptyList()
         {
             // Arrange
             var locationService = new LocationService(new FakeLocationRepository());
 
             // Act
-            IEnumerable<Location> nonsenseLocations = locationService.GetByCityState("xyz123abc4217", "CA");
+            var nonsenseLocations = await locationService.GetByCityStateAsync("xyz123abc4217", "CA");
 
             // Assert
-            Assert.True(nonsenseLocations.Count() == 0);
+            Assert.Empty(nonsenseLocations);
         }
 
         [Fact]
-        public void GetByCityState_ValidCityInvalidState_ReturnsEmptyList()
+        public async Task GetByCityState_ValidCityInvalidState_ReturnsEmptyList()
         {
             // Arrange
             var locationService = new LocationService(new FakeLocationRepository());
 
             // Act
-            IEnumerable<Location> nonsenseLocations = locationService.GetByCityState("Sacramento", "BB");
+            var nonsenseLocations = await locationService.GetByCityStateAsync("Sacramento", "BB");
 
             // Assert
-            Assert.True(nonsenseLocations.Count() == 0);
+            Assert.Empty(nonsenseLocations);
         }
 
         [Fact]
-        public void GetByCityState_InvalidCityInvalidState_ReturnsEmptyList()
+        public async Task GetByCityState_InvalidCityInvalidState_ReturnsEmptyList()
         {
             // Arrange
             var locationService = new LocationService(new FakeLocationRepository());
 
             // Act
-            IEnumerable<Location> nonsenseLocations = locationService.GetByCityState("$#@ASDFad", "ZZ");
+            var nonsenseLocations = await locationService.GetByCityStateAsync("$#@ASDFad", "ZZ");
 
             // Assert
-            Assert.True(nonsenseLocations.Count() == 0);
+            Assert.Empty(nonsenseLocations);
         }
 
         [Fact]
-        public void GetByCityState_NullCityValidState_ThrowsArgumentException()
+        public async Task GetByCityState_NullCityValidState_ThrowsArgumentException()
         {
             var locationService = new LocationService(new FakeLocationRepository());
 
-            var argEx = Assert.Throws<ArgumentException>(() => locationService.GetByCityState(null, "ZZ"));
+            var argEx = await Assert.ThrowsAsync<ArgumentException>(async () => await locationService.GetByCityStateAsync(null, "ZZ"));
             Assert.StartsWith("City must be non-null", argEx.Message);
         }
 
         [Fact]
-        public void GetByCityState_EmptyCityValidState_ThrowsArgumentException()
+        public async Task GetByCityState_EmptyCityValidState_ThrowsArgumentException()
         {
             var locationService = new LocationService(new FakeLocationRepository());
 
-            var argEx = Assert.Throws<ArgumentException>(() => locationService.GetByCityState(string.Empty, "ZZ"));
+            var argEx = await Assert.ThrowsAsync<ArgumentException>(async () => await locationService.GetByCityStateAsync(string.Empty, "ZZ"));
             Assert.StartsWith("City must be non-null", argEx.Message);
         }
 
         [Fact]
-        public void GetByCityState_WhiteSpaceCityValidState_ThrowsArgumentException()
+        public async Task GetByCityState_WhiteSpaceCityValidState_ThrowsArgumentException()
         {
             var locationService = new LocationService(new FakeLocationRepository());
 
-            var argEx = Assert.Throws<ArgumentException>(() => locationService.GetByCityState(" \t", "ZZ"));
+            var argEx = await Assert.ThrowsAsync<ArgumentException>(async () => await locationService.GetByCityStateAsync(" \t", "ZZ"));
             Assert.StartsWith("City must be non-null", argEx.Message);
         }
 
         [Fact]
-        public void GetByCityState_ValidCityNullState_ThrowsArgumentException()
+        public async Task GetByCityState_ValidCityNullState_ThrowsArgumentException()
         {
             var locationService = new LocationService(new FakeLocationRepository());
 
-            var argEx = Assert.Throws<ArgumentException>(() => locationService.GetByCityState("San Luis Obispo", null));
+            var argEx = await Assert.ThrowsAsync<ArgumentException>(async () => await locationService.GetByCityStateAsync("San Luis Obispo", null));
             Assert.StartsWith("State must be non-null", argEx.Message);
         }
 
         [Fact]
-        public void GetByCityState_ValidCityEmptyState_ThrowsArgumentException()
+        public async Task GetByCityState_ValidCityEmptyState_ThrowsArgumentException()
         {
             var locationService = new LocationService(new FakeLocationRepository());
 
-            var argEx = Assert.Throws<ArgumentException>(() => locationService.GetByCityState("San Luis Obispo", string.Empty));
+            var argEx = await Assert.ThrowsAsync<ArgumentException>(async () => await locationService.GetByCityStateAsync("San Luis Obispo", string.Empty));
             Assert.StartsWith("State must be non-null", argEx.Message);
         }
 
         [Fact]
-        public void GetByCityState_ValidCityWhiteSpaceState_ThrowsArgumentException()
+        public async Task GetByCityState_ValidCityWhiteSpaceState_ThrowsArgumentException()
         {
             var locationService = new LocationService(new FakeLocationRepository());
 
-            var argEx = Assert.Throws<ArgumentException>(() => locationService.GetByCityState("San Luis Obispo", "\t "));
+            var argEx = await Assert.ThrowsAsync<ArgumentException>(async () => await locationService.GetByCityStateAsync("San Luis Obispo", "\t "));
             Assert.StartsWith("State must be non-null", argEx.Message);
         }
 
@@ -182,61 +182,61 @@ namespace LocationByZip.UnitTests
         //
 
         [Fact]
-        public void GetLocationsInRadius_ValidZipCodeValidRadiusExistingLocationsNearby_ReturnsNonEmptyList()
+        public async Task GetLocationsInRadius_ValidZipCodeValidRadiusExistingLocationsNearby_ReturnsNonEmptyList()
         {
             var locationService = new LocationService(new FakeLocationRepository());
 
-            IEnumerable<LocationInRadius> locationsNearby = locationService.GetLocationsInRadius("95814", 5.0);
+            var locationsNearby = await locationService.GetLocationsInRadiusAsync("95814", 5.0);
 
             Assert.NotEmpty(locationsNearby);
         }
 
         [Fact]
-        public void GetLocationsInRadius_InvalidZipCodeValidRadiusExistingLocationsNearby_ReturnsEmptyList()
+        public async Task GetLocationsInRadius_InvalidZipCodeValidRadiusExistingLocationsNearby_ReturnsEmptyList()
         {
             var locationService = new LocationService(new FakeLocationRepository());
 
-            IEnumerable<LocationInRadius> locationsNearby = locationService.GetLocationsInRadius("-12345", 5.0);
+            var locationsNearby = await locationService.GetLocationsInRadiusAsync("-12345", 5.0);
 
             Assert.Empty(locationsNearby);
         }
 
         [Fact]
-        public void GetLocationsInRadius_ValidZipCode0RadiusExistingLocationsNearby_ThrowsArgumentOutOfRangeException()
+        public async Task GetLocationsInRadius_ValidZipCode0RadiusExistingLocationsNearby_ThrowsArgumentOutOfRangeException()
         {
             var locationService = new LocationService(new FakeLocationRepository());
 
-            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => locationService.GetLocationsInRadius("95814", 0.0));
+            var ex = await Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await locationService.GetLocationsInRadiusAsync("95814", 0.0));
             Assert.StartsWith("Radius must be greater than 0", ex.Message);
         }
 
         [Fact]
-        public void GetLocationsInRadius_ValidZipCodeNegativeRadiusExistingLocationsNearby_ThrowsArgumentOutOfRangeException()
+        public async Task GetLocationsInRadius_ValidZipCodeNegativeRadiusExistingLocationsNearby_ThrowsArgumentOutOfRangeException()
         {
             var locationService = new LocationService(new FakeLocationRepository());
 
-            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => locationService.GetLocationsInRadius("95814", -100.0));
+            var ex = await Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await locationService.GetLocationsInRadiusAsync("95814", -100.0));
             Assert.StartsWith("Radius must be greater than 0", ex.Message);
         }
 
         [Fact]
-        public void GetLocationsInRadius_ValidZipCodeValidRadiusNoExistingLocationsNearby_ReturnsEmptyList()
+        public async Task GetLocationsInRadius_ValidZipCodeValidRadiusNoExistingLocationsNearby_ReturnsEmptyList()
         {
             var locationService = new LocationService(new FakeLocationRepository());
 
             // There should be nothing within one mile of this ZIP code (see FakeLocationRepository's constructor).
-            IEnumerable<LocationInRadius> locationsNearby = locationService.GetLocationsInRadius("99950", 1.0);
+            var locationsNearby = await locationService.GetLocationsInRadiusAsync("99950", 1.0);
 
             // The Location itself is returned.
             Assert.Single(locationsNearby);
         }
 
         [Fact]
-        public void GetLocationsInRadius_InvalidZipCodeInvalidRadiusExistingLocationsNearby_ThrowsArgumentOutOfRangeException()
+        public async Task GetLocationsInRadius_InvalidZipCodeInvalidRadiusExistingLocationsNearby_ThrowsArgumentOutOfRangeException()
         {
             var locationService = new LocationService(new FakeLocationRepository());
 
-            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => locationService.GetLocationsInRadius("abcdefkjkjkjkjk", -3.14159));
+            var ex = await Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await locationService.GetLocationsInRadiusAsync("abcdefkjkjkjkjk", -3.14159));
             Assert.StartsWith("Radius must be greater than 0", ex.Message);
         }
 
@@ -246,11 +246,11 @@ namespace LocationByZip.UnitTests
         //
 
         [Fact]
-        public void GetDistanceBetweenLocations_ValidZip1ValidZip2_ReturnsDistanceGreaterThan0()
+        public async Task GetDistanceBetweenLocations_ValidZip1ValidZip2_ReturnsDistanceGreaterThan0()
         {
             var locationService = new LocationService(new FakeLocationRepository());
 
-            double distance = locationService.GetDistanceBetweenLocations("95814", "95330");
+            var distance = await locationService.GetDistanceBetweenLocationsAsync("95814", "95330");
 
             Assert.True(distance > 0.0);
         }

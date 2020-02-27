@@ -1,54 +1,130 @@
 ﻿using System;
+using System.IO;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace LocationByZip.DemoConsoleApp
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task<int> Main(string[] args)
         {
-            var locationSvc = new LocationService();
-
-            // Location by ZIP Code
-            Console.WriteLine("=== Location by ZIP Code ===");
-            Location location = locationSvc.GetByZipCode("93275");
-            if (location != null)
+            try
             {
-                DisplayLocation(location);
+                var builder = new HostBuilder()
+                    .ConfigureHostConfiguration(
+                        configHost =>
+                        {
+                            configHost.SetBasePath(Directory.GetCurrentDirectory());
+                            configHost.AddJsonFile("hostsettings.json", optional: true);
+
+                            // Analogous to ASPNETCORE_WHATEVER, except it's PREFIX_WHATEVER
+                            configHost.AddEnvironmentVariables(prefix: "PREFIX_");
+
+                            if (args != null)
+                            {
+                                configHost.AddCommandLine(args);
+                            }
+                        })
+                    .ConfigureAppConfiguration(
+                        (hostContext, configApp) =>
+                        {
+                            configApp.AddJsonFile("appsettings.json", optional: true);
+                            configApp.AddJsonFile($"appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json", optional: true);
+
+                            // Analogous to ASPNETCORE_WHATEVER, except it's PREFIX_WHATEVER
+                            configApp.AddEnvironmentVariables(prefix: "PREFIX_");
+
+                            if (args != null)
+                            {
+                                configApp.AddCommandLine(args);
+                            }
+                        })
+                    .ConfigureServices(
+                        (hostContext, services) =>
+                        {
+                            Console.WriteLine($"Environment: {hostContext.HostingEnvironment.EnvironmentName}");
+                            services.AddTransient<LocationService, LocationService>();
+                            services.AddTransient<ILocationRepository, SqlLocationRepository>();
+                        })
+                    //.ConfigureLogging(
+                    //    (hostContext, configLogging) =>
+                    //    {
+                    //        configLogging.AddConsole();
+                    //        configLogging.AddDebug();
+                    //    })
+                    .UseConsoleLifetime();
+
+                var host = builder.Build();
+
+                using (var serviceScope = host.Services.CreateScope())
+                {
+                    var services = serviceScope.ServiceProvider;
+
+                    try
+                    {
+                        var locationSvc = services.GetRequiredService<LocationService>();
+
+                        // Location by ZIP Code
+                        Console.WriteLine("=== Location by ZIP Code ===");
+                        Location location = await locationSvc.GetByZipCodeAsync("93275");
+                        if (location != null)
+                        {
+                            DisplayLocation(location);
+                        }
+
+
+                        // Location(s) by City/State
+                        Console.WriteLine();
+                        Console.WriteLine("=== Location(s) by City/State ===");
+
+                        var locationsByCityState = await locationSvc.GetByCityStateAsync("Tulare", "CA");
+                        foreach (var loc in locationsByCityState)
+                        {
+                            DisplayLocation(loc);
+                        }
+
+
+                        // Location(s) in Radius
+                        Console.WriteLine();
+                        Console.WriteLine("=== Location(s) in Radius ===");
+
+                        var locsationsInRadius = await locationSvc.GetLocationsInRadiusAsync("93401", 10.0);
+                        foreach (Location locInRad in locsationsInRadius)
+                        {
+                            DisplayLocation(locInRad);
+                        }
+
+
+                        //	Distance between two locations.
+                        Console.WriteLine();
+                        Console.WriteLine("=== Distance between two ZIP Codes ===");
+
+                        var distance = await locationSvc.GetDistanceBetweenLocationsAsync("93401", "93446");
+                        Console.WriteLine("93401 is {0:F1} miles from 93446", distance);
+                        Console.WriteLine();
+
+
+                        Console.ReadLine();
+                    }
+                    catch (Exception ex)
+                    {
+                        var logger = services.GetRequiredService<ILogger<Program>>();
+                        Console.Error.WriteLine($"Unhandled exception: {ex}");
+                        logger.LogError(ex, "Unhandled exception");
+                    }
+                }
+
+                return 0;
             }
-
-
-            // Location(s) by City/State
-            Console.WriteLine();
-            Console.WriteLine("=== Location(s) by City/State ===");
-
-            var locationsByCityState = locationSvc.GetByCityState("Tulare", "CA");
-            foreach (var loc in locationsByCityState)
+            catch (Exception ex)
             {
-                DisplayLocation(loc);
+                Console.Error.WriteLine($"Unhandled exception in Main: {ex}");
+                return 1;
             }
-
-
-            // Location(s) in Radius
-            Console.WriteLine();
-            Console.WriteLine("=== Location(s) in Radius ===");
-
-            var locsationsInRadius = locationSvc.GetLocationsInRadius("93401", 10.0);
-            foreach (Location locInRad in locsationsInRadius)
-            {
-                DisplayLocation(locInRad);
-            }
-
-
-            //	Distance between two locations.
-            Console.WriteLine();
-            Console.WriteLine("=== Distance between two ZIP Codes ===");
-
-            var distance = locationSvc.GetDistanceBetweenLocations("93401", "93446");
-            Console.WriteLine("93401 is {0:F1} miles from 93446", distance);
-            Console.WriteLine();
-
-
-            Console.ReadLine();
         }
 
         static void DisplayLocation(Location location)

@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace LocationByZip
 {
     public interface ILocationRepository
     {
-        Location GetByZipCode(string zipCode);
-        IEnumerable<Location> GetByCityState(string city, string state);
-        IEnumerable<LocationInRadius> GetLocationsInRadius(Location origin, RadiusBox bounds);
+        Task<Location> GetByZipCodeAsync(string zipCode);
+        Task<IReadOnlyCollection<Location>> GetByCityStateAsync(string city, string state);
+        Task<IReadOnlyCollection<LocationInRadius>> GetLocationsInRadiusAsync(Location origin, RadiusBox bounds);
     }
 }

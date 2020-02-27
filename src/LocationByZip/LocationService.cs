@@ -1,29 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace LocationByZip
 {
     public class LocationService
     {
-        //
-        // Instance Data
-        //
-
-        private ILocationRepository _locationRepository;
-
-
-        //
-        // Instance Constructors
-        //
-
-        public LocationService()
-            : this(new SqlLocationRepository())
-        {
-        }
+        private readonly ILocationRepository _locationRepository;
 
         public LocationService(ILocationRepository locationRepository)
         {
-            this._locationRepository = locationRepository;
+            _locationRepository = locationRepository;
         }
 
 
@@ -31,22 +18,22 @@ namespace LocationByZip
         // LocationService Methods
         //
 
-        public Location GetByZipCode(string zipCode)
+        public async Task<Location> GetByZipCodeAsync(string zipCode)
         {
             ValidateZipCodeArgument(zipCode);
 
-            return _locationRepository.GetByZipCode(zipCode);
+            return await _locationRepository.GetByZipCodeAsync(zipCode);
         }
 
-        public IEnumerable<Location> GetByCityState(string city, string state)
+        public async Task<IReadOnlyCollection<Location>> GetByCityStateAsync(string city, string state)
         {
             ValidateCityArgument(city);
             ValidateStateArgument(state);
 
-            return _locationRepository.GetByCityState(city, state);
+            return await _locationRepository.GetByCityStateAsync(city, state);
         }
 
-        public IEnumerable<LocationInRadius> GetLocationsInRadius(string zipCode, double radiusMiles)
+        public async Task<IReadOnlyCollection<LocationInRadius>> GetLocationsInRadiusAsync(string zipCode, double radiusMiles)
         {
             ValidateZipCodeArgument(zipCode);
             ValidateRadiusArgument(radiusMiles);
@@ -54,7 +41,7 @@ namespace LocationByZip
             var locationsNearby = new List<LocationInRadius>();
 
             // Get the lat/lon coordinates of the ZIP code (usually the centroid).
-            var centerOfSearch = GetByZipCode(zipCode);
+            var centerOfSearch = await GetByZipCodeAsync(zipCode);
 
             if (centerOfSearch != null)
             {
@@ -63,19 +50,19 @@ namespace LocationByZip
 
                 // Get all locations within the bounding box, and then filter out any that are more than 
                 //   radius miles away from the center of the search.
-                locationsNearby.AddRange(_locationRepository.GetLocationsInRadius(centerOfSearch, boundingBox));
+                locationsNearby.AddRange(await _locationRepository.GetLocationsInRadiusAsync(centerOfSearch, boundingBox));
             }
 
             return locationsNearby;
         }
 
-        public double GetDistanceBetweenLocations(string zipCode1, string zipCode2)
+        public async Task<double> GetDistanceBetweenLocationsAsync(string zipCode1, string zipCode2)
         {
             ValidateZipCodeArgument(zipCode1);
             ValidateZipCodeArgument(zipCode2);
 
-            var location1 = GetByZipCode(zipCode1);
-            var location2 = GetByZipCode(zipCode2);
+            var location1 = await GetByZipCodeAsync(zipCode1);
+            var location2 = await GetByZipCodeAsync(zipCode2);
 
             return location1 != null && location2 != null
                 ? location1.DistanceFrom(location2)

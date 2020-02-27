@@ -1,36 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Dapper;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 
 namespace LocationByZip
 {
     public class SqlLocationRepository : ILocationRepository
     {
-        //
-        // Instance Properties
-        //
+        //private readonly IConfiguration _config;
 
-        private string ConnectionString
+        private string _connectionString { get; }
+
+        public SqlLocationRepository(IConfiguration config)
         {
-            get
-            {
-                throw new NotImplementedException();
-                //string connStr = ConfigurationManager.ConnectionStrings["ZipCodeDatabase"].ConnectionString;
-
-                //if (string.IsNullOrWhiteSpace(connStr))
-                //{
-                //    throw new Exception("You must provide a connection string for your SQL Server database.");
-                //}
-
-                //return connStr;
-            }
+            //_config = config;
+            _connectionString = config.GetConnectionString("LocationByZip");
         }
 
-
-        //
-        // ILocationRepository Members
-        //
 
         /// <summary>
         /// Look up a <see cref="LocationByZip.Location" /> by ZIP Code.  If Latitude
@@ -38,26 +26,13 @@ namespace LocationByZip
         /// </summary>
         /// <param name="zipCode">ZIP Code to lookup.</param>
         /// <returns><see cref="LocationByZip.Location" /> of the ZIP Code.</returns>
-        public Location GetByZipCode(string zipCode)
+        public async Task<Location> GetByZipCodeAsync(string zipCode)
         {
-            Location loc = null;
-
-            using (var conn = new SqlConnection(ConnectionString))
-            using (var cmd = new SqlCommand(GetDoLookupByZipCodeSql(), conn))
+            using (var conn = new SqlConnection(_connectionString))
             {
-                cmd.Parameters.Add(new SqlParameter("@ZipCode", zipCode));
-                conn.Open();
-
-                using (var reader = cmd.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        loc = ReadLocation<Location>(reader);
-                    }
-                }
+                return (await conn.QueryAsync<Location>(GetDoLookupByZipCodeSql(), new { Zip5 = zipCode }))
+                    .SingleOrDefault();
             }
-
-            return loc;
         }
 
         /// <summary>
@@ -67,27 +42,13 @@ namespace LocationByZip
         /// <param name="city">Name of the City.</param>
         /// <param name="state">Name of the State.</param>
         /// <returns>An array of <see cref="LocationByZip.Location" /> objects whose City/State matches the input City/State.</returns>
-        public IEnumerable<Location> GetByCityState(string city, string state)
+        public async Task<IReadOnlyCollection<Location>> GetByCityStateAsync(string city, string state)
         {
-            IList<Location> locs = new List<Location>();
-
-            using (var conn = new SqlConnection(ConnectionString))
-            using (var cmd = new SqlCommand(GetDoLookupByCityStateSql(), conn))
+            using (var conn = new SqlConnection(_connectionString))
             {
-                cmd.Parameters.Add(new SqlParameter("@City", city));
-                cmd.Parameters.Add(new SqlParameter("@State", state));
-                conn.Open();
-
-                using (var reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        locs.Add(ReadLocation<Location>(reader));
-                    }
-                }
+                return (await conn.QueryAsync<Location>(GetDoLookupByCityStateSql(), new { city, state }))
+                    .ToArray();
             }
-
-            return locs;
         }
 
         /// <summary>
@@ -105,39 +66,37 @@ namespace LocationByZip
         /// <param name="bounds">A class containing the "box" that encloses inRefLoc.  Used to approximate a circle of Radius R centered around the point inRefLoc.</param>
         /// <returns>0 or more <see cref="LocationByZip.LocationInRadius" />es that are
         ///  within Radius miles of inRefLoc.</returns>
-        public IEnumerable<LocationInRadius> GetLocationsInRadius(Location origin, RadiusBox bounds)
+        public async Task<IReadOnlyCollection<LocationInRadius>> GetLocationsInRadiusAsync(Location origin, RadiusBox bounds)
         {
-            IList<LocationInRadius> locs = new List<LocationInRadius>();
+            var locationsInRadius = new List<LocationInRadius>();
 
-            using (var conn = new SqlConnection(ConnectionString))
-            using (var cmd = new SqlCommand(GetLocationsWithinRadiusSql(), conn))
+            using (var conn = new SqlConnection(_connectionString))
             {
-                cmd.Parameters.Add(new SqlParameter("@SouthLat", bounds.BottomLatitude));
-                cmd.Parameters.Add(new SqlParameter("@NorthLat", bounds.TopLatitude));
-                cmd.Parameters.Add(new SqlParameter("@WestLon", bounds.LeftLongitude));
-                cmd.Parameters.Add(new SqlParameter("@EastLon", bounds.RightLongitude));
-                conn.Open();
-
-                using (var reader = cmd.ExecuteReader())
+                var args = new
                 {
-                    LocationInRadius loc = null;
+                    SouthLat = bounds.BottomLatitude,
+                    NorthLat = bounds.TopLatitude,
+                    WestLon = bounds.LeftLongitude,
+                    EastLon = bounds.RightLongitude,
+                };
 
-                    while (reader.Read())
+                var locs = (await conn.QueryAsync<LocationInRadius>(GetLocationsWithinRadiusSql(), args))
+                    .ToArray();
+
+                foreach (var loc in locs)
+                {
+                    loc.DistanceToCenter = loc.DistanceFrom(origin);
+
+                    if (loc.DistanceToCenter <= bounds.RadiusMiles)
                     {
-                        loc = ReadLocation<LocationInRadius>(reader);
-                        loc.DistanceToCenter = loc.DistanceFrom(origin);
-
-                        if (loc.DistanceToCenter <= bounds.RadiusMiles)
-                        {
-                            locs.Add(loc);
-                        }
+                        locationsInRadius.Add(loc);
                     }
                 }
             }
 
-            return locs
+            return locationsInRadius
                 .OrderBy(loc => loc.DistanceToCenter)
-                .ToList();
+                .ToArray();
         }
 
 
@@ -148,78 +107,79 @@ namespace LocationByZip
         private string GetDoLookupByZipCodeSql()
         {
             return
-@"SELECT
-	  ZipCode
+@"
+SELECT
+	  Zip5
+	, PlaceName
+	, AdminName1
+	, AdminCode1
+	, AdminName2
+	, AdminCode2
+	, AdminName3
+	, AdminCode3
 	, Latitude
 	, Longitude
-	, City
-	, [State]
-	, County
-	, ZipClass
+	, Accuracy
 FROM
-	ZipCode
+	ZipCodes
 WHERE
-	ZipCode = @ZipCode";
+	Zip5 = @Zip5
+";
         }
 
         private string GetDoLookupByCityStateSql()
         {
             return
-@"SELECT
-	  ZipCode
+@"
+SELECT
+	  Zip5
+	, PlaceName
+	, AdminName1
+	, AdminCode1
+	, AdminName2
+	, AdminCode2
+	, AdminName3
+	, AdminCode3
 	, Latitude
 	, Longitude
-	, City
-	, [State]
-	, County
-	, ZipClass
+	, Accuracy
 FROM
-	ZipCode
+	ZipCodes
 WHERE 
-	City = @City 
-	AND [State] = @State 
+	PlaceName = @City 
+	AND AdminCode1 = @State 
 ORDER BY 
-	ZipCode";
+	Zip5
+";
         }
 
         private string GetLocationsWithinRadiusSql()
         {
             return
-@"SELECT
-	  ZipCode
+@"
+SELECT
+	  Zip5
+	, PlaceName
+	, AdminName1
+	, AdminCode1
+	, AdminName2
+	, AdminCode2
+	, AdminName3
+	, AdminCode3
 	, Latitude
 	, Longitude
-	, City
-	, [State]
-	, County
-	, ZipClass
+	, Accuracy
 FROM
-	ZipCode
+	ZipCodes
 WHERE
-	COALESCE(Latitude, 999.0) >= @SouthLat
-	AND COALESCE(Latitude, 999.0) <= @NorthLat
-	AND COALESCE(Longitude, 999.0) >= @WestLon
-	AND COALESCE(Longitude, 999.0) <= @EastLon
+	Latitude >= @SouthLat
+	AND Latitude <= @NorthLat
+	AND Longitude >= @WestLon
+	AND Longitude <= @EastLon
 ORDER BY
-	  City
-	, [State]
-	, ZipCode";
-        }
-
-        private T ReadLocation<T>(SqlDataReader reader)
-            where T : Location, new()
-        {
-            var loc = new T();
-
-            loc.City = Convert.ToString(reader["City"]);
-            loc.State = Convert.ToString(reader["State"]);
-            loc.ZipCode = Convert.ToString(reader["ZipCode"]);
-            loc.County = Convert.ToString(reader["County"]);
-            loc.Latitude = (reader["Latitude"] == DBNull.Value) ? double.MinValue : Convert.ToDouble(reader["Latitude"]);
-            loc.Longitude = (reader["Longitude"] == DBNull.Value) ? double.MinValue : Convert.ToDouble(reader["Longitude"]);
-            loc.ZipClass = Convert.ToString(reader["ZipClass"]);
-
-            return loc;
+	  PlaceName
+	, AdminCode1
+	, Zip5";
         }
     }
 }

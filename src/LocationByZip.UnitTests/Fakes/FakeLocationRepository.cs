@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace LocationByZip.UnitTests.Fakes
 {
@@ -11,120 +12,121 @@ namespace LocationByZip.UnitTests.Fakes
         public FakeLocationRepository()
         {
             #region Sacramento, CA
-            _locations.Add(new Location { ZipCode = "94203", Latitude = 38.380456, Longitude = -121.555406, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94204", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94205", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94206", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94207", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94208", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94209", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94211", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94229", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94230", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94232", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94234", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94235", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94236", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94237", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94239", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94240", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94243", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94244", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94245", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94246", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94247", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94248", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94249", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94250", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94252", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94253", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94254", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94256", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94257", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94258", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94259", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94261", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94262", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94263", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94267", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94268", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94269", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94271", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94273", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94274", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94277", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94278", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94279", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94280", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94282", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94283", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94284", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94285", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94286", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94287", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94288", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94289", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94290", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94291", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94293", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94294", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94295", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94296", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94297", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94298", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "94299", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95812", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95813", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95814", Latitude = 38.579055, Longitude = -121.480905, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95815", Latitude = 38.589505, Longitude = -121.448665, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95816", Latitude = 38.571505, Longitude = -121.467549, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95817", Latitude = 38.549232, Longitude = -121.452264, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95818", Latitude = 38.557255, Longitude = -121.495915, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95819", Latitude = 38.568305, Longitude = -121.440764, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95820", Latitude = 38.536606, Longitude = -121.446414, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95821", Latitude = 38.627204, Longitude = -121.437964, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95822", Latitude = 38.511356, Longitude = -121.497716, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95823", Latitude = 38.481354, Longitude = -121.442071, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95824", Latitude = 38.517256, Longitude = -121.440764, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95825", Latitude = 38.585804, Longitude = -121.402213, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95826", Latitude = 38.547639, Longitude = -121.385459, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95827", Latitude = 38.552752, Longitude = -121.322653, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95828", Latitude = 38.488446, Longitude = -121.423245, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95829", Latitude = 38.495328, Longitude = -121.321524, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95830", Latitude = 38.490022, Longitude = -121.256140, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95831", Latitude = 38.497863, Longitude = -121.531332, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95832", Latitude = 38.435014, Longitude = -121.497276, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95833", Latitude = 38.621802, Longitude = -121.514016, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95834", Latitude = 38.584193, Longitude = -121.523566, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95835", Latitude = 38.667783, Longitude = -121.526051, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95836", Latitude = 38.710901, Longitude = -121.522717, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95837", Latitude = 38.692855, Longitude = -121.603038, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95838", Latitude = 38.645103, Longitude = -121.440015, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95840", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "UNIQUE" });
-            _locations.Add(new Location { ZipCode = "95841", Latitude = 38.665385, Longitude = -121.353862, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95842", Latitude = 38.692752, Longitude = -121.359009, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95851", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95852", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95853", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95857", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "UNIQUE" });
-            _locations.Add(new Location { ZipCode = "95860", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95864", Latitude = 38.586554, Longitude = -121.379467, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95865", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95866", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "95867", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "UNIQUE" });
-            _locations.Add(new Location { ZipCode = "95873", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "UNIQUE" });
-            _locations.Add(new Location { ZipCode = "95887", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "UNIQUE" });
-            _locations.Add(new Location { ZipCode = "95894", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "UNIQUE" });
-            _locations.Add(new Location { ZipCode = "95899", Latitude = 38.377411, Longitude = -121.444429, City = "SACRAMENTO", State = "CA", ZipClass = "UNIQUE" });
+            _locations.AddRange(new[]
+            {
+                new Location(zip5: "94203", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94204", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94205", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94206", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94207", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94208", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94209", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94211", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94229", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94230", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94232", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94234", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94235", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94236", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94237", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94239", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94240", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94244", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94245", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94247", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94248", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94249", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94250", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94252", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94254", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94256", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94257", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94258", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94259", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94261", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94262", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94263", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94267", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94268", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94269", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94271", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94273", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94274", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94277", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94278", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94279", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94280", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94282", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94283", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94284", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94285", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94286", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94287", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94288", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94289", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94290", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94291", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94293", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94294", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94295", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94296", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94297", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94298", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "94299", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.494400, accuracy: 4),
+                new Location(zip5: "95811", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.576200, longitude: -121.488000, accuracy: 4),
+                new Location(zip5: "95812", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.582200, longitude: -121.494300, accuracy: 4),
+                new Location(zip5: "95813", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.602600, longitude: -121.447500, accuracy: 4),
+                new Location(zip5: "95814", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.580400, longitude: -121.492200, accuracy: 4),
+                new Location(zip5: "95815", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.609300, longitude: -121.444300, accuracy: 4),
+                new Location(zip5: "95816", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.572800, longitude: -121.467500, accuracy: 4),
+                new Location(zip5: "95817", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.549800, longitude: -121.458300, accuracy: 4),
+                new Location(zip5: "95818", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.556800, longitude: -121.492900, accuracy: 4),
+                new Location(zip5: "95819", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.568300, longitude: -121.436600, accuracy: 4),
+                new Location(zip5: "95820", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.534700, longitude: -121.445100, accuracy: 4),
+                new Location(zip5: "95821", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.623900, longitude: -121.383700, accuracy: 4),
+                new Location(zip5: "95822", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.509100, longitude: -121.493500, accuracy: 4),
+                new Location(zip5: "95823", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.479700, longitude: -121.443800, accuracy: 4),
+                new Location(zip5: "95824", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.517800, longitude: -121.441900, accuracy: 4),
+                new Location(zip5: "95825", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.589200, longitude: -121.405700, accuracy: 4),
+                new Location(zip5: "95826", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.553900, longitude: -121.369300, accuracy: 4),
+                new Location(zip5: "95827", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.566200, longitude: -121.328600, accuracy: 4),
+                new Location(zip5: "95828", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.482600, longitude: -121.400600, accuracy: 4),
+                new Location(zip5: "95829", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.468900, longitude: -121.344000, accuracy: 4),
+                new Location(zip5: "95830", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.489600, longitude: -121.277200, accuracy: 4),
+                new Location(zip5: "95831", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.496200, longitude: -121.529700, accuracy: 4),
+                new Location(zip5: "95832", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.469500, longitude: -121.488300, accuracy: 4),
+                new Location(zip5: "95833", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.615700, longitude: -121.505300, accuracy: 4),
+                new Location(zip5: "95834", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.638300, longitude: -121.507200, accuracy: 4),
+                new Location(zip5: "95835", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.662600, longitude: -121.483400, accuracy: 4),
+                new Location(zip5: "95836", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.719800, longitude: -121.534300, accuracy: 4),
+                new Location(zip5: "95837", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.681700, longitude: -121.603000, accuracy: 4),
+                new Location(zip5: "95838", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.640600, longitude: -121.444000, accuracy: 4),
+                new Location(zip5: "95840", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.493300, accuracy: 4),
+                new Location(zip5: "95841", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.662700, longitude: -121.340600, accuracy: 4),
+                new Location(zip5: "95842", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.686500, longitude: -121.349400, accuracy: 4),
+                new Location(zip5: "95851", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.602600, longitude: -121.447500, accuracy: 4),
+                new Location(zip5: "95852", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.602600, longitude: -121.447500, accuracy: 4),
+                new Location(zip5: "95853", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.602600, longitude: -121.447500, accuracy: 4),
+                new Location(zip5: "95860", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.610500, longitude: -121.379900, accuracy: 4),
+                new Location(zip5: "95864", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.587800, longitude: -121.376900, accuracy: 4),
+                new Location(zip5: "95865", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.596000, longitude: -121.397800, accuracy: 4),
+                new Location(zip5: "95866", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.596000, longitude: -121.397800, accuracy: 4),
+                new Location(zip5: "95867", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.493300, accuracy: 4),
+                new Location(zip5: "95894", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.581600, longitude: -121.493300, accuracy: 4),
+                new Location(zip5: "95899", placeName: "Sacramento", adminName1: "California", adminCode1: "CA", adminName2: "Sacramento", adminCode2: "067", adminName3: null, adminCode3: null, latitude: 38.538300, longitude: -121.554900, accuracy: 4),
+            });
             #endregion
 
             #region Lathrop, CA
-            _locations.Add(new Location { ZipCode = "95330", Latitude = 37.811976, Longitude = -121.287362, City = "LATHROP", State = "CA", ZipClass = "STANDARD" });
+            _locations.Add(new Location(zip5: "95330", placeName: "Lathrop", adminName1: "California", adminCode1: "CA", adminName2: "San Joaquin", adminCode2: "077", adminName3: null, adminCode3: null, latitude: 37.820900, longitude: -121.282700, accuracy: 4));
             #endregion
 
             #region Ketchikan, AK
-            _locations.Add(new Location { ZipCode = "99901", Latitude = 55.400674, Longitude = -131.674090, City = "KETCHIKAN", State = "AK", ZipClass = "STANDARD" });
-            _locations.Add(new Location { ZipCode = "99950", Latitude = 55.542007, Longitude = -131.432682, City = "KETCHIKAN", State = "AK", ZipClass = "STANDARD" });
+            _locations.AddRange(new[]
+            {
+                new Location(zip5: "99901", placeName: "Ketchikan", adminName1: "Alaska", adminCode1: "AK", adminName2: "Ketchikan Gateway", adminCode2: "130", adminName3: null, adminCode3: null, latitude: 55.372000, longitude: -131.683200, accuracy: 4),
+                new Location(zip5: "99950", placeName: "Ketchikan", adminName1: "Alaska", adminCode1: "AK", adminName2: "Ketchikan Gateway", adminCode2: "130", adminName3: null, adminCode3: null, latitude: 55.342200, longitude: -131.647800, accuracy: 4),
+            });
             #endregion
         }
 
@@ -133,22 +135,27 @@ namespace LocationByZip.UnitTests.Fakes
         // ILocationRepository Methods
         //
 
-        public Location GetByZipCode(string zipCode)
+        public Task<Location> GetByZipCodeAsync(string zipCode)
         {
-            return _locations
-                .Where(loc => loc.ZipCode.Equals(zipCode, StringComparison.OrdinalIgnoreCase))
+            var location = _locations
+                .Where(loc => loc.Zip5.Equals(zipCode, StringComparison.OrdinalIgnoreCase))
                 .SingleOrDefault();
+
+            return Task.FromResult(location);
         }
 
-        public IEnumerable<Location> GetByCityState(string city, string state)
+        public Task<IReadOnlyCollection<Location>> GetByCityStateAsync(string city, string state)
         {
-            return _locations
-                .Where(loc => loc.City.Equals(city, StringComparison.OrdinalIgnoreCase) && loc.State.Equals(state, StringComparison.OrdinalIgnoreCase));
+            var locations = _locations
+                .Where(loc => loc.PlaceName.Equals(city, StringComparison.OrdinalIgnoreCase) && loc.AdminCode1.Equals(state, StringComparison.OrdinalIgnoreCase))
+                .ToArray();
+
+            return Task.FromResult((IReadOnlyCollection<Location>)locations);
         }
 
-        public IEnumerable<LocationInRadius> GetLocationsInRadius(Location origin, RadiusBox bounds)
+        public Task<IReadOnlyCollection<LocationInRadius>> GetLocationsInRadiusAsync(Location origin, RadiusBox bounds)
         {
-            return _locations
+            var locations = _locations
                 .Where(loc =>
                     {
                         return loc.Latitude >= bounds.BottomLatitude
@@ -158,18 +165,24 @@ namespace LocationByZip.UnitTests.Fakes
                     })
                 .Select(loc =>
                     {
-                        return new LocationInRadius
-                        {
-                            ZipCode = loc.ZipCode,
-                            Latitude = loc.Latitude,
-                            Longitude = loc.Longitude,
-                            City = loc.City,
-                            State = loc.State,
-                            County = loc.County,
-                            ZipClass = loc.ZipClass,
-                            DistanceToCenter = loc.DistanceFrom(origin)
-                        };
-                    });
+                        return new LocationInRadius(
+                            zip5: loc.Zip5,
+                            placeName: loc.PlaceName,
+                            adminName1: loc.AdminName1,
+                            adminCode1: loc.AdminCode1,
+                            adminName2: loc.AdminName2,
+                            adminCode2: loc.AdminCode2,
+                            adminName3: loc.AdminName3,
+                            adminCode3: loc.AdminCode3,
+                            latitude: loc.Latitude,
+                            longitude: loc.Longitude,
+                            accuracy: loc.Accuracy,
+                            distanceToCenter: loc.DistanceFrom(origin)
+                            );
+                    })
+                .ToArray();
+
+            return Task.FromResult((IReadOnlyCollection<LocationInRadius>)locations);
         }
     }
 }

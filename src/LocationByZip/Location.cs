@@ -1,25 +1,58 @@
 using System;
 using System.Text;
 
+#nullable enable
+
 namespace LocationByZip
 {
     /// <summary>
-    /// A Location is represented by a City, State, ZIP Code, County, Latitude, Longitude, and ZIP 
-    ///  Class.  This just so happens to correspond to the columns of the ZipCodes table.
+    /// <para>A Location is represented by a 5-digit US ZIP Code, and has latitude/longitude coordinates. Most
+    /// also have descriptive names about the jurisdiction.</para>
+    /// <para>This just so happens to correspond to the columns of the ZipCodes table.</para>
     /// </summary>
     public class Location
     {
-        //
-        // Instance Properties
-        //
-
-        public string City { get; set; }
-        public string State { get; set; }
-        public string ZipCode { get; set; }
-        public string County { get; set; }
+        public string Zip5 { get; set; }
+        public string PlaceName { get; set; }
+        public string? AdminName1 { get; set; }
+        public string? AdminCode1 { get; set; }
+        public string? AdminName2 { get; set; }
+        public string? AdminCode2 { get; set; }
+        public string? AdminName3 { get; set; }
+        public string? AdminCode3 { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
-        public string ZipClass { get; set; }
+        public int Accuracy { get; set; }
+
+        // Justification: Need parameterless for Dapper.
+#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+        public Location()
+#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+        {
+        }
+
+        public Location(string zip5, string placeName, string? adminName1, string? adminCode1, string? adminName2, string? adminCode2,
+            string? adminName3, string? adminCode3, double latitude, double longitude, int accuracy)
+        {
+            if (string.IsNullOrWhiteSpace(zip5))
+            {
+                throw new ArgumentException($"{nameof(zip5)} can not be null or white space", nameof(zip5));
+            }
+
+            Zip5 = zip5;
+
+            PlaceName = placeName;
+            AdminName1 = adminName1;
+            AdminCode1 = adminCode1;
+            AdminName2 = adminName2;
+            AdminCode2 = adminCode2;
+            AdminName3 = adminName3;
+            AdminCode3 = adminCode3;
+
+            Latitude = latitude;
+            Longitude = longitude;
+            Accuracy = accuracy;
+        }
 
 
         //
@@ -39,28 +72,28 @@ namespace LocationByZip
         {
             var str = new StringBuilder();
 
-            str.AppendFormat("Location: {0}, {1} {2} in {3} County{4}", City, State, ZipCode, County, Environment.NewLine);
-            str.AppendFormat("\tLatitude:\t{0}{1}", Latitude, Environment.NewLine);
-            str.AppendFormat("\tLongitude:\t{0}{1}", Longitude, Environment.NewLine);
-            str.AppendFormat("\tZip Class:\t{0}", ZipClass);
+            str.AppendLine($"Location: {PlaceName}, {AdminName1} {Zip5} in {AdminName2} County");
+            str.AppendLine($"\tLatitude:\t{Latitude}");
+            str.AppendLine($"\tLongitude:\t{Longitude}");
+            str.AppendLine($"\tAccuracy:\t{Accuracy}");
 
             return str.ToString();
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (obj == null)
             {
                 return false;
             }
 
-            Location other = obj as Location;
-            if (other == null)
+            Location? other = obj as Location;
+            if (other is null)
             {
                 return false;
             }
 
-            return ZipCode.Equals(other.ZipCode, StringComparison.OrdinalIgnoreCase);
+            return Zip5.Equals(other.Zip5, StringComparison.OrdinalIgnoreCase);
         }
 
         public override int GetHashCode()
@@ -69,10 +102,7 @@ namespace LocationByZip
             {
                 int hash = 17;
 
-                if (ZipCode != null)
-                {
-                    hash = hash * 23 + ZipCode.GetHashCode();
-                }
+                hash = hash * 23 + Zip5.GetHashCode();
 
                 return hash;
             }
@@ -88,21 +118,21 @@ namespace LocationByZip
             Verify(this);
         }
 
-        internal static void Verify(Location location)
+        internal static void Verify(Location? location)
         {
-            if (location == null)
+            if (location is null)
             {
-                throw new ArgumentNullException("location");
+                throw new ArgumentNullException(nameof(location));
             }
 
             if (location.Latitude == double.MinValue)
             {
-                throw new ArgumentException("inLoc1.Latitude", string.Format("The database does not contain latitude information for {0}, {1}.", location.City, location.State));
+                throw new ArgumentException($"The database does not contain latitude information for {location.PlaceName}, {location.AdminName1}.", $"{nameof(location)}.{nameof(location.Latitude)}");
             }
 
             if (location.Longitude == double.MinValue)
             {
-                throw new ArgumentException("inLoc1.Longitude", string.Format("The database does not contain longitude information for {0}, {1}.", location.City, location.State));
+                throw new ArgumentException($"The database does not contain longitude information for {location.PlaceName}, {location.AdminName1}.", $"{nameof(location)}.{nameof(location.Longitude)}");
             }
         }
 
