@@ -21,9 +21,6 @@ namespace LocationByZip.DemoConsoleApp
                             configHost.SetBasePath(Directory.GetCurrentDirectory());
                             configHost.AddJsonFile("hostsettings.json", optional: true);
 
-                            // Analogous to ASPNETCORE_WHATEVER, except it's PREFIX_WHATEVER
-                            configHost.AddEnvironmentVariables(prefix: "PREFIX_");
-
                             if (args != null)
                             {
                                 configHost.AddCommandLine(args);
@@ -34,9 +31,6 @@ namespace LocationByZip.DemoConsoleApp
                         {
                             configApp.AddJsonFile("appsettings.json", optional: true);
                             configApp.AddJsonFile($"appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json", optional: true);
-
-                            // Analogous to ASPNETCORE_WHATEVER, except it's PREFIX_WHATEVER
-                            configApp.AddEnvironmentVariables(prefix: "PREFIX_");
 
                             if (args != null)
                             {
@@ -50,12 +44,11 @@ namespace LocationByZip.DemoConsoleApp
                             services.AddTransient<LocationService, LocationService>();
                             services.AddTransient<ILocationRepository, SqlLocationRepository>();
                         })
-                    //.ConfigureLogging(
-                    //    (hostContext, configLogging) =>
-                    //    {
-                    //        configLogging.AddConsole();
-                    //        configLogging.AddDebug();
-                    //    })
+                    .ConfigureLogging(
+                        (hostContext, configLogging) =>
+                        {
+                            configLogging.AddConsole();
+                        })
                     .UseConsoleLifetime();
 
                 var host = builder.Build();
@@ -70,8 +63,8 @@ namespace LocationByZip.DemoConsoleApp
 
                         // Location by ZIP Code
                         Console.WriteLine("=== Location by ZIP Code ===");
-                        Location location = await locationSvc.GetByZipCodeAsync("93275");
-                        if (location != null)
+                        var location = await locationSvc.GetByZipCodeAsync("93275");
+                        if (location is object)
                         {
                             DisplayLocation(location);
                         }

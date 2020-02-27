@@ -1,13 +1,12 @@
 ﻿using System.Text;
 
-#nullable enable
-
 namespace LocationByZip
 {
     public class LocationInRadius : Location
     {
         public double DistanceToCenter { get; set; }
 
+        // Parameterless required for Dapper.
         public LocationInRadius()
         {
         }

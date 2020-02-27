@@ -11,14 +11,14 @@ namespace LocationByZip
         /// <remarks>See: http://en.wikipedia.org/wiki/Haversine_formula</remarks>
         /// <param name="location1">The first location.</param>
         /// <param name="location2">The second location.</param>
-        public static double CalculateDistance(Location location1, Location location2)
+        public static double CalculateDistance(Location? location1, Location? location2)
         {
-            if (location1 == null)
+            if (location1 is null)
             {
                 throw new ArgumentNullException(nameof(location1));
             }
 
-            if (location2 == null)
+            if (location2 is null)
             {
                 throw new ArgumentNullException(nameof(location2));
             }

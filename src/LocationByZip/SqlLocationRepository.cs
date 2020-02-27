@@ -9,13 +9,10 @@ namespace LocationByZip
 {
     public class SqlLocationRepository : ILocationRepository
     {
-        //private readonly IConfiguration _config;
-
         private string _connectionString { get; }
 
         public SqlLocationRepository(IConfiguration config)
         {
-            //_config = config;
             _connectionString = config.GetConnectionString("LocationByZip");
         }
 
@@ -26,13 +23,12 @@ namespace LocationByZip
         /// </summary>
         /// <param name="zipCode">ZIP Code to lookup.</param>
         /// <returns><see cref="LocationByZip.Location" /> of the ZIP Code.</returns>
-        public async Task<Location> GetByZipCodeAsync(string zipCode)
+        public async Task<Location?> GetByZipCodeAsync(string zipCode)
         {
-            using (var conn = new SqlConnection(_connectionString))
-            {
-                return (await conn.QueryAsync<Location>(GetDoLookupByZipCodeSql(), new { Zip5 = zipCode }))
-                    .SingleOrDefault();
-            }
+            using var conn = new SqlConnection(_connectionString);
+
+            return (await conn.QueryAsync<Location>(GetDoLookupByZipCodeSql(), new { Zip5 = zipCode }))
+                .SingleOrDefault();
         }
 
         /// <summary>
@@ -44,11 +40,10 @@ namespace LocationByZip
         /// <returns>An array of <see cref="LocationByZip.Location" /> objects whose City/State matches the input City/State.</returns>
         public async Task<IReadOnlyCollection<Location>> GetByCityStateAsync(string city, string state)
         {
-            using (var conn = new SqlConnection(_connectionString))
-            {
-                return (await conn.QueryAsync<Location>(GetDoLookupByCityStateSql(), new { city, state }))
-                    .ToArray();
-            }
+            using var conn = new SqlConnection(_connectionString);
+
+            return (await conn.QueryAsync<Location>(GetDoLookupByCityStateSql(), new { city, state }))
+                .ToArray();
         }
 
         /// <summary>

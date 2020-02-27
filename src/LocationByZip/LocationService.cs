@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace LocationByZip
@@ -18,14 +19,14 @@ namespace LocationByZip
         // LocationService Methods
         //
 
-        public async Task<Location> GetByZipCodeAsync(string zipCode)
+        public async Task<Location?> GetByZipCodeAsync([AllowNull] string zipCode)
         {
             ValidateZipCodeArgument(zipCode);
 
             return await _locationRepository.GetByZipCodeAsync(zipCode);
         }
 
-        public async Task<IReadOnlyCollection<Location>> GetByCityStateAsync(string city, string state)
+        public async Task<IReadOnlyCollection<Location>> GetByCityStateAsync([AllowNull] string city, [AllowNull] string state)
         {
             ValidateCityArgument(city);
             ValidateStateArgument(state);
@@ -43,7 +44,7 @@ namespace LocationByZip
             // Get the lat/lon coordinates of the ZIP code (usually the centroid).
             var centerOfSearch = await GetByZipCodeAsync(zipCode);
 
-            if (centerOfSearch != null)
+            if (centerOfSearch is object)
             {
                 // Create a bounding box of radius miles around the center of the search.
                 var boundingBox = RadiusBox.Create(centerOfSearch, radiusMiles);
@@ -64,7 +65,7 @@ namespace LocationByZip
             var location1 = await GetByZipCodeAsync(zipCode1);
             var location2 = await GetByZipCodeAsync(zipCode2);
 
-            return location1 != null && location2 != null
+            return location1 is object && location2 is object
                 ? location1.DistanceFrom(location2)
                 : 0.0;
         }

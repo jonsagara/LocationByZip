@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace LocationByZip
 {
@@ -58,9 +59,9 @@ namespace LocationByZip
         /// </summary>
         /// <param name="location">The center of the search radius, and therefore of the bounding box.</param>
         /// <param name="radiusMiles">The search radius in miles.</param>
-        public static RadiusBox Create(Location location, double radiusMiles)
+        public static RadiusBox Create([AllowNull] Location location, double radiusMiles)
         {
-            if (location == null)
+            if (location is null)
             {
                 throw new ArgumentNullException(nameof(location));
             }

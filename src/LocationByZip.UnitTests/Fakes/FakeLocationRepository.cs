@@ -7,7 +7,7 @@ namespace LocationByZip.UnitTests.Fakes
 {
     public class FakeLocationRepository : ILocationRepository
     {
-        private List<Location> _locations = new List<Location>();
+        private readonly List<Location> _locations = new List<Location>();
 
         public FakeLocationRepository()
         {
@@ -135,19 +135,19 @@ namespace LocationByZip.UnitTests.Fakes
         // ILocationRepository Methods
         //
 
-        public Task<Location> GetByZipCodeAsync(string zipCode)
+        public Task<Location?> GetByZipCodeAsync(string zipCode)
         {
             var location = _locations
                 .Where(loc => loc.Zip5.Equals(zipCode, StringComparison.OrdinalIgnoreCase))
                 .SingleOrDefault();
 
-            return Task.FromResult(location);
+            return Task.FromResult<Location?>(location);
         }
 
         public Task<IReadOnlyCollection<Location>> GetByCityStateAsync(string city, string state)
         {
             var locations = _locations
-                .Where(loc => loc.PlaceName.Equals(city, StringComparison.OrdinalIgnoreCase) && loc.AdminCode1.Equals(state, StringComparison.OrdinalIgnoreCase))
+                .Where(loc => loc.PlaceName.Equals(city, StringComparison.OrdinalIgnoreCase) && loc.AdminCode1?.Equals(state, StringComparison.OrdinalIgnoreCase) == true)
                 .ToArray();
 
             return Task.FromResult((IReadOnlyCollection<Location>)locations);

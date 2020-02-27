@@ -1,7 +1,6 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
-
-#nullable enable
 
 namespace LocationByZip
 {
@@ -10,7 +9,7 @@ namespace LocationByZip
     /// also have descriptive names about the jurisdiction.</para>
     /// <para>This just so happens to correspond to the columns of the ZipCodes table.</para>
     /// </summary>
-    public class Location
+    public class Location : IEquatable<Location>
     {
         public string Zip5 { get; set; }
         public string PlaceName { get; set; }
@@ -61,8 +60,7 @@ namespace LocationByZip
 
         public double DistanceFrom(Location remoteLocation)
         {
-            Verify(this);
-            Verify(remoteLocation);
+            VerifyLocation(remoteLocation);
 
             return Haversine.CalculateDistance(this, remoteLocation);
         }
@@ -82,87 +80,32 @@ namespace LocationByZip
 
         public override bool Equals(object? obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            return Equals(obj as Location);
+        }
 
-            Location? other = obj as Location;
-            if (other is null)
-            {
-                return false;
-            }
-
-            return Zip5.Equals(other.Zip5, StringComparison.OrdinalIgnoreCase);
+        public bool Equals([AllowNull] Location other)
+        {
+            // "x is object": https://twitter.com/jaredpar/status/1171477684523651072
+            return (other is object) &&
+                Zip5 == other.Zip5;
         }
 
         public override int GetHashCode()
         {
-            unchecked // Overflow is fine; just wrap.
-            {
-                int hash = 17;
-
-                hash = hash * 23 + Zip5.GetHashCode();
-
-                return hash;
-            }
+            return HashCode.Combine(Zip5);
         }
 
 
         //
-        // Helpers
+        // Private methods
         //
 
-        internal void Verify()
-        {
-            Verify(this);
-        }
-
-        internal static void Verify(Location? location)
+        private void VerifyLocation(Location? location)
         {
             if (location is null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
-
-            if (location.Latitude == double.MinValue)
-            {
-                throw new ArgumentException($"The database does not contain latitude information for {location.PlaceName}, {location.AdminName1}.", $"{nameof(location)}.{nameof(location.Latitude)}");
-            }
-
-            if (location.Longitude == double.MinValue)
-            {
-                throw new ArgumentException($"The database does not contain longitude information for {location.PlaceName}, {location.AdminName1}.", $"{nameof(location)}.{nameof(location.Longitude)}");
-            }
-        }
-
-
-        //
-        // Operator Overloads
-        //
-
-        public static bool operator ==(Location a, Location b)
-        {
-            // If both are null, or both are the same instance, return true.
-            if (object.ReferenceEquals(a, b))
-            {
-                return true;
-            }
-
-            // If one is null, but not both, return false.
-            // Cast to object is necessary, else we will get a StackOverflowException
-            //  due to repeatedly calling this method.
-            if ((object)a == null || (object)b == null)
-            {
-                return false;
-            }
-
-            return a.Equals(b);
-        }
-
-        public static bool operator !=(Location a, Location b)
-        {
-            return !(a == b);
         }
     }
 }
