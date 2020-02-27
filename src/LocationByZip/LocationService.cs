@@ -46,18 +46,24 @@ namespace LocationByZip
             return _locationRepository.GetByCityState(city, state);
         }
 
-        public IEnumerable<LocationInRadius> GetLocationsInRadius(string zipCode, double radius)
+        public IEnumerable<LocationInRadius> GetLocationsInRadius(string zipCode, double radiusMiles)
         {
-            ValidateRadiusArgument(radius);
+            ValidateZipCodeArgument(zipCode);
+            ValidateRadiusArgument(radiusMiles);
 
             var locationsNearby = new List<LocationInRadius>();
-            Location origin = GetByZipCode(zipCode);
 
-            if (origin != null)
+            // Get the lat/lon coordinates of the ZIP code (usually the centroid).
+            var centerOfSearch = GetByZipCode(zipCode);
+
+            if (centerOfSearch != null)
             {
-                RadiusBox bounds = RadiusBox.Create(origin, radius);
+                // Create a bounding box of radius miles around the center of the search.
+                var boundingBox = RadiusBox.Create(centerOfSearch, radiusMiles);
 
-                locationsNearby.AddRange(_locationRepository.GetLocationsInRadius(origin, bounds));
+                // Get all locations within the bounding box, and then filter out any that are more than 
+                //   radius miles away from the center of the search.
+                locationsNearby.AddRange(_locationRepository.GetLocationsInRadius(centerOfSearch, boundingBox));
             }
 
             return locationsNearby;
@@ -68,16 +74,12 @@ namespace LocationByZip
             ValidateZipCodeArgument(zipCode1);
             ValidateZipCodeArgument(zipCode2);
 
-            double distance = 0.0;
-            Location location1 = GetByZipCode(zipCode1);
-            Location location2 = GetByZipCode(zipCode2);
+            var location1 = GetByZipCode(zipCode1);
+            var location2 = GetByZipCode(zipCode2);
 
-            if (location1 != null && location2 != null)
-            {
-                distance = location1.DistanceFrom(location2);
-            }
-
-            return distance;
+            return location1 != null && location2 != null
+                ? location1.DistanceFrom(location2)
+                : 0.0;
         }
 
 
@@ -89,7 +91,7 @@ namespace LocationByZip
         {
             if (string.IsNullOrWhiteSpace(zipCode))
             {
-                throw new ArgumentException("ZIP Code must be non-null, non-white space string", "zipCode");
+                throw new ArgumentException("ZIP Code must be non-null, non-white space string", nameof(zipCode));
             }
         }
 
@@ -97,7 +99,7 @@ namespace LocationByZip
         {
             if (string.IsNullOrWhiteSpace(city))
             {
-                throw new ArgumentException("City must be non-null, non-white space string", "city");
+                throw new ArgumentException("City must be non-null, non-white space string", nameof(city));
             }
         }
 
@@ -105,7 +107,7 @@ namespace LocationByZip
         {
             if (string.IsNullOrWhiteSpace(state))
             {
-                throw new ArgumentException("State must be non-null, non-white space string", "state");
+                throw new ArgumentException("State must be non-null, non-white space string", nameof(state));
             }
         }
 
@@ -113,7 +115,7 @@ namespace LocationByZip
         {
             if (radius <= 0.0)
             {
-                throw new ArgumentOutOfRangeException("radius", radius, "Radius must be greater than 0");
+                throw new ArgumentOutOfRangeException(nameof(radius), radius, "Radius must be greater than 0");
             }
         }
     }

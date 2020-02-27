@@ -112,10 +112,10 @@ namespace LocationByZip
             using (var conn = new SqlConnection(ConnectionString))
             using (var cmd = new SqlCommand(GetLocationsWithinRadiusSql(), conn))
             {
-                cmd.Parameters.Add(new SqlParameter("@SouthLat", bounds.BottomLine));
-                cmd.Parameters.Add(new SqlParameter("@NorthLat", bounds.TopLine));
-                cmd.Parameters.Add(new SqlParameter("@WestLon", bounds.LeftLine));
-                cmd.Parameters.Add(new SqlParameter("@EastLon", bounds.RightLine));
+                cmd.Parameters.Add(new SqlParameter("@SouthLat", bounds.BottomLatitude));
+                cmd.Parameters.Add(new SqlParameter("@NorthLat", bounds.TopLatitude));
+                cmd.Parameters.Add(new SqlParameter("@WestLon", bounds.LeftLongitude));
+                cmd.Parameters.Add(new SqlParameter("@EastLon", bounds.RightLongitude));
                 conn.Open();
 
                 using (var reader = cmd.ExecuteReader())
@@ -127,7 +127,7 @@ namespace LocationByZip
                         loc = ReadLocation<LocationInRadius>(reader);
                         loc.DistanceToCenter = loc.DistanceFrom(origin);
 
-                        if (loc.DistanceToCenter <= bounds.Radius)
+                        if (loc.DistanceToCenter <= bounds.RadiusMiles)
                         {
                             locs.Add(loc);
                         }

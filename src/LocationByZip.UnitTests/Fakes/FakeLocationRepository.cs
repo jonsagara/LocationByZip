@@ -151,10 +151,10 @@ namespace LocationByZip.UnitTests.Fakes
             return _locations
                 .Where(loc =>
                     {
-                        return loc.Latitude >= bounds.BottomLine
-                            && loc.Latitude <= bounds.TopLine
-                            && loc.Longitude >= bounds.LeftLine
-                            && loc.Longitude <= bounds.RightLine;
+                        return loc.Latitude >= bounds.BottomLatitude
+                            && loc.Latitude <= bounds.TopLatitude
+                            && loc.Longitude >= bounds.LeftLongitude
+                            && loc.Longitude <= bounds.RightLongitude;
                     })
                 .Select(loc =>
                     {
