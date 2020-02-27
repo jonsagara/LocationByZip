@@ -8,8 +8,4 @@
     <ProjectReference Include="..\LocationByZip\LocationByZip.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
-
 </Project>
