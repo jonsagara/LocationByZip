@@ -42,18 +42,18 @@ namespace LocationByZip
                     * The locations of the two points in spherical coordinates (longitude and 
                         latitude) are lon1,lat1 and lon2, lat2.
             */
-            double dLat1InRad = location1.Latitude * (Math.PI / 180.0);
-            double dLong1InRad = location1.Longitude * (Math.PI / 180.0);
-            double dLat2InRad = location2.Latitude * (Math.PI / 180.0);
-            double dLong2InRad = location2.Longitude * (Math.PI / 180.0);
+            double latitude1Radians = location1.Latitude.ToRadians();
+            double longitude1Radians = location1.Longitude.ToRadians();
+            double latitude2Radians = location2.Latitude.ToRadians();
+            double longitude2Radians = location2.Longitude.ToRadians();
 
-            double dLongitude = dLong2InRad - dLong1InRad;
-            double dLatitude = dLat2InRad - dLat1InRad;
+            double dLongitude = longitude2Radians - longitude1Radians;
+            double dLatitude = latitude2Radians - latitude1Radians;
 
             // Intermediate result a.
-            double a = Math.Pow(Math.Sin(dLatitude / 2.0), 2.0) + Math.Cos(dLat1InRad) * Math.Cos(dLat2InRad) * Math.Pow(Math.Sin(dLongitude / 2.0), 2.0);
+            double a = Math.Pow(Math.Sin(dLatitude / 2.0), 2.0) + Math.Cos(latitude1Radians) * Math.Cos(latitude2Radians) * Math.Pow(Math.Sin(dLongitude / 2.0), 2.0);
 
-            // Intermediate result c (great circle distance in Radians).
+            // Intermediate result c (great circle distance in radians).
             double c = 2.0 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1.0 - a));
 
             // Distance.

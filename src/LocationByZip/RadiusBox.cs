@@ -78,11 +78,10 @@ namespace LocationByZip
                         the radius of the Earth.
                     * tc = 0 is N, tc = pi is S, tc = pi/2 is E, tc = 3*pi/2 is W.
             */
-            double lat;
-            double dlon;
-            double dLatInRads = location.Latitude * (Math.PI / 180.0);
-            double dLongInRads = location.Longitude * (Math.PI / 180.0);
-            double dDistInRad = radiusMiles / Globals.EarthRadiusMiles;
+
+            double latitudeRadians = location.Latitude.ToRadians();
+            double longitudeRadians = location.Longitude.ToRadians();
+            double radiusRadians = radiusMiles / Globals.EarthRadiusMiles;
 
             //	N (tc == 0):
             //		lat = asin (sin(lat1)*cos(d) + cos(lat1)*sin(d))
@@ -90,8 +89,7 @@ namespace LocationByZip
             //			= lat1 + d
             //	Unused:
             //		lon	= lon1, because north-south lines follow lines of longitude.
-            var topLat = dLatInRads + dDistInRad;
-            topLat *= (180.0 / Math.PI);
+            var topLatRadians = latitudeRadians + radiusRadians;
 
             //	S (tc == pi):
             //		lat = asin (sin(lat1)*cos(d) - cos(lat1)*sin(d))
@@ -99,31 +97,29 @@ namespace LocationByZip
             //			= lat1 - d
             //	Unused:
             //		lon	= lon1, because north-south lines follow lines of longitude.
-            var bottomLat = dLatInRads - dDistInRad;
-            bottomLat *= (180.0 / Math.PI);
+            var bottomLatRadians = latitudeRadians - radiusRadians;
 
             //	E (tc == pi/2):
             //		lat	 = asin (sin(lat1)*cos(d))
             //		dlon = atan2 (sin(tc)*sin(d)*cos(lat1), cos(d) - sin(lat1)*sin(lat))
             //		lon	 = mod (lon1 + dlon + pi, 2*pi) - pi
-            lat = Math.Asin(Math.Sin(dLatInRads) * Math.Cos(dDistInRad));
-            dlon = Math.Atan2(Math.Sin(Math.PI / 2.0) * Math.Sin(dDistInRad) * Math.Cos(dLatInRads), Math.Cos(dDistInRad) - Math.Sin(dLatInRads) * Math.Sin(lat));
-            var rightLon = ((dLongInRads + dlon + Math.PI) % (2.0 * Math.PI)) - Math.PI;
-            rightLon *= (180.0 / Math.PI);
+            var lat = Math.Asin(Math.Sin(latitudeRadians) * Math.Cos(radiusRadians));
+            var dlonE = Math.Atan2(Math.Sin(Math.PI / 2.0) * Math.Sin(radiusRadians) * Math.Cos(latitudeRadians), Math.Cos(radiusRadians) - Math.Sin(latitudeRadians) * Math.Sin(lat));
+            var rightLonRadians = ((longitudeRadians + dlonE + Math.PI) % (2.0 * Math.PI)) - Math.PI;
 
             //	W (tc == 3*pi/2):
             //		lat	 = asin (sin(lat1)*cos(d))
             //		dlon = atan2 (sin(tc)*sin(d)*cos(lat1), cos(d) - sin(lat1)*sin(lat))
             //		lon	 = mod (lon1 + dlon + pi, 2*pi) - pi
-            dlon = Math.Atan2(Math.Sin(3.0 * Math.PI / 2.0) * Math.Sin(dDistInRad) * Math.Cos(dLatInRads), Math.Cos(dDistInRad) - Math.Sin(dLatInRads) * Math.Sin(lat));
-            var leftLon = ((dLongInRads + dlon + Math.PI) % (2.0 * Math.PI)) - Math.PI;
-            leftLon *= (180.0 / Math.PI);
+            var dlonW = Math.Atan2(Math.Sin(3.0 * Math.PI / 2.0) * Math.Sin(radiusRadians) * Math.Cos(latitudeRadians), Math.Cos(radiusRadians) - Math.Sin(latitudeRadians) * Math.Sin(lat));
+            var leftLonRadians = ((longitudeRadians + dlonW + Math.PI) % (2.0 * Math.PI)) - Math.PI;
+
 
             return new RadiusBox(
-                topLat: topLat,
-                bottomLat: bottomLat,
-                leftLon: leftLon,
-                rightLon: rightLon,
+                topLat: topLatRadians.ToDegrees(),
+                bottomLat: bottomLatRadians.ToDegrees(),
+                leftLon: leftLonRadians.ToDegrees(),
+                rightLon: rightLonRadians.ToDegrees(),
                 radiusMiles: radiusMiles
                 );
         }
