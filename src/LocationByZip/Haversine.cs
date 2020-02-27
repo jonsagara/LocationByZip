@@ -5,15 +5,24 @@ namespace LocationByZip
     internal static class Haversine
     {
         /// <summary>
-        /// Calculates the great-circle distance between two points on a sphere from their 
+        /// Calculates the great-circle distance in miles between two points on a sphere from their 
         /// longitudes and latitudes.
         /// </summary>
         /// <remarks>See: http://en.wikipedia.org/wiki/Haversine_formula</remarks>
-        /// <param name="loc1"></param>
-        /// <param name="loc2"></param>
-        /// <returns></returns>
-        public static double CalculateDistance(Location loc1, Location loc2)
+        /// <param name="location1">The first location.</param>
+        /// <param name="location2">The second location.</param>
+        public static double CalculateDistance(Location location1, Location location2)
         {
+            if (location1 == null)
+            {
+                throw new ArgumentNullException(nameof(location1));
+            }
+
+            if (location2 == null)
+            {
+                throw new ArgumentNullException(nameof(location2));
+            }
+
             /*
                 The Haversine formula according to Dr. Math.
                 http://mathforum.org/library/drmath/view/51879.html
@@ -32,11 +41,10 @@ namespace LocationByZip
                     * The locations of the two points in spherical coordinates (longitude and 
                         latitude) are lon1,lat1 and lon2, lat2.
             */
-            double dDistance = double.MinValue;
-            double dLat1InRad = loc1.Latitude * (Math.PI / 180.0);
-            double dLong1InRad = loc1.Longitude * (Math.PI / 180.0);
-            double dLat2InRad = loc2.Latitude * (Math.PI / 180.0);
-            double dLong2InRad = loc2.Longitude * (Math.PI / 180.0);
+            double dLat1InRad = location1.Latitude * (Math.PI / 180.0);
+            double dLong1InRad = location1.Longitude * (Math.PI / 180.0);
+            double dLat2InRad = location2.Latitude * (Math.PI / 180.0);
+            double dLong2InRad = location2.Longitude * (Math.PI / 180.0);
 
             double dLongitude = dLong2InRad - dLong1InRad;
             double dLatitude = dLat2InRad - dLat1InRad;
@@ -48,9 +56,7 @@ namespace LocationByZip
             double c = 2.0 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1.0 - a));
 
             // Distance.
-            dDistance = Globals.EarthRadiusMiles * c;
-
-            return dDistance;
+            return Globals.EarthRadiusMiles * c;
         }
     }
 }

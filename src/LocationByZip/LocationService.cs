@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace LocationByZip
 {
-    public class LocationService : ILocationService
+    public class LocationService
     {
         //
         // Instance Data
         //
 
-        private ILocationRepository locationRepository;
+        private ILocationRepository _locationRepository;
 
 
         //
@@ -23,19 +23,19 @@ namespace LocationByZip
 
         public LocationService(ILocationRepository locationRepository)
         {
-            this.locationRepository = locationRepository;
+            this._locationRepository = locationRepository;
         }
 
 
         //
-        // ILocationService Methods
+        // LocationService Methods
         //
 
         public Location GetByZipCode(string zipCode)
         {
             ValidateZipCodeArgument(zipCode);
 
-            return locationRepository.GetByZipCode(zipCode);
+            return _locationRepository.GetByZipCode(zipCode);
         }
 
         public IEnumerable<Location> GetByCityState(string city, string state)
@@ -43,7 +43,7 @@ namespace LocationByZip
             ValidateCityArgument(city);
             ValidateStateArgument(state);
 
-            return locationRepository.GetByCityState(city, state);
+            return _locationRepository.GetByCityState(city, state);
         }
 
         public IEnumerable<LocationInRadius> GetLocationsInRadius(string zipCode, double radius)
@@ -57,7 +57,7 @@ namespace LocationByZip
             {
                 RadiusBox bounds = RadiusBox.Create(origin, radius);
 
-                locationsNearby.AddRange(locationRepository.GetLocationsInRadius(origin, bounds));
+                locationsNearby.AddRange(_locationRepository.GetLocationsInRadius(origin, bounds));
             }
 
             return locationsNearby;

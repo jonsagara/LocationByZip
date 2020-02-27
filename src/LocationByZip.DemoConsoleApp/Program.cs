@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-
-using LocationByZip;
 
 namespace LocationByZip.DemoConsoleApp
 {
@@ -9,7 +6,7 @@ namespace LocationByZip.DemoConsoleApp
     {
         static void Main(string[] args)
         {
-            ILocationService locationSvc = new LocationService();
+            var locationSvc = new LocationService();
 
             // Location by ZIP Code
             Console.WriteLine("=== Location by ZIP Code ===");
@@ -21,26 +18,32 @@ namespace LocationByZip.DemoConsoleApp
 
 
             // Location(s) by City/State
-            Console.WriteLine("{0}=== Location(s) by City/State ===", Environment.NewLine);
-            IEnumerable<Location> locs = locationSvc.GetByCityState("Tulare", "CA");
-            foreach (Location loc in locs)
+            Console.WriteLine();
+            Console.WriteLine("=== Location(s) by City/State ===");
+
+            var locationsByCityState = locationSvc.GetByCityState("Tulare", "CA");
+            foreach (var loc in locationsByCityState)
             {
                 DisplayLocation(loc);
             }
 
 
             // Location(s) in Radius
-            Console.WriteLine("{0}=== Location(s) in Radius ===", Environment.NewLine);
-            IEnumerable<LocationInRadius> locsInRadius = locationSvc.GetLocationsInRadius("93401", 10.0);
-            foreach (Location locInRad in locsInRadius)
+            Console.WriteLine();
+            Console.WriteLine("=== Location(s) in Radius ===");
+
+            var locsationsInRadius = locationSvc.GetLocationsInRadius("93401", 10.0);
+            foreach (Location locInRad in locsationsInRadius)
             {
                 DisplayLocation(locInRad);
             }
 
 
             //	Distance between two locations.
-            Console.WriteLine("{0}=== Distance between two ZIP Codes ===", Environment.NewLine);
-            double distance = locationSvc.GetDistanceBetweenLocations("93401", "93446");
+            Console.WriteLine();
+            Console.WriteLine("=== Distance between two ZIP Codes ===");
+
+            var distance = locationSvc.GetDistanceBetweenLocations("93401", "93446");
             Console.WriteLine("93401 is {0:F1} miles from 93446", distance);
             Console.WriteLine();
 

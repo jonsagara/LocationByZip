@@ -37,7 +37,7 @@ namespace LocationByZip
 
         public override string ToString()
         {
-            StringBuilder str = new StringBuilder();
+            var str = new StringBuilder();
 
             str.AppendFormat("Location: {0}, {1} {2} in {3} County{4}", City, State, ZipCode, County, Environment.NewLine);
             str.AppendFormat("\tLatitude:\t{0}{1}", Latitude, Environment.NewLine);
@@ -103,14 +103,6 @@ namespace LocationByZip
             if (location.Longitude == double.MinValue)
             {
                 throw new ArgumentException("inLoc1.Longitude", string.Format("The database does not contain longitude information for {0}, {1}.", location.City, location.State));
-            }
-        }
-
-        private void VerifyRadius(double radius)
-        {
-            if (radius <= 0.0)
-            {
-                throw new ArgumentOutOfRangeException("inRadius", radius, "Invalid value for radius passed in.");
             }
         }
 
