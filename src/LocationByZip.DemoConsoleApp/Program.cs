@@ -28,7 +28,7 @@ namespace LocationByZip.DemoConsoleApp
                         var location = await locationSvc.GetByZipCodeAsync("93275");
                         if (location is object)
                         {
-                            DisplayLocation(location);
+                            Console.WriteLine(location);
                         }
 
                         // Location(s) by City/State
@@ -36,9 +36,9 @@ namespace LocationByZip.DemoConsoleApp
                         Console.WriteLine("=== Location(s) by City/State ===");
 
                         var locationsByCityState = await locationSvc.GetByCityStateAsync("Tulare", "CA");
-                        foreach (var loc in locationsByCityState)
+                        foreach (var locByCityState in locationsByCityState)
                         {
-                            DisplayLocation(loc);
+                            Console.WriteLine(locByCityState);
                         }
 
                         // Location(s) in Radius
@@ -46,9 +46,10 @@ namespace LocationByZip.DemoConsoleApp
                         Console.WriteLine("=== Location(s) in Radius ===");
 
                         var locsationsInRadius = await locationSvc.GetLocationsInRadiusAsync("93401", 10.0);
-                        foreach (Location locInRad in locsationsInRadius)
+                        foreach (var locInRad in locsationsInRadius)
                         {
-                            DisplayLocation(locInRad);
+                            Console.WriteLine(locInRad);
+                            Console.WriteLine();
                         }
 
                         //	Distance between two locations.
@@ -74,12 +75,6 @@ namespace LocationByZip.DemoConsoleApp
                 Console.Error.WriteLine($"Unhandled exception in Main: {ex}");
                 return 1;
             }
-        }
-
-        static void DisplayLocation(Location location)
-        {
-            Console.WriteLine(location);
-            Console.WriteLine();
         }
     }
 }
