@@ -60,6 +60,7 @@ namespace LocationByZip
         ///  within Radius miles of inRefLoc.</returns>
         public async Task<IReadOnlyCollection<LocationInRadius>> GetLocationsInRadiusAsync(Location origin, RadiusBox bounds)
         {
+            var locationsInBoundingBox = new List<LocationInRadius>();
             var locationsInRadius = new List<LocationInRadius>();
 
             using (var conn = new SqlConnection(_connectionString))
@@ -72,17 +73,16 @@ namespace LocationByZip
                     EastLon = bounds.RightLongitude,
                 };
 
-                var locs = (await conn.QueryAsync<LocationInRadius>(GetLocationsWithinRadiusSql(), args))
-                    .ToArray();
+                locationsInBoundingBox.AddRange(await conn.QueryAsync<LocationInRadius>(GetLocationsWithinRadiusSql(), args));
+            }
 
-                foreach (var loc in locs)
+            foreach (var locInBox in locationsInBoundingBox)
+            {
+                locInBox.DistanceToCenter = locInBox.DistanceFrom(origin);
+
+                if (locInBox.DistanceToCenter <= bounds.RadiusMiles)
                 {
-                    loc.DistanceToCenter = loc.DistanceFrom(origin);
-
-                    if (loc.DistanceToCenter <= bounds.RadiusMiles)
-                    {
-                        locationsInRadius.Add(loc);
-                    }
+                    locationsInRadius.Add(locInBox);
                 }
             }
 
