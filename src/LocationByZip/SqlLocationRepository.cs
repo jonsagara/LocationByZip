@@ -61,7 +61,6 @@ namespace LocationByZip
         public async Task<IReadOnlyCollection<LocationInRadius>> GetLocationsInRadiusAsync(Location origin, RadiusBox bounds)
         {
             var locationsInBoundingBox = new List<LocationInRadius>();
-            var locationsInRadius = new List<LocationInRadius>();
 
             using (var conn = new SqlConnection(_connectionString))
             {
@@ -76,18 +75,17 @@ namespace LocationByZip
                 locationsInBoundingBox.AddRange(await conn.QueryAsync<LocationInRadius>(GetLocationsWithinRadiusSql(), args));
             }
 
-            foreach (var locInBox in locationsInBoundingBox)
-            {
-                locInBox.DistanceToCenter = locInBox.DistanceFrom(origin);
-
-                if (locInBox.DistanceToCenter <= bounds.RadiusMiles)
+            return locationsInBoundingBox
+                // Compute the distance in miles from the origin (center of the circle).
+                .Select(l =>
                 {
-                    locationsInRadius.Add(locInBox);
-                }
-            }
-
-            return locationsInRadius
-                .OrderBy(loc => loc.DistanceToCenter)
+                    l.DistanceToCenter = l.DistanceFrom(origin);
+                    return l;
+                })
+                // Only keep those locations that are actually within the radius.
+                .Where(l => l.DistanceToCenter <= bounds.RadiusMiles)
+                // Put the closest to the origin first.
+                .OrderBy(l => l.DistanceToCenter)
                 .ToArray();
         }
 
