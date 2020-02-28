@@ -18,11 +18,10 @@ namespace LocationByZip
 
 
         /// <summary>
-        /// Look up a <see cref="LocationByZip.Location" /> by ZIP Code.  If Latitude
-        /// or Longitude are NULL, they are set to double.MinValue.
+        /// Look up a <see cref="Location" /> by ZIP Code.
         /// </summary>
         /// <param name="zipCode">ZIP Code to lookup.</param>
-        /// <returns><see cref="LocationByZip.Location" /> of the ZIP Code.</returns>
+        /// <returns><see cref="Location" /> of the ZIP Code.</returns>
         public async Task<Location?> GetByZipCodeAsync(string zipCode)
         {
             using var conn = new SqlConnection(_connectionString);
@@ -32,12 +31,12 @@ namespace LocationByZip
         }
 
         /// <summary>
-        /// Lookup one or more <see cref="LocationByZip.Location" />s by City/State.
-        ///  In the database, some cities are represented by more than one ZIP Code.
+        /// Lookup one or more <see cref="Location" />s by City/State. In the database, some cities 
+        /// are represented by more than one ZIP Code.
         /// </summary>
         /// <param name="city">Name of the City.</param>
         /// <param name="state">Name of the State.</param>
-        /// <returns>An array of <see cref="LocationByZip.Location" /> objects whose City/State matches the input City/State.</returns>
+        /// <returns>An array of <see cref="Location" /> objects whose City/State matches the input City/State.</returns>
         public async Task<IReadOnlyCollection<Location>> GetByCityStateAsync(string city, string state)
         {
             using var conn = new SqlConnection(_connectionString);
@@ -47,19 +46,17 @@ namespace LocationByZip
         }
 
         /// <summary>
-        /// Finds all <see cref="LocationByZip.LocationInRadius" />es within X miles
-        ///  of inRefLoc.
+        /// Finds all <see cref="LocationInRadius" />es within X miles of <paramref name="origin"/>.
         /// </summary>
         /// <remarks>
-        /// To speed the calculation, this method finds all areas within a square area of dimension
-        ///  (2*Radius)x(2*Radius).  Any city with a Lat/Lon pair that falls within this square is
-        ///  returned.  However, only those cities whose distance is less than or equal to Radius
-        ///  miles from inRefLoc are returned.  This has the unfortunate side effect of selecting
-        ///  from ~22% more area than is necessary.
+        /// To speed the calculation, this method finds all areas within a square area of dimension (2*Radius)x(2*Radius). 
+        /// Any city with a Lat/Lon pair that falls within this square is returned. However, only those cities whose 
+        /// distance is less than or equal to Radius miles from inRefLoc are returned. This has the unfortunate side effect 
+        /// of selecting from ~22% more area than is necessary.
         /// </remarks>
         /// <param name="origin">The central location from which we are trying to find other locations within the specified radius.</param>
         /// <param name="bounds">A class containing the "box" that encloses inRefLoc.  Used to approximate a circle of Radius R centered around the point inRefLoc.</param>
-        /// <returns>0 or more <see cref="LocationByZip.LocationInRadius" />es that are
+        /// <returns>0 or more <see cref="LocationInRadius" />es that are
         ///  within Radius miles of inRefLoc.</returns>
         public async Task<IReadOnlyCollection<LocationInRadius>> GetLocationsInRadiusAsync(Location origin, RadiusBox bounds)
         {

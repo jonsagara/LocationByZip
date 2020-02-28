@@ -57,7 +57,7 @@ namespace LocationByZip
             double c = 2.0 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1.0 - a));
 
             // Distance.
-            return Globals.EarthRadiusMiles * c;
+            return Globals.EARTH_RADIUS_MILES * c;
         }
     }
 }

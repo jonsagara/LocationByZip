@@ -81,7 +81,7 @@ namespace LocationByZip
 
             double latitudeRadians = location.Latitude.ToRadians();
             double longitudeRadians = location.Longitude.ToRadians();
-            double radiusRadians = radiusMiles / Globals.EarthRadiusMiles;
+            double radiusRadians = radiusMiles / Globals.EARTH_RADIUS_MILES;
 
             //	N (tc == 0):
             //		lat = asin (sin(lat1)*cos(d) + cos(lat1)*sin(d))

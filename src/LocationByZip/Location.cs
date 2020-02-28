@@ -23,6 +23,7 @@ namespace LocationByZip
         public double Longitude { get; set; }
         public int Accuracy { get; set; }
 
+
         // Justification: Need parameterless for Dapper.
 #pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
         public Location()
