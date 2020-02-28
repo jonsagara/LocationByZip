@@ -49,7 +49,6 @@ namespace LocationByZip.DemoConsoleApp
                         foreach (var locInRad in locsationsInRadius)
                         {
                             Console.WriteLine(locInRad);
-                            Console.WriteLine();
                         }
 
                         //	Distance between two locations.
@@ -57,7 +56,7 @@ namespace LocationByZip.DemoConsoleApp
                         Console.WriteLine("=== Distance between two ZIP Codes ===");
 
                         var distance = await locationSvc.GetDistanceBetweenLocationsAsync("93401", "93446");
-                        Console.WriteLine("93401 is {0:F1} miles from 93446", distance);
+                        Console.WriteLine($"93401 is {distance:F1} miles from 93446");
                         Console.WriteLine();
                     }
                     catch (Exception ex)

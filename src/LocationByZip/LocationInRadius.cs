@@ -32,13 +32,9 @@ namespace LocationByZip
 
         public override string ToString()
         {
-            var str = new StringBuilder();
+            var str = new StringBuilder(base.ToString());
 
-            str.AppendLine($"Location: {PlaceName}, {AdminName1} {Zip5} in {AdminName2} County");
-            str.AppendLine($"\tLatitude: {Latitude}");
-            str.AppendLine($"\tLongitude: {Longitude}");
-            str.AppendLine($"\tAccuracy: {Accuracy}");
-            str.Append($"\tDistance to original location: {DistanceToCenter:F1} miles");
+            str.AppendLine($"\tDistance to original location: {DistanceToCenter:F1} miles");
 
             return str.ToString();
         }

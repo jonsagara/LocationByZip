@@ -71,7 +71,7 @@ namespace LocationByZip
         {
             var str = new StringBuilder();
 
-            str.AppendLine($"Location: {PlaceName}, {AdminName1} {Zip5} in {AdminName2} County");
+            str.AppendLine($"Location: {PlaceName}, {AdminCode1} {Zip5} in {AdminName2} County");
             str.AppendLine($"\tLatitude: {Latitude}");
             str.AppendLine($"\tLongitude: {Longitude}");
             str.AppendLine($"\tAccuracy: {Accuracy}");
