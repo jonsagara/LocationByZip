@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
@@ -22,7 +23,7 @@ namespace LocationByZip
         /// </summary>
         /// <param name="zipCode">ZIP Code to lookup.</param>
         /// <returns><see cref="Location" /> of the ZIP Code.</returns>
-        public async Task<Location?> GetByZipCodeAsync(string zipCode)
+        public async Task<Location?> GetByZipCodeAsync([AllowNull] string zipCode)
         {
             using var conn = new SqlConnection(_connectionString);
 
@@ -37,7 +38,7 @@ namespace LocationByZip
         /// <param name="city">Name of the City.</param>
         /// <param name="state">Name of the State.</param>
         /// <returns>An array of <see cref="Location" /> objects whose City/State matches the input City/State.</returns>
-        public async Task<IReadOnlyCollection<Location>> GetByCityStateAsync(string city, string state)
+        public async Task<IReadOnlyCollection<Location>> GetByCityStateAsync([AllowNull] string city, [AllowNull] string state)
         {
             using var conn = new SqlConnection(_connectionString);
 

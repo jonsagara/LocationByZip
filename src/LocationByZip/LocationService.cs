@@ -75,7 +75,7 @@ namespace LocationByZip
         // Helpers
         //
 
-        private void ValidateZipCodeArgument(string zipCode)
+        private void ValidateZipCodeArgument([AllowNull] string zipCode)
         {
             if (string.IsNullOrWhiteSpace(zipCode))
             {
@@ -83,7 +83,7 @@ namespace LocationByZip
             }
         }
 
-        private void ValidateCityArgument(string city)
+        private void ValidateCityArgument([AllowNull] string city)
         {
             if (string.IsNullOrWhiteSpace(city))
             {
@@ -91,7 +91,7 @@ namespace LocationByZip
             }
         }
 
-        private void ValidateStateArgument(string state)
+        private void ValidateStateArgument([AllowNull] string state)
         {
             if (string.IsNullOrWhiteSpace(state))
             {

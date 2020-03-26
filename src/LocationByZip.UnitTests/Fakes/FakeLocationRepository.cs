@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -135,7 +136,7 @@ namespace LocationByZip.UnitTests.Fakes
         // ILocationRepository Methods
         //
 
-        public Task<Location?> GetByZipCodeAsync(string zipCode)
+        public Task<Location?> GetByZipCodeAsync([AllowNull] string zipCode)
         {
             var location = _locations
                 .Where(loc => loc.Zip5.Equals(zipCode, StringComparison.OrdinalIgnoreCase))
@@ -144,7 +145,7 @@ namespace LocationByZip.UnitTests.Fakes
             return Task.FromResult<Location?>(location);
         }
 
-        public Task<IReadOnlyCollection<Location>> GetByCityStateAsync(string city, string state)
+        public Task<IReadOnlyCollection<Location>> GetByCityStateAsync([AllowNull] string city, [AllowNull] string state)
         {
             var locations = _locations
                 .Where(loc => loc.PlaceName.Equals(city, StringComparison.OrdinalIgnoreCase) && loc.AdminCode1?.Equals(state, StringComparison.OrdinalIgnoreCase) == true)
